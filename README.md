@@ -1,0 +1,2 @@
+# InternshipsManagement_Project
+Internships Management Software Solution
