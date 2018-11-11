@@ -12,17 +12,26 @@ namespace InternshipsManagmentProject.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetRole
+    public partial class Resume
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AspNetRole()
+        public Resume()
         {
+            this.StudentInternships = new HashSet<StudentInternship>();
+            this.Students = new HashSet<Student>();
             this.AspNetUsers = new HashSet<AspNetUser>();
         }
     
         public string Id { get; set; }
         public string Name { get; set; }
+        public string Path { get; set; }
+        public string File { get; set; }
     
+        public virtual File File1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StudentInternship> StudentInternships { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Student> Students { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }

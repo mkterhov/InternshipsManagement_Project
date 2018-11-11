@@ -12,18 +12,17 @@ namespace InternshipsManagmentProject.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetRole
+    public partial class Email
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AspNetRole()
-        {
-            this.AspNetUsers = new HashSet<AspNetUser>();
-        }
-    
         public string Id { get; set; }
-        public string Name { get; set; }
+        public string From { get; set; }
+        public string To { get; set; }
+        public string Subject { get; set; }
+        public string Content { get; set; }
+        public string SenderId { get; set; }
+        public string ReceiverId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual AspNetUser AspNetUser1 { get; set; }
     }
 }

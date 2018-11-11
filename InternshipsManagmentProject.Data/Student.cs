@@ -12,18 +12,29 @@ namespace InternshipsManagmentProject.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetRole
+    public partial class Student
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AspNetRole()
+        public Student()
         {
-            this.AspNetUsers = new HashSet<AspNetUser>();
+            this.StudentInternships = new HashSet<StudentInternship>();
         }
     
-        public string Id { get; set; }
+        public string StudentId { get; set; }
         public string Name { get; set; }
+        public string LastName { get; set; }
+        public string UserId { get; set; }
+        public string University { get; set; }
+        public string Domain { get; set; }
+        public string Bio { get; set; }
+        public System.DateTime Birthday { get; set; }
+        public string LevelOfStudies { get; set; }
+        public Nullable<bool> Available { get; set; }
+        public string StudentCV { get; set; }
     
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual Resume Resume { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
+        public virtual ICollection<StudentInternship> StudentInternships { get; set; }
     }
 }

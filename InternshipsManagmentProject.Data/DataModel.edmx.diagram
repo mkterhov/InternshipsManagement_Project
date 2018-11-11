@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bae912f5c01e4f2b93259615b7b9f7cb" Name="Diagram1" ZoomLevel="98">
+        <EntityTypeShape EntityType="InternshipsManagmentProjectDatabaseModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipsManagmentProjectDatabaseModel.AspNetRole" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipsManagmentProjectDatabaseModel.AspNetUserClaim" Width="1.5" PointX="7.5" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipsManagmentProjectDatabaseModel.AspNetUserLogin" Width="1.5" PointX="7.5" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipsManagmentProjectDatabaseModel.AspNetUser" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipsManagmentProjectDatabaseModel.Email" Width="1.5" PointX="7.5" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipsManagmentProjectDatabaseModel.File" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipsManagmentProjectDatabaseModel.Firm" Width="1.5" PointX="5.25" PointY="21.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipsManagmentProjectDatabaseModel.Image" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipsManagmentProjectDatabaseModel.Internship" Width="1.5" PointX="9.75" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipsManagmentProjectDatabaseModel.Recruiter" Width="1.5" PointX="7.5" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipsManagmentProjectDatabaseModel.Resume" Width="1.5" PointX="10.5" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipsManagmentProjectDatabaseModel.StudentInternship" Width="1.5" PointX="15" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipsManagmentProjectDatabaseModel.Student" Width="1.5" PointX="12.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="InternshipsManagmentProjectDatabaseModel.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_AspNetUsers_Images" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_Emails_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_Emails_AspNetUsers1" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_Recruiters_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_Students_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_Images_Files" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_Resumes_Files" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_Firms_Images" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_Internships_Firms1" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_Recruiters_Firms" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_Internships_Images" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_Internships_Recruiters1" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Internships1" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Resumes" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_Students_Resumes" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Students1" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="InternshipsManagmentProjectDatabaseModel.UserResumeMapTable" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
