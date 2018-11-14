@@ -5,13 +5,22 @@
 <div class="jumbotron">
     <h2>Working Links For Different entities and actions</h2>
     <h6>development use only</h6>
-    <li>
-        @Html.ActionLink("Firms", "Index", "Firms")
-        <i>CRUD FOR FIRM ENTITIES</i>
-    </li>
+    <ul>
+        <li>@Html.ActionLink("Firms", "Index", "Firms")
+            <i>CRUD FOR FIRM ENTITIES</i>
+        </li>
+        <li>
+            //Open the Student Profile page
+            @Html.ActionLink("Student", "StudentProfile", "Student");
+        </li>
+        <li>
+            //Jump directly into a menu, optional parameter, default = 0
+            @Html.ActionLink("Student Edit Profile", "StudentProfile", "Student", new { selection = 3 }, null);
+        </li> 
     <li>
         <i>CRUD FOR THE REST OF THE ENTITIES COMING SOON</i>
     </li>
+        </ul>
 
 </div>
 
