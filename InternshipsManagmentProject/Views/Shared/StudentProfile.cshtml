@@ -1,0 +1,431 @@
+﻿@model InternshipsManagmentProject.Data.Student
+
+@{
+    ViewBag.Title = "View";
+}
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<style>
+    :root {
+        --menu_selected: #fb950b;
+        --menu_grayed: #ff1515;
+        --menu_hover_selected: #fcb049;
+        --menu_hover_grayed: #ff6666;
+        --ship_selected: #00cc99;
+        --ship_grayed: #006600;
+        --ship_hover_selected: #51ffd3;
+        --ship_hover_grayed: #00aa00;
+        --progress_complete: #2ECC71;
+        --progress_active: #3498DB;
+        --progress_mute: #DFE3E4;
+    }
+
+    .progress {
+        list-style: none;
+        background-color: transparent;
+        height: auto;
+        width: auto;
+    }
+
+        .progress > li {
+            position: relative;
+            display: table-cell;
+            text-align: center;
+            font-size: 0.8em;
+            padding-left: 25px;
+        }
+
+            .progress > li:before {
+                content: attr(data-step);
+                display: block;
+                margin: 0 auto;
+                background: var(--progress_mute);
+                width: 3em;
+                height: 3em;
+                text-align: center;
+                line-height: 3em;
+                border-radius: 100%;
+                position: relative;
+                z-index: 1000;
+            }
+
+            .progress > li:after {
+                content: '';
+                position: absolute;
+                display: block;
+                background: var(--progress_mute);
+                width: 100%;
+                height: 0.5em;
+                top: 1.25em;
+                left: 50%;
+                margin-left: 1.5em\9;
+            }
+
+            .progress > li:last-child:after {
+                display: none;
+            }
+
+            .progress > li.is-complete {
+                color: var(--progress_complete);
+            }
+
+                .progress > li.is-complete:before {
+                    color: #FFF;
+                    background: var(--progress_complete);
+                }
+
+                .progress > li.is-complete:after {
+                    color: #FFF;
+                    background: var(--progress_complete);
+                }
+
+            .progress > li.is-active {
+                color: var(--progress_active);
+            }
+
+                .progress > li.is-active:before {
+                    color: #FFF;
+                    background: var(--progress_active);
+                }
+
+    .progress__last:after {
+        display: none !important;
+    }
+
+    .progress__last:after {
+        display: none !important;
+    }
+
+    .form_student {
+        width: 450px;
+        font-size: 16px;
+        padding: 30px 30px 15px 30px;
+    }
+
+        .form_student input[type=submit],
+        .form_student input[type=button],
+        .form_student input[type=text],
+        .form_student input[type=email],
+        .form_student input[type=date] .form_student textarea,
+        .form_student label {
+            font-family: Georgia, "Times New Roman", Times, serif;
+            font-size: 16px;
+        }
+
+            .form_student input[type=text],
+            .form_student input[type=email] .form_student input[type=date] {
+                background: transparent;
+                border: 3px dashed var(--ship_grayed);
+                width: 275px;
+                outline: none;
+                padding: 0px 0px 0px 0px;
+                font-style: italic;
+            }
+
+        .form_student textarea {
+            font-style: italic;
+            padding: 0px 0px 0px 0px;
+            background: transparent;
+            outline: none;
+            border: 3px dashed var(--ship_grayed);
+            height: auto;
+            min-height: 60px;
+            overflow-y: auto;
+            word-wrap: break-word
+        }
+
+            .form_student textarea:focus,
+            .form_student input[type=text]:focus,
+            .form_student input[type=email]:focus,
+            .form_student input[type=date] :focus {
+                border: 3px solid var(--ship_hover_grayed);
+            }
+
+        .form_student input[type=submit],
+        .form_student input[type=button] {
+            background: var(--ship_selected);
+            border: none;
+            padding: 8px 10px 8px 10px;
+            border-radius: 5px;
+        }
+
+            .form_student input[type=submit]:hover,
+            .form_student input[type=button]:hover {
+                background: var(--ship_hover_selected)
+            }
+
+
+    .profile_pic {
+        max-width: 150px;
+        margin: 10px;
+        border: 3px dotted green;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    div.internship > div {
+        border-radius: 5px;
+        background: #e087e5;
+        padding: 20px;
+        width: auto;
+    }
+
+    div.internship {
+        border-radius: 25px;
+        background: #bc21c4;
+        padding: 20px;
+        max-width: 500px;
+        width: auto;
+    }
+
+    #menu > li {
+        border-radius: 25px;
+        padding: 10px;
+        width: auto;
+    }
+
+    #parent_left {
+        position: relative;
+    }
+
+    #panel_left {
+        position: absolute;
+        min-width: 200px;
+        padding-top: 0px;
+        top: 0px;
+    }
+
+    #panel_right > div {
+        margin-top: 0px;
+    }
+
+    #panel_right {
+        min-width: 600px;
+        min-height: 300px;
+        margin-left: 300px;
+        margin-bottom: 30px;
+    }
+
+    .menu_selected {
+        background: var(--menu_selected);
+    }
+
+    .menu_grayed {
+        background: var(--menu_grayed);
+    }
+
+    .menu_selected:hover {
+        background: var(--menu_hover_selected);
+    }
+
+    .menu_grayed:hover {
+        background: var(--menu_hover_grayed);
+    }
+
+    .ship_selected {
+        background: var(--ship_selected);
+    }
+
+    .ship_grayed {
+        background: var(--ship_grayed);
+    }
+
+    .ship_selected:hover {
+        background: var(--ship_hover_selected);
+    }
+
+    .ship_grayed:hover {
+        background: var(--ship_hover_grayed);
+    }
+
+    .form_student td {
+        padding-bottom: 30px;
+        padding-right: 10px;
+    }
+</style>
+
+<table>
+    <tr>
+        <td id="parent_left">
+            <div id="panel_left">
+                <div class="profile_pic">Non deity viewer detected. Image will not be shown to protect their souls from obliteration with handsomeness.</div>
+                <ul id="menu">
+                    <li class="">Aplicarile Mele</li>
+                    <li>Notificari</li>
+                    <li>Manage CV</li>
+                    <li>Editare Cont</li>
+                    <li>Log out</li>
+                </ul>
+            </div>
+        </td>
+        <td>
+            <div id="panel_right">
+                <div>
+                    <h3>Aplicarile Mele</h3>
+                    @foreach (var item in Model.StudentInternships)
+                    {
+                    <div class="internship">
+
+                        <span class="internship_drop"><strong>\/</strong></span> <strong>@item.Internship.Title</strong>
+
+                        @if (!(bool)item.StatusOfApplication) {
+                            <ol class="progress progress--large">
+                                <li class="is-active" data-step="">Sent CV</li>
+                                <li class="" data-step="">Response</li>
+                                <li data-step="">Accepted</li>
+                                <li class="progress__last" data-step="">Review</li>
+                            </ol>
+                            <div>
+                                You've sent your CV.
+                                <br />
+                                <input type="submit" value="Sent CV" disabled>
+                            </div>
+                        }
+                        else if ((bool)item.StatusOfApplication && !(bool)item.Completed)
+                        {
+                            <ol class="progress progress--large">
+                                <li class="is-complete" data-step="">Sent CV</li>
+                                <li class="is-active" data-step="">Response</li>
+                                <li data-step="">Accepted</li>
+                                <li class="progress__last" data-step="">Review</li>
+                            </ol>
+                            <div>
+                                The firm has received your CV.
+                                <br />
+                                <input type="submit" value="Waiting Response" disabled>
+                            </div>
+                        }
+                        else if ((bool)item.Completed && !(bool)item.StarredForFurtherReview)
+                        {
+                            <ol class="progress progress--large">
+                                <li class="is-complete" data-step="">Sent CV</li>
+                                <li class="is-complete" data-step="">Response</li>
+                                <li class="is-active" data-step="">Accepted</li>
+                                <li class="progress__last" data-step="">Review</li>
+                            </ol>
+                            <div>
+                                The firm has accepted you!
+                                <br />
+                                <input type="submit" value="Accept" formaction="/Student/StudentFirmResponse/?response=true&id=@item.Internship.InternshipId">
+                                <input type="submit" value="Refuse" formaction="/Student/StudentFirmResponse/?response=false&id=@item.Internship.InternshipId">
+                            </div>
+                        }
+                        else if ((bool)item.StarredForFurtherReview)
+                        {
+                            <ol class="progress progress--large">
+                                <li class="is-complete" data-step="">Sent CV</li>
+                                <li class="is-complete" data-step="">Response</li>
+                                <li class="is-complete" data-step="">Accepted</li>
+                                <li class="is-active" data-step="">Review</li>
+                            </ol>
+                            <div>
+                                Thank you for joining this internship. Please give us a feedback.
+                                <br />
+                                Rate:
+                                <input type="submit" value="1" formaction="/Student/StudentFirmRating/?rating=1&id=@item.Internship.InternshipId">
+                                <input type="submit" value="2" formaction="/Student/StudentFirmRating/?rating=2&id=@item.Internship.InternshipId">
+                                <input type="submit" value="3" formaction="/Student/StudentFirmRating/?rating=3&id=@item.Internship.InternshipId">
+                                <input type="submit" value="4" formaction="/Student/StudentFirmRating/?rating=4&id=@item.Internship.InternshipId">
+                                <input type="submit" value="5" formaction="/Student/StudentFirmRating/?rating=5&id=@item.Internship.InternshipId">
+                                Stars
+                            </div>
+                        }
+                        else
+                        {
+                            <ol class="progress progress--large">
+                                <li class="" data-step="">Sent CV</li>
+                                <li class="" data-step="">Response</li>
+                                <li class="" data-step="">Accepted</li>
+                                <li class="progress__last" data-step="">Review</li>
+                            </ol>
+                            <div>
+                                <br />
+                                No idea how you got here...
+                            </div>
+                        }
+                         
+                    </div>
+                    }
+                </div>
+                <div>
+                    <h3>Notificari</h3>
+                </div>
+                <div>
+                    <h3>Manage CV</h3>
+                </div>
+                <div>
+                    <h3>Editare Cont</h3>
+                    <form action="/Student/StudentUpdate" method="post" target="_blank" class="form_student" id="studentform">
+                        <table id="form_table">
+                            <tr>
+                                <td>
+                                    Name:
+                                    <input type="text" name="Name" value=@Model.Name>
+                                </td>
+                                <td>
+                                    Last Name:
+                                    <input type="text" name="LastName" value=@Model.LastName>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    University:
+                                    <input type="text" name="University" value=@Model.University>
+                                </td>
+                                <td>
+                                    Domain:
+                                    <input type="text" name="Domain" value=@Model.Domain>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Bio:
+                                    <textarea name="Bio" rows="5" cols="50">@Model.Bio</textarea>
+                                </td>
+                                <td>
+                                    Birthday:<br />
+                                    <input type="date" name="Birthday" value=@Model.Birthday>
+                                </td>
+                            </tr>
+                        </table>
+                        <input type="submit" value="Save Changes">
+                    </form>
+                </div>
+                <div>
+                    <h3>Log out</h3>
+                </div>
+
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+<script>
+    var sel = 0;
+    if (@ViewBag.Selection!=null) sel = @ViewBag.Selection;
+    function RefreshMenu() {
+        $("#panel_right>div").addClass("hidden");
+        $("#panel_right>div:nth-child(" + (sel + 1) + ")").removeClass("hidden");
+        $("#menu>li").attr("class", "menu_grayed");
+        $("#menu>li:nth-child(" + (sel + 1) + ")").attr("class", "menu_selected");
+    }
+
+    $(function () {
+        RefreshMenu();
+        $(".internship>div").slideUp(0);
+        $("#menu>li").click(function () {
+            $("#menu>li:nth-child(" + (sel + 1) + ")").attr("class", "menu_grayed");
+            sel = $("#menu>li").index(this);
+            $(this).attr("class", "menu_selected");
+            RefreshMenu();
+        });
+        $(".internship_drop").click(function () {
+            $(this).siblings("div").slideToggle(300);
+            if ($(this).text() == "\\/") $(this).text("/\\");
+            else $(this).text("\\/");
+        });
+    });
+
+</script>
