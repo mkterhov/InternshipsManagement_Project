@@ -1,0 +1,87 @@
+﻿@model IEnumerable<InternshipsManagmentProject.Data.Internship>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PositionsAvailable)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Firm.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Recruiter.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PositionsAvailable)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Firm.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Image.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Recruiter.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.InternshipId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.InternshipId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.InternshipId })
+        </td>
+    </tr>
+}
+
+</table>

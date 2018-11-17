@@ -197,13 +197,17 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FirmsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InternshipsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RecruitersAccountDetailsController.cs" />
+    <Compile Include="Controllers\StudentsAccountDetailsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\UserRoles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -271,9 +275,25 @@
     <Content Include="Views\Firms\Details.cshtml" />
     <Content Include="Views\Firms\Edit.cshtml" />
     <Content Include="Views\Firms\Index.cshtml" />
+    <Content Include="Views\Internships\Create.cshtml" />
+    <Content Include="Views\Internships\Delete.cshtml" />
+    <Content Include="Views\Internships\Details.cshtml" />
+    <Content Include="Views\Internships\Edit.cshtml" />
+    <Content Include="Views\Internships\Index.cshtml" />
+    <Content Include="Views\RecruitersAccountDetails\Create.cshtml" />
+    <Content Include="Views\RecruitersAccountDetails\Delete.cshtml" />
+    <Content Include="Views\RecruitersAccountDetails\Details.cshtml" />
+    <Content Include="Views\RecruitersAccountDetails\Edit.cshtml" />
+    <Content Include="Views\RecruitersAccountDetails\Index.cshtml" />
+    <Content Include="Views\StudentsAccountDetails\Create.cshtml" />
+    <Content Include="Views\StudentsAccountDetails\Delete.cshtml" />
+    <Content Include="Views\StudentsAccountDetails\Details.cshtml" />
+    <Content Include="Views\StudentsAccountDetails\Edit.cshtml" />
+    <Content Include="Views\StudentsAccountDetails\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Utilities\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

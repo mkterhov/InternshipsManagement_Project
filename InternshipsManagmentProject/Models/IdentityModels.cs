@@ -1,6 +1,8 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using InternshipsManagmentProject.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -17,17 +19,16 @@ namespace InternshipsManagmentProject.Models
             return userIdentity;
         }
     }
-
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+
     }
 }

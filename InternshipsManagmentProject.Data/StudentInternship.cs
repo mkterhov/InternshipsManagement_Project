@@ -11,7 +11,8 @@ namespace InternshipsManagmentProject.Data
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class StudentInternship
     {
         public string StudentId { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InternshipsManagmentProject.Data.Interfaces
 {
-    public interface IRepository
+    internal interface IRepository
     {
         File GetFileById(string idFile);
 
@@ -25,6 +25,6 @@ namespace InternshipsManagmentProject.Data.Interfaces
         StudentInternship GetApplicationByUserNameAndInternshipId(string username, string id);
 
         bool SaveAll();
-        void AddEntity(object model);
+        void AddEntity<T>(T newItem) where T : class;
     }
 }

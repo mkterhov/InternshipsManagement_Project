@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace InternshipsManagmentProject.Data.Interfaces
 {
+    //NOT TO BE USED YET, UNDER DEVELOPMENT
     class RepositoryInternshipsManagment : IRepository
     {
         private readonly Entities _DataContext;
@@ -16,9 +17,10 @@ namespace InternshipsManagmentProject.Data.Interfaces
 
 
         //Add an entity by a model of an entity, in theory should work generic, but needs further investigation of the matter
-        public void AddEntity(object model)
+        public void AddEntity<T>(T newItem) where T : class
         {
-            throw new NotImplementedException();
+            _DataContext.Set<T>().Add(newItem);
+            SaveAll();
         }
         //returns all the internships
         public IEnumerable<Internship> GetAllInternships()

@@ -15,6 +15,7 @@ namespace InternshipsManagmentProject.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        //add a role managa
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -153,8 +154,10 @@ namespace InternshipsManagmentProject.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(user.Id, model.UserType.ToString());
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

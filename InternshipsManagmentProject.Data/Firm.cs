@@ -20,7 +20,9 @@ namespace InternshipsManagmentProject.Data
             this.Internships = new HashSet<Internship>();
             this.Recruiters = new HashSet<Recruiter>();
         }
-    
+
+        
+
         public string FirmId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

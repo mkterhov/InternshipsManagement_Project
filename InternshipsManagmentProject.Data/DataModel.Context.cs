@@ -9,6 +9,7 @@
 
 namespace InternshipsManagmentProject.Data
 {
+    using InternshipsManagmentProject.Utilities;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
@@ -18,8 +19,9 @@ namespace InternshipsManagmentProject.Data
         public Entities()
             : base("name=InternshipsManagmentProjectDatabaseEntities")
         {
+
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

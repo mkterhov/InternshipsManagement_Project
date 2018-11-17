@@ -7,119 +7,122 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using InternshipsManagmentProject.Data;
-using InternshipsManagmentProject.Data.Interfaces;
 
 namespace InternshipsManagmentProject.Controllers
 {
-    public class FirmsController : Controller
+    [Authorize(Roles ="Recruiter")]
+    public class RecruitersAccountDetailsController : Controller
     {
         private Entities db = new Entities();
 
-        // GET: Firms
+        // GET: RecruitersAccountDetails
         public ActionResult Index()
         {
-            var firms = db.Firms.Include(f => f.Image);
-            return View(firms.ToList());
+            var recruiters = db.Recruiters.Include(r => r.AspNetUser).Include(r => r.Firm);
+            return View(recruiters.ToList());
         }
 
-        // GET: Firms/Details/5
+        // GET: RecruitersAccountDetails/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Firm firm = db.Firms.Find(id);
-            if (firm == null)
+            Recruiter recruiter = db.Recruiters.Find(id);
+            if (recruiter == null)
             {
                 return HttpNotFound();
             }
-            return View(firm);
+            return View(recruiter);
         }
 
-        // GET: Firms/Create
+        // GET: RecruitersAccountDetails/Create
         public ActionResult Create()
         {
-            
-            ViewBag.Logo = new SelectList(db.Images, "Id", "Name");
+            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email");
+            ViewBag.FirmId = new SelectList(db.Firms, "FirmId", "Name");
             return View();
         }
 
-        // POST: Firms/Create
+        // POST: RecruitersAccountDetails/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,Description,NumberOfEmployees,Logo")] Firm firm)
+        public ActionResult Create([Bind(Include = "Name,LastName,FirmId,ContactEmail,Bio,UserId")] Recruiter recruiter)
         {
             if (ModelState.IsValid)
             {
                 string guid = Guid.NewGuid().ToString();
-                firm.FirmId = guid;
-                db.Firms.Add(firm);
+                recruiter.RecruiterId = guid;
+                db.Recruiters.Add(recruiter);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Logo = new SelectList(db.Images, "Id", "Name", firm.Logo);
-            return View(firm);
+            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", recruiter.UserId);
+            ViewBag.FirmId = new SelectList(db.Firms, "FirmId", "Name", recruiter.FirmId);
+            return View(recruiter);
         }
 
-        // GET: Firms/Edit/5
+        // GET: RecruitersAccountDetails/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Firm firm = db.Firms.Find(id);
-            if (firm == null)
+            Recruiter recruiter = db.Recruiters.Find(id);
+            if (recruiter == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Logo = new SelectList(db.Images, "Id", "Name", firm.Logo);
-            return View(firm);
+            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", recruiter.UserId);
+            ViewBag.FirmId = new SelectList(db.Firms, "FirmId", "Name", recruiter.FirmId);
+            return View(recruiter);
         }
 
-        // POST: Firms/Edit/5
+        // POST: RecruitersAccountDetails/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FirmId,Name,Description,NumberOfEmployees,Logo")] Firm firm)
+        public ActionResult Edit([Bind(Include = "RecruiterId,Name,LastName,FirmId,ContactEmail,Bio,UserId")] Recruiter recruiter)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(firm).State = EntityState.Modified;
+                db.Entry(recruiter).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Logo = new SelectList(db.Images, "Id", "Name", firm.Logo);
-            return View(firm);
+            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", recruiter.UserId);
+            ViewBag.FirmId = new SelectList(db.Firms, "FirmId", "Name", recruiter.FirmId);
+            return View(recruiter);
         }
 
-        // GET: Firms/Delete/5
+        // GET: RecruitersAccountDetails/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Firm firm = db.Firms.Find(id);
-            if (firm == null)
+            Recruiter recruiter = db.Recruiters.Find(id);
+            if (recruiter == null)
             {
                 return HttpNotFound();
             }
-            return View(firm);
+            return View(recruiter);
         }
 
-        // POST: Firms/Delete/5
+        // POST: RecruitersAccountDetails/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Firm firm = db.Firms.Find(id);
-            db.Firms.Remove(firm);
+            Recruiter recruiter = db.Recruiters.Find(id);
+            db.Recruiters.Remove(recruiter);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

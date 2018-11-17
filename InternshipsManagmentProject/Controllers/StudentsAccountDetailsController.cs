@@ -7,119 +7,121 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using InternshipsManagmentProject.Data;
-using InternshipsManagmentProject.Data.Interfaces;
 
 namespace InternshipsManagmentProject.Controllers
 {
-    public class FirmsController : Controller
+    public class StudentsAccountDetailsController : Controller
     {
         private Entities db = new Entities();
 
-        // GET: Firms
+        // GET: StudentsAccountDetails
         public ActionResult Index()
         {
-            var firms = db.Firms.Include(f => f.Image);
-            return View(firms.ToList());
+            var students = db.Students.Include(s => s.AspNetUser).Include(s => s.Resume);
+            return View(students.ToList());
         }
 
-        // GET: Firms/Details/5
+        // GET: StudentsAccountDetails/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Firm firm = db.Firms.Find(id);
-            if (firm == null)
+            Student student = db.Students.Find(id);
+            if (student == null)
             {
                 return HttpNotFound();
             }
-            return View(firm);
+            return View(student);
         }
 
-        // GET: Firms/Create
+        // GET: StudentsAccountDetails/Create
         public ActionResult Create()
         {
-            
-            ViewBag.Logo = new SelectList(db.Images, "Id", "Name");
+            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email");
+            ViewBag.StudentCV = new SelectList(db.Resumes, "Id", "Name");
             return View();
         }
 
-        // POST: Firms/Create
+        // POST: StudentsAccountDetails/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,Description,NumberOfEmployees,Logo")] Firm firm)
+        public ActionResult Create([Bind(Include = "Name,LastName,UserId,University,Domain,Bio,Birthday,LevelOfStudies,Available,StudentCV")] Student student)
         {
             if (ModelState.IsValid)
             {
                 string guid = Guid.NewGuid().ToString();
-                firm.FirmId = guid;
-                db.Firms.Add(firm);
+                student.StudentId = guid;
+                db.Students.Add(student);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Logo = new SelectList(db.Images, "Id", "Name", firm.Logo);
-            return View(firm);
+            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", student.UserId);
+            ViewBag.StudentCV = new SelectList(db.Resumes, "Id", "Name", student.StudentCV);
+            return View(student);
         }
 
-        // GET: Firms/Edit/5
+        // GET: StudentsAccountDetails/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Firm firm = db.Firms.Find(id);
-            if (firm == null)
+            Student student = db.Students.Find(id);
+            if (student == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Logo = new SelectList(db.Images, "Id", "Name", firm.Logo);
-            return View(firm);
+            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", student.UserId);
+            ViewBag.StudentCV = new SelectList(db.Resumes, "Id", "Name", student.StudentCV);
+            return View(student);
         }
 
-        // POST: Firms/Edit/5
+        // POST: StudentsAccountDetails/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FirmId,Name,Description,NumberOfEmployees,Logo")] Firm firm)
+        public ActionResult Edit([Bind(Include = "StudentId,Name,LastName,UserId,University,Domain,Bio,Birthday,LevelOfStudies,Available,StudentCV")] Student student)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(firm).State = EntityState.Modified;
+                db.Entry(student).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Logo = new SelectList(db.Images, "Id", "Name", firm.Logo);
-            return View(firm);
+            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", student.UserId);
+            ViewBag.StudentCV = new SelectList(db.Resumes, "Id", "Name", student.StudentCV);
+            return View(student);
         }
 
-        // GET: Firms/Delete/5
+        // GET: StudentsAccountDetails/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Firm firm = db.Firms.Find(id);
-            if (firm == null)
+            Student student = db.Students.Find(id);
+            if (student == null)
             {
                 return HttpNotFound();
             }
-            return View(firm);
+            return View(student);
         }
 
-        // POST: Firms/Delete/5
+        // POST: StudentsAccountDetails/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Firm firm = db.Firms.Find(id);
-            db.Firms.Remove(firm);
+            Student student = db.Students.Find(id);
+            db.Students.Remove(student);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -94,7 +94,7 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Interfaces\RepositoryInternshipsManagment.cs" />
+    <Compile Include="Repos\RepositoryInternshipsManagment.cs" />
     <Compile Include="Internship.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -114,6 +114,7 @@
     <Compile Include="sysdiagram.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\DataBaseInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
