@@ -58,11 +58,23 @@ namespace InternshipsManagmentProject.Controllers
             si2.StarredForFurtherReview = false;
             student.StudentInternships.Add(si2);
 
+            StudentInternship si3 = new StudentInternship();
+            Internship i3 = new Internship
+            {
+                Title = "Random Internship",
+                Description = "all hail 47 our lord and saviour"
+            };
+            si3.Internship = i3;
+            si3.StatusOfApplication = true;
+            si3.Completed = true;
+            si3.StarredForFurtherReview = true;
+            student.StudentInternships.Add(si3);
+
             ViewBag.Selection = selection;
             return View(student);
         }
         [HttpPost]
-        public ActionResult StudentProfile()
+        public void StudentUpdate()
         {
             student.Name = Request["Name"];
             student.LastName = Request["LastName"];
@@ -70,8 +82,19 @@ namespace InternshipsManagmentProject.Controllers
             student.Domain = Request["Domain"];
             //student.Birthday = DateTime.Parse(Request["Birthday"]);
             student.Bio = Request["Bio"];
+            Console.WriteLine("New Name:" + Request["Name"]);
+            Console.WriteLine("New Last Name:" + Request["LastName"]);
 
-            return View(student);
+        }
+
+        public void StudentFirmResponse(bool response, string id)
+        {
+
+        }
+
+        public void StudentFirmRating(int rating, string id)
+        {
+
         }
     }
 }
