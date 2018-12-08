@@ -6,8 +6,13 @@
     <h2>Working Links For Different entities and actions</h2>
     <h6>development use only</h6>
     <ul>
-        <li>@Html.ActionLink("Firms", "Index", "Firms")
+        <li>
+            @Html.ActionLink("Firms", "Index", "Firms")
             <i>CRUD FOR FIRM ENTITIES</i>
+        </li>
+        <li>
+            //Open the Student Register page
+            @Html.ActionLink("Student Register", "StudentRegister", "Student");
         </li>
         <li>
             //Open the Student Profile page
@@ -16,23 +21,23 @@
         <li>
             //Jump directly into a menu, optional parameter, default = 0
             @Html.ActionLink("Student Edit Profile", "StudentProfile", "Student", new { selection = 3 }, null);
-        </li> 
-    <li>
-        @Html.ActionLink("Internships", "Index", "Internships")
-        <i>CRUD FOR Internships</i>
-    </li>
-    <li>
-        @Html.ActionLink("RecruiterDetails", "Index", "RecruitersAccountDetails")
-        <i>CRUD FOR RecruiterDetails</i>
-    </li>
-    <li>
-        @Html.ActionLink("StudentsDetails", "Index", "StudentsAccountDetails")
-        <i>CRUD FOR StudentAccount</i>
-    </li>
-    <li>
-        <i>CRUD FOR THE REST OF THE ENTITIES COMING SOON</i>
-    </li>
-        </ul>
+        </li>
+        <li>
+            @Html.ActionLink("Internships", "Index", "Internships")
+            <i>CRUD FOR Internships</i>
+        </li>
+        <li>
+            @Html.ActionLink("RecruiterDetails", "Index", "RecruitersAccountDetails")
+            <i>CRUD FOR RecruiterDetails</i>
+        </li>
+        <li>
+            @Html.ActionLink("StudentsDetails", "Index", "StudentsAccountDetails")
+            <i>CRUD FOR StudentAccount</i>
+        </li>
+        <li>
+            <i>CRUD FOR THE REST OF THE ENTITIES COMING SOON</i>
+        </li>
+    </ul>
 
 </div>
 

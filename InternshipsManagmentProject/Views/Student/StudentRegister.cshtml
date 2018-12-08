@@ -1,0 +1,87 @@
+﻿@model InternshipsManagmentProject.Data.Student
+@{
+    ViewBag.Title = "Student Register";
+}
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<link href="~/Content/Student.css" rel="stylesheet" />
+<script src="/Scripts/Student.js"></script>
+<div>
+    <form action="/Student/StudentProfile" method="get" class="form_student" id="studentform">
+        <input type="hidden" name="selection" value="3" />
+        <table id="form_table">
+            <tr>
+                <td>
+                    Name:
+                    <input type="text" id="input_name" name="Name" value=@Model.Name>
+                </td>
+                <td>
+                    Last Name:
+                    <input type="text" id="input_lastName" name="LastName" value=@Model.LastName>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    City:
+                    <input type="text" id="input_city" name="City" value=@Model.City>
+                </td>
+                <td>
+                    Phone Number:
+                    <input type="text" id="input_phoneNumber" name="PhoneNumber" value=@Model.PhoneNumber>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    University:
+                    <input type="text" id="input_university" name="University" value=@Model.University>
+                </td>
+                <td>
+                    Domain:
+                    <input type="text" id="input_domain" name="Domain" value=@Model.Domain>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Link Github:
+                    <input type="text" id="input_linkGithub" name="LinkGitHub" value=@Model.LinkGithub>
+                </td>
+                <td>
+                    Birthday:<br />
+                    <input type="date" id="input_birthday" name="Birthday" value=@Model.Birthday>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Skills:
+                    <ul id="skillsList">
+                        @if (Model.Skills != null)
+                        {
+                            foreach (var itemSkill in Model.Skills)
+                            {
+                                <li>
+                                    <input name="Skills" value="@itemSkill" readonly />
+                                </li>
+                            }
+                        }
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="text" id="input_newSkill" value="New Skill"></td>
+                <td> <input type="button" id="addNewSkill" value="+" /></td>
+            </tr>
+            <tr>
+                <td>
+                    Bio:
+                    <textarea name="Bio" id="input_bio" rows="5" cols="50">@Model.Bio</textarea>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <input id="form_button" type="button" value="Register Student">
+            <input id="form_submit" type="submit" value="Register Student">
+        </div>
+    </form>
+</div>
+<script>
+    $(FormSetup("Register Student"));
+</script>
