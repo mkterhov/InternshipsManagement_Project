@@ -80,6 +80,7 @@ namespace InternshipsManagmentProject.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    Session["UserId"] = UserManager.FindByEmail(model.Email).Id;
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -159,7 +160,8 @@ namespace InternshipsManagmentProject.Controllers
                 {
                     await UserManager.AddToRoleAsync(user.Id, model.UserType.ToString());
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    Session["UserId"] = UserManager.FindByEmail(model.Email).Id;
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

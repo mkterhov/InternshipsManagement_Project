@@ -63,6 +63,7 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Class1.cs" />
+    <Compile Include="Comment.cs" />
     <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>

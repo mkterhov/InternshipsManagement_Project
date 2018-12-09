@@ -1,6 +1,19 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+@{  
+    //example of usage, possible errors
+    //check if it's not null, and also if user is authenticated
+    //be careful if it is used before login/register, can cause errors
+    string user_id="";
+    if (User.Identity.IsAuthenticated && Session["UserId"]!=null)
+    {
+        user_id = Session["UserId"].ToString();
+
+    }
+}
+@*session variable usage example*@
+<p>@user_id</p>
 
 <div class="jumbotron">
     <h2>Working Links For Different entities and actions</h2>
