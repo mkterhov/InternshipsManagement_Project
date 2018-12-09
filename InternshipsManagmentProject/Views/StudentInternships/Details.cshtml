@@ -1,0 +1,98 @@
+﻿@model InternshipsManagmentProject.Data.StudentInternship
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StudentInternship</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentUserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentUserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Completed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Completed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Updates)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Updates)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusOfApplication)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusOfApplication)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentResumeId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentResumeId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StarredForFurtherReview)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StarredForFurtherReview)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Internship.FirmOrganizerId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Internship.FirmOrganizerId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Resume.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Resume.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

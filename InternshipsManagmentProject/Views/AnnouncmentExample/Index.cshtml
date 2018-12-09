@@ -1,0 +1,115 @@
+﻿@model IEnumerable<InternshipsManagmentProject.Models.AnnouncementExampleDTO>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>Internship Title</th>
+        <th>Details</th>
+        <th>Company</th>
+        <th>Recruiter Name</th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        @{
+            String firmName = item.FirmHolder.Name;
+            String InternshipTitle = item.InternshipInQuestion.Title;
+            String RectruiterName = item.Recruiter.Name + " " + item.Recruiter.LastName;
+        }
+        <td>
+            @Html.ActionLink(InternshipTitle, "Details", "Internships", new { id = item.InternshipInQuestion.InternshipId }, null)
+        </td>
+
+        <!-- Modal -->
+
+        <td>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
+                LookUpDetails
+            </button>
+
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">@item.InternshipInQuestion.Title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h2>Details</h2>
+
+                            <div>
+                                <h4>Internship</h4>
+                                <hr />
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        Title
+                                    </dt>
+                                    <dd>
+                                        @item.InternshipInQuestion.Title
+                                    </dd>
+                                    <dt>
+                                        StartDate
+                                    </dt>
+                                    <dd>
+                                        @item.InternshipInQuestion.StartDate
+                                    </dd>
+                                    <dt>
+                                        EndDate
+                                    </dt>
+                                    <dd>
+                                        @item.InternshipInQuestion.EndDate
+                                    </dd>
+                                    <dt>
+                                        Description
+                                    </dt>
+                                    <dd>
+                                        @item.InternshipInQuestion.Description
+                                    </dd>
+                                    <dt>
+                                        City
+                                    </dt>
+                                    <dd>
+                                        @item.InternshipInQuestion.City
+                                    </dd>
+                                    <dt>
+                                        Positions
+                                    </dt>
+                                    <dd>
+                                        @item.InternshipInQuestion.PositionsAvailable
+                                    </dd>
+                                    <dt>
+                                        Category
+                                    </dt>
+                                    <dd>
+                                        @item.InternshipInQuestion.Category
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </td>
+        <td>@Html.ActionLink(firmName, "Details", "Firms", new { id = item.FirmHolder.FirmId }, null)</td>
+
+        @*<td>@Html.ActionLink(RectruiterName, "Details", "RecruiterAccoutDetails", new { id = item.FirmHolder.FirmId }, null)</td>*@
+        <td>@RectruiterName</td>
+
+    </tr>
+}
+
+</table>
