@@ -19,9 +19,8 @@ namespace InternshipsManagmentProject.Controllers
             StudentInternships = new List<StudentInternship>()
         };
 
-        public ActionResult StudentProfile(int selection = 0)
-        {
-            
+        public StudentController() {
+            Console.WriteLine("CONSTRUCTOR");
             StudentInternship si0 = new StudentInternship();
             Internship i0 = new Internship
             {
@@ -69,9 +68,20 @@ namespace InternshipsManagmentProject.Controllers
             si3.Completed = true;
             si3.StarredForFurtherReview = true;
             student.StudentInternships.Add(si3);
+        }
 
+        public ActionResult StudentProfile(Student createOrUpdateStudent = null, int selection = 0)
+        {
             ViewBag.Selection = selection;
+            if (createOrUpdateStudent.Name!=null) {
+                student = createOrUpdateStudent;
+            }
             return View(student);
+        }
+
+        public ActionResult StudentRegister()
+        {
+            return View(new Student());
         }
         [HttpPost]
         public void StudentUpdate()

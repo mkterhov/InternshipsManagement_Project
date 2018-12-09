@@ -26,7 +26,7 @@ namespace InternshipsManagmentProject.Data
             this.Students = new HashSet<Student>();
             this.AspNetRoles = new HashSet<AspNetRole>();
             this.Resumes = new HashSet<Resume>();
-        }
+        }    
         public string Id { get; set; }
         public string Email { get; set; }
         public bool EmailConfirmed { get; set; }
