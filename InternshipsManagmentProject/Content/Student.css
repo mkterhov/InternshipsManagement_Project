@@ -27,7 +27,7 @@
 
 .progress {
     list-style: none;
-    background-color: transparent;
+    background-color: lightgrey;
     height: auto;
     width: auto;
 }
@@ -39,6 +39,8 @@
         font-size: 0.8em;
         padding-left: 25px;
     }
+
+
 
         .progress > li:before {
             content: attr(data-step);
@@ -101,12 +103,127 @@
     display: none !important;
 }
 
+.progress > li.red_:after {
+    background: red;
+}
+.progress > li.green_:after {
+    background: darkgreen;
+}
+.progress > li.blue_:after {
+    background: darkblue;
+}
+
+.progress > li.red:before {
+    content: attr(data-step);
+    display: block;
+    margin: 0 auto;
+    background: red;
+    width: 3em;
+    height: 3em;
+    text-align: center;
+    line-height: 3em;
+    border-radius: 100%;
+    position: relative;
+    z-index: 1000;
+}
+
+.progress > li.green:before {
+    content: attr(data-step);
+    display: block;
+    margin: 0 auto;
+    background: lightgreen;
+    width: 3em;
+    height: 3em;
+    text-align: center;
+    line-height: 3em;
+    border-radius: 100%;
+    position: relative;
+    z-index: 1000;
+}
+.progress > li.green2:before {
+    content: attr(data-step);
+    display: block;
+    margin: 0 auto;
+    background: darkgreen;
+    width: 3em;
+    height: 3em;
+    text-align: center;
+    line-height: 3em;
+    border-radius: 100%;
+    position: relative;
+    z-index: 1000;
+}
+
+    .progress > li.yellow:before {
+        content: attr(data-step);
+        display: block;
+        margin: 0 auto;
+        background: yellow;
+        width: 3em;
+        height: 3em;
+        text-align: center;
+        line-height: 3em;
+        border-radius: 100%;
+        position: relative;
+        z-index: 1000;
+    }
+
+.progress > li.blue:before {
+    content: attr(data-step);
+    display: block;
+    margin: 0 auto;
+    background: lightblue;
+    width: 3em;
+    height: 3em;
+    text-align: center;
+    line-height: 3em;
+    border-radius: 100%;
+    position: relative;
+    z-index: 1000;
+}
+.progress > li.blue2:before {
+    content: attr(data-step);
+    display: block;
+    margin: 0 auto;
+    background: darkblue;
+    width: 3em;
+    height: 3em;
+    text-align: center;
+    line-height: 3em;
+    border-radius: 100%;
+    position: relative;
+    z-index: 1000;
+}
+.progress > li.red {
+    color: red;
+}
+
+.progress > li.blue {
+    color: lightblue;
+}
+
+.progress > li.green {
+    color: lightgreen;
+}
+
+.progress > li.blue2 {
+    color: darkblue;
+}
+
+.progress > li.green2 {
+    color: darkgreen;
+}
+
+.progress > li.yellow{
+    color: yellow;
+}
+
 .form_student {
     width: 450px;
     font-size: 16px;
     padding: 30px 30px 15px 30px;
 }
-
+/*
     .form_student input[type=submit],
     .form_student input[type=button],
     .form_student input[type=text],
@@ -159,6 +276,7 @@
         .form_student input[type=button]:hover {
             background: var(--ship_hover_selected)
         }
+        */
 
 .profile_pic {
     max-width: 150px;
@@ -180,7 +298,7 @@ div.internship > div {
 .internship_drop {
     background: var(--ship_grayed);
     border-radius: 20px;
-    padding: 5px;
+    padding: 2.5px;
 }
 
 .skill_plus {
@@ -195,6 +313,7 @@ div.internship {
     padding: 20px;
     max-width: 500px;
     width: auto;
+    margin-top:5px;
 }
 
 #menu > li {
@@ -217,7 +336,10 @@ div.internship {
 #panel_right > div {
     margin-top: 0px;
 }
-
+#skillsList {
+    padding:0;
+    list-style: none;
+}
 #panel_right {
     min-width: 600px;
     min-height: 400px;
@@ -265,3 +387,60 @@ div.internship {
     padding-bottom: 30px;
     padding-right: 10px;
 }
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: red;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+input:checked + .slider {
+    background-color: green;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px green;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+.slider.round {
+    border-radius: 34px;
+}
+
+    .slider.round:before {
+        border-radius: 50%;
+    }

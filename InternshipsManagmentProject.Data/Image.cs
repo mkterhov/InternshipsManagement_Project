@@ -26,6 +26,7 @@ namespace InternshipsManagmentProject.Data
         public string Name { get; set; }
         public string Path { get; set; }
         public string File { get; set; }
+        public Nullable<bool> Deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }

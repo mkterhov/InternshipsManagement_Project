@@ -1,11 +1,34 @@
-﻿function FormSetup(submitName) {
-    $("#addNewSkill").click(() => $("#skillsList").append('<li><input name="Skills" value="' + $("#input_newSkill").val() + '"/>' + '</li>'));
+﻿var probs;
+function FormSetup(submitName) {
+    $("#addNewSkill").click(() => {
+        $("#skillsList").append('<li><input name="Skills" value="' + $("#input_newSkill").val() + '"/>' + '</li>');
+        $("#input_newSkill").val("");
+        $("#addNewSkill").attr("disabled","disabled");
+    });
     RefreshSubmit();
+    $('#input_newSkill').on('input', (e) => {
+        if ($("#input_newSkill").val().length > 0) $("#addNewSkill").removeAttr("disabled");
+    });
     $('#input_name').on('input', (e) => RefreshSubmit());
-    $("#form_button").hover(() => $("#form_button").val("Name cannot be empty!"), () => $("#form_button").val(submitName));
+    $('#input_image').on('input', (e) => alert($('#input_image').val()));
+    $('#input_lastName').on('input', (e) => RefreshSubmit());
+    $('#input_birthday').on('input', (e) => RefreshSubmit());
+    $("#form_button").hover(() => $("#form_button").val(probs), () => $("#form_button").val(submitName));
 }
 function RefreshSubmit() {
+    probs = "";
+    alert($('#input_image').val());
     if ($("#input_name").val().length == 0) {
+        probs += "Nume ";
+    }
+    if ($("#input_lastName").val().length == 0) {
+        probs += "Prenume ";
+    }
+    if ($("#input_birthday").val().length == 0) {
+        probs += "Data Nasterii";
+    }
+    if (probs.length > 0) {
+        probs = "Trebuie:" + probs;
         $("#form_submit").hide();
         $("#form_button").show();
     }

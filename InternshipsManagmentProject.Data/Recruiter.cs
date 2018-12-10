@@ -27,6 +27,7 @@ namespace InternshipsManagmentProject.Data
         public string ContactEmail { get; set; }
         public string Bio { get; set; }
         public string UserId { get; set; }
+        public Nullable<bool> Deleted { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Firm Firm { get; set; }

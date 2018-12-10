@@ -33,9 +33,9 @@ namespace InternshipsManagmentProject.Data
         public Nullable<bool> Available { get; set; }
         public string StudentCV { get; set; }
 
-        //Da are si userul din asp mi-e lene sa-l iau de acolo. Serios? Da nu vreau FIGHT ME !!! 
+
         public string PhoneNumber { get; set; }
-        public string LinkGithub { get; set; }
+        public string Website { get; set; }
         public string City { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<string> Skills { get; set; }

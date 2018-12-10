@@ -14,6 +14,12 @@ namespace InternshipsManagmentProject.Data
     
     public partial class Email
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Email()
+        {
+            this.Files = new HashSet<File>();
+        }
+    
         public string Id { get; set; }
         public string From { get; set; }
         public string To { get; set; }
@@ -21,8 +27,11 @@ namespace InternshipsManagmentProject.Data
         public string Content { get; set; }
         public string SenderId { get; set; }
         public string ReceiverId { get; set; }
+        public Nullable<bool> Deleted { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual AspNetUser AspNetUser1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<File> Files { get; set; }
     }
 }

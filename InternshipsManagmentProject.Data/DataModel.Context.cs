@@ -9,7 +9,6 @@
 
 namespace InternshipsManagmentProject.Data
 {
-    using InternshipsManagmentProject.Utilities;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
@@ -17,9 +16,8 @@ namespace InternshipsManagmentProject.Data
     public partial class Entities : DbContext
     {
         public Entities()
-            : base("name=InternshipsManagmentProjectDatabaseEntities")
+            : base("name=Entities")
         {
-
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -42,5 +40,8 @@ namespace InternshipsManagmentProject.Data
         public virtual DbSet<StudentInternship> StudentInternships { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<C__MigrationHistory1> C__MigrationHistory1 { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<StudentInternship1> StudentInternship1 { get; set; }
     }
 }

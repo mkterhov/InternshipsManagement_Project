@@ -19,6 +19,11 @@ namespace InternshipsManagmentProject.Data
         {
             this.Images = new HashSet<Image>();
             this.Resumes = new HashSet<Resume>();
+            this.StudentInternships = new HashSet<StudentInternship1>();
+            this.StudentInternships1 = new HashSet<StudentInternship1>();
+            this.Comments = new HashSet<Comment>();
+            this.Emails = new HashSet<Email>();
+            this.Internships = new HashSet<Internship>();
         }
     
         public string FileId { get; set; }
@@ -27,10 +32,22 @@ namespace InternshipsManagmentProject.Data
         public Nullable<long> Size { get; set; }
         public byte[] Image { get; set; }
         public byte[] File1 { get; set; }
+        public byte[] File11 { get; set; }
+        public Nullable<bool> Deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Image> Images { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Resume> Resumes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StudentInternship1> StudentInternships { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StudentInternship1> StudentInternships1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Email> Emails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Internship> Internships { get; set; }
     }
 }

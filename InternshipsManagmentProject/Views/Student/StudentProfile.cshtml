@@ -11,10 +11,13 @@
         <td id="parent_left">
             <div id="panel_left">
                 <div class="profile_pic">Non deity viewer detected. Image will not be shown to protect their souls from obliteration with handsomeness.</div>
+                @Model.Name @Model.LastName
+                <br />
+                
                 <ul id="menu">
                     <li class="">Aplicarile Mele</li>
                     <li>Notificari</li>
-                    <li>Manage CV</li>
+                    <li>Setari</li>
                     <li>Editare Cont</li>
                     <li>Log out</li>
                 </ul>
@@ -28,14 +31,28 @@
                     {
                         <div class="internship">
 
-                            <span class="internship_drop"><strong>\/</strong></span> <strong>@item.Internship.Title</strong>
+                            <span class="internship_drop"><strong>\/ <strong>@item.Internship.Title</strong></strong></span> 
 
                             @if (!(bool)item.StatusOfApplication)
                             {
+                                if (item.Internship.Title == "Yet Another Internship")
+                                {
                                 <ol class="progress progress--large">
+                                    <li class="is-complete" data-step="">Sent CV</li>
+                                    <li class="is-complete" data-step="">Response</li>
+                                    <li class="is-active progress__last red" data-step="">Rejected</li>
+                                </ol>
+                                <div>
+                                    <br />
+                                    You have been rejected... womp womp womp...
+                                </div>
+                                }
+                                else {
+                                    <ol class="progress progress--large">
                                     <li class="is-active" data-step="">Sent CV</li>
                                     <li class="" data-step="">Response</li>
-                                    <li data-step="">Accepted</li>
+                                    <li class="" data-step="">Accepted</li>
+                                    <li class="" data-step="">In Progress</li>
                                     <li class="progress__last" data-step="">Review</li>
                                 </ol>
                                 <div>
@@ -43,13 +60,15 @@
                                     <br />
                                     <input type="submit" value="Sent CV" disabled>
                                 </div>
+                                }
                             }
                             else if ((bool)item.StatusOfApplication && !(bool)item.Completed)
                             {
                                 <ol class="progress progress--large">
                                     <li class="is-complete" data-step="">Sent CV</li>
                                     <li class="is-active" data-step="">Response</li>
-                                    <li data-step="">Accepted</li>
+                                    <li class="" data-step="">Accepted</li>
+                                    <li class="" data-step="">In Progress</li>
                                     <li class="progress__last" data-step="">Review</li>
                                 </ol>
                                 <div>
@@ -63,7 +82,8 @@
                                 <ol class="progress progress--large">
                                     <li class="is-complete" data-step="">Sent CV</li>
                                     <li class="is-complete" data-step="">Response</li>
-                                    <li class="is-active" data-step="">Accepted</li>
+                                    <li class="is-active green" data-step="">Accepted</li>
+                                    <li class="" data-step="">In Progress</li>
                                     <li class="progress__last" data-step="">Review</li>
                                 </ol>
                                 <div>
@@ -79,7 +99,8 @@
                                     <li class="is-complete" data-step="">Sent CV</li>
                                     <li class="is-complete" data-step="">Response</li>
                                     <li class="is-complete" data-step="">Accepted</li>
-                                    <li class="is-active" data-step="">Review</li>
+                                    <li class="is-complete" data-step="">In Progress</li>
+                                    <li class="is-active yellow" data-step="">Review</li>
                                 </ol>
                                 <div>
                                     Thank you for joining this internship. Please give us a feedback.
@@ -96,16 +117,18 @@
                             else
                             {
                                 <ol class="progress progress--large">
-                                    <li class="" data-step="">Sent CV</li>
-                                    <li class="" data-step="">Response</li>
+                                    <li class="is-complete" data-step="">Sent CV</li>
+                                    <li class="is-complete" data-step="">Response</li>
                                     <li class="" data-step="">Accepted</li>
-                                    <li class="progress__last" data-step="">Review</li>
+                                    <li class="" data-step="">In Progress</li>
+                                    <li class="progress__last yellow" data-step="">Review</li>
                                 </ol>
                                 <div>
                                     <br />
                                     No idea how you got here...
                                 </div>
                             }
+                            
 
                         </div>
                     }
@@ -114,81 +137,29 @@
                     <h3>Notificari</h3>
                 </div>
                 <div>
-                    <h3>Manage CV</h3>
+                    <h3>Setari</h3>
+                    Disponibil: 
+                    
+                    @if (Model.Available!=null&&(bool)Model.Available)
+                    {
+                    <label class="switch">
+                        <input type="checkbox" checked/>
+                        <span class="slider round"></span>
+                    </label>
+                    }
+                    else {
+                    <label class="switch">
+                        <input type="checkbox" />
+                        <span class="slider round"></span>
+                    </label>
+                    }
+                    
                 </div>
                 <div>
                     <h3>Editare Cont</h3>
-                    <form action="/Student/StudentProfile" method="post" class="form_student" id="studentform">
-                        <input type="hidden" name="selection" value="3" />
-                        <table id="form_table">
-                            <tr>
-                                <td>
-                                    Name:
-                                    <input type="text" id="input_name" name="Name" value=@Model.Name>
-                                </td>
-                                <td>
-                                    Last Name:
-                                    <input type="text" id="input_lastName" name="LastName" value=@Model.LastName>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    City:
-                                    <input type="text" id="input_city" name="City" value=@Model.City>
-                                </td>
-                                <td>
-                                    Phone Number:
-                                    <input type="text" id="input_phoneNumber" name="PhoneNumber" value=@Model.PhoneNumber>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    University:
-                                    <input type="text" id="input_university" name="University" value=@Model.University>
-                                </td>
-                                <td>
-                                    Domain:
-                                    <input type="text" id="input_domain" name="Domain" value=@Model.Domain>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Link Github:
-                                    <input type="text" id="input_linkGithub" name="LinkGitHub" value=@Model.LinkGithub>
-                                </td>
-                                <td>
-                                    Birthday:<br />
-                                    <input type="date" id="input_birthday" name="Birthday" value=@Model.Birthday>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Skills:
-                                    <ul id="skillsList">
-                                        @if (Model.Skills != null){
-                                             foreach (var itemSkill in Model.Skills){
-                                                <li>
-                                                    <input name="Skills" value="@itemSkill" />
-                                                </li>
-                                                }
-}
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" id="input_newSkill" value="New Skill"></td>
-                                <td> <input type="button" id="addNewSkill" value="+" /></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Bio:
-                                    <textarea name="Bio" id="input_bio" rows="5" cols="50">@Model.Bio</textarea>
-                                </td>
-                            </tr>
-                        </table>
-                        <input id="form_button" type="button" value="Save Changes">
-                        <input id="form_submit" type="submit" value="Save Changes">
-                    </form>
+                    <div id="partialTest">
+                        @Html.Partial("StudentRegister", new InternshipsManagmentProject.Data.Student());
+                    </div>
                 </div>
                 <div>
                     <h3>Log out</h3>
@@ -198,6 +169,8 @@
         </td>
     </tr>
 </table>
+
+
 
 
 <script>
@@ -221,8 +194,6 @@
         });
         $(".internship_drop").click(function () {
             $(this).siblings("div").slideToggle(300);
-            if ($(this).text() == "\\/") $(this).text("/\\");
-            else $(this).text("\\/");
         });
     });
 </script>

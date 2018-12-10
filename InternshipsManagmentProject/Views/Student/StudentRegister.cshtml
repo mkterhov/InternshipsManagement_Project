@@ -11,63 +11,94 @@
         <table id="form_table">
             <tr>
                 <td>
-                    Name:
-                    <input type="text" id="input_name" name="Name" value=@Model.Name>
+                    Nume:
                 </td>
                 <td>
-                    Last Name:
+                    <input type="text" id="input_name" name="Name" value=@Model.Name>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Prenume:
+                </td>
+                <td>
                     <input type="text" id="input_lastName" name="LastName" value=@Model.LastName>
                 </td>
             </tr>
             <tr>
                 <td>
-                    City:
-                    <input type="text" id="input_city" name="City" value=@Model.City>
+                    Oras:
                 </td>
                 <td>
-                    Phone Number:
+                    <input type="text" id="input_city" name="City" value=@Model.City>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Telefon:
+                </td>
+                <td>
                     <input type="text" id="input_phoneNumber" name="PhoneNumber" value=@Model.PhoneNumber>
                 </td>
             </tr>
             <tr>
                 <td>
-                    University:
-                    <input type="text" id="input_university" name="University" value=@Model.University>
+                    Universitate:
                 </td>
                 <td>
-                    Domain:
-                    <input type="text" id="input_domain" name="Domain" value=@Model.Domain>
+                    <input type="text" id="input_university" name="University" value=@Model.University>
                 </td>
             </tr>
             <tr>
                 <td>
-                    Link Github:
-                    <input type="text" id="input_linkGithub" name="LinkGitHub" value=@Model.LinkGithub>
+                    Domeniu:
                 </td>
                 <td>
-                    Birthday:<br />
+                    <input type="text" id="input_domain" name="Domain" value=@Model.Domain>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Link Github:
+                </td>
+                <td>
+                    <input type="text" id="input_linkGithub" name="Website" value=@Model.Website>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Data Nasterii:
+                </td>
+                <td>
                     <input type="date" id="input_birthday" name="Birthday" value=@Model.Birthday>
                 </td>
             </tr>
             <tr>
                 <td>
-                    Skills:
+                    Aptitudini:
                     <ul id="skillsList">
                         @if (Model.Skills != null)
-                        {
-                            foreach (var itemSkill in Model.Skills)
-                            {
-                                <li>
-                                    <input name="Skills" value="@itemSkill" readonly />
-                                </li>
-                            }
-                        }
+                {
+                    foreach (var itemSkill in Model.Skills)
+                    {
+                        <li>
+                            <input name="Skills" value="@itemSkill" readonly />
+                        </li>
+            }
+        }
                     </ul>
                 </td>
             </tr>
             <tr>
                 <td><input type="text" id="input_newSkill" value="New Skill"></td>
                 <td> <input type="button" id="addNewSkill" value="+" /></td>
+            </tr>
+            <tr>
+                <td>
+                    Poza Profil:
+                    <input type="file" name="imagePath" id="input_image"/>
+                </td>
             </tr>
             <tr>
                 <td>
@@ -83,5 +114,5 @@
     </form>
 </div>
 <script>
-    $(FormSetup("Register Student"));
+    $(FormSetup("Inregistrare Student"));
 </script>

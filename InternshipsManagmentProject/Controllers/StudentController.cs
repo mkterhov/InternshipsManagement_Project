@@ -68,10 +68,25 @@ namespace InternshipsManagmentProject.Controllers
             si3.Completed = true;
             si3.StarredForFurtherReview = true;
             student.StudentInternships.Add(si3);
+
+            StudentInternship si4 = new StudentInternship();
+            Internship i4 = new Internship
+            {
+                Title = "Yet Another Internship",
+                Description = "YACK!"
+            };
+            si4.Internship = i4;
+            si4.StatusOfApplication = false;
+            si4.Completed = false;
+            si4.StarredForFurtherReview = true;
+            student.StudentInternships.Add(si4);
         }
 
-        public ActionResult StudentProfile(Student createOrUpdateStudent = null, int selection = 0)
+        public ActionResult StudentProfile(Student createOrUpdateStudent = null, int selection = 0, string imagePath = "")
         {
+            if (imagePath.Length>0) {
+                //load image pls
+            }
             ViewBag.Selection = selection;
             if (createOrUpdateStudent.Name!=null) {
                 student = createOrUpdateStudent;
