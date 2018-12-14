@@ -6,112 +6,134 @@
 <link href="~/Content/Student.css" rel="stylesheet" />
 <script src="/Scripts/Student.js"></script>
 <div>
-    <form action="/Student/StudentProfile" method="get" class="form_student" id="studentform">
-        <input type="hidden" name="selection" value="3" />
-        <table id="form_table">
-            <tr>
-                <td>
-                    Nume:
-                </td>
-                <td>
-                    <input type="text" id="input_name" name="Name" value=@Model.Name>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Prenume:
-                </td>
-                <td>
-                    <input type="text" id="input_lastName" name="LastName" value=@Model.LastName>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Oras:
-                </td>
-                <td>
-                    <input type="text" id="input_city" name="City" value=@Model.City>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Telefon:
-                </td>
-                <td>
-                    <input type="text" id="input_phoneNumber" name="PhoneNumber" value=@Model.PhoneNumber>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Universitate:
-                </td>
-                <td>
-                    <input type="text" id="input_university" name="University" value=@Model.University>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Domeniu:
-                </td>
-                <td>
-                    <input type="text" id="input_domain" name="Domain" value=@Model.Domain>
-                </td>
-            </tr>
+    
+    @*<form action="/Student/StudentProfile" method="get" class="form_student" id="studentform">*@
+    @using (Html.BeginForm("StudentRegister", "Student", FormMethod.Post, new { @class = "form_student",@id= "studentform", role = "form", enctype = "multipart/form-data" })) {
 
-            <tr>
+    <input type="hidden" name="selection" value="3" />
+    <input type="hidden" name="UserId" id="UserId" value="@Session["UserId"]" />
+
+    <table id="form_table">
+        <tr>
+            <td>
+                Nume:
+            </td>
+            <td>
+                <input type="text" id="input_name" name="Name" value=@Model.Name>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Prenume:
+            </td>
+            <td>
+                <input type="text" id="input_lastName" name="LastName" value=@Model.LastName>
+            </td>
+        </tr>
+        <tr>
+            <div class="form-group">
+                @*need to submit a boolean somehow, not sure how exactly to do it with the switch will look into it,
+                until then this can be used to change it and somehow then show the effect on the switch*@
+                <td>@Html.LabelFor(model => model.Available, htmlAttributes: new { @class = "control-label col-md-2" })</td> 
                 <td>
-                    Link Github:
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.Available)
+                            @Html.ValidationMessageFor(model => model.Available, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </td>
-                <td>
-                    <input type="text" id="input_linkGithub" name="Website" value=@Model.Website>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Data Nasterii:
-                </td>
-                <td>
-                    <input type="date" id="input_birthday" name="Birthday" value=@Model.Birthday>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Aptitudini:
-                    <ul id="skillsList">
-                        @if (Model.Skills != null)
-                {
-                    foreach (var itemSkill in Model.Skills)
+            </div>
+        </tr>
+       
+        @*<tr> are not in this model, will see how to push them in here
+            <td>
+                Oras:
+            </td>
+            <td>
+                <input type="text" id="input_city" name="City" value=@Model.City>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Telefon:
+            </td>
+            <td>
+                <input type="text" id="input_phoneNumber" name="PhoneNumber" value=@Model.PhoneNumber>
+            </td>
+        </tr>*@
+        <tr>
+            <td>
+                Universitate:
+            </td>
+            <td>
+                <input type="text" id="input_university" name="University" value=@Model.University>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Domeniu:
+            </td>
+            <td>
+                <input type="text" id="input_domain" name="Domain" value=@Model.Domain>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Link Github:
+            </td>
+            <td>
+                <input type="text" id="input_linkGithub" name="WebsiteLink" value=@Model.WebsiteLink>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Data Nasterii:
+            </td>
+            <td>
+                <input type="date" id="input_birthday" name="Birthday" value=@Model.Birthday>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Aptitudini:
+                <ul id="skillsList">
+                    @if (Model.Skills != null)
                     {
-                        <li>
-                            <input name="Skills" value="@itemSkill" readonly />
-                        </li>
-            }
-        }
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="text" id="input_newSkill" value="New Skill"></td>
-                <td> <input type="button" id="addNewSkill" value="+" /></td>
-            </tr>
-            <tr>
-                <td>
-                    Poza Profil:
-                    <input type="file" name="imagePath" id="input_image"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Bio:
-                    <textarea name="Bio" id="input_bio" rows="5" cols="50">@Model.Bio</textarea>
-                </td>
-            </tr>
-        </table>
-        <div>
-            <input id="form_button" type="button" value="Register Student">
-            <input id="form_submit" type="submit" value="Register Student">
-        </div>
-    </form>
+                        foreach (var itemSkill in Model.Skills.Split('#').ToList())
+                        {
+                            <li>
+                                <input name="Skills" value="@itemSkill" readonly />
+                            </li>
+                        }
+                    }
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="text" id="input_newSkill" value="New Skill"></td>
+            <td> <input type="button" id="addNewSkill" value="+" /></td>
+        </tr>
+        <tr>
+            <td>
+                Poza Profil:
+                <input type="file" name="imagePath" id="input_image" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Bio:
+                <textarea name="Bio" id="input_bio" rows="5" cols="50">@Model.Bio</textarea>
+            </td>
+        </tr>
+    </table>
+    <div>
+        <input id="form_button" type="button" value="Register Student">
+        <input id="form_submit" type="submit" value="Register Student">
+    </div>
+    }
+    @*</form>*@
 </div>
 <script>
     $(FormSetup("Inregistrare Student"));

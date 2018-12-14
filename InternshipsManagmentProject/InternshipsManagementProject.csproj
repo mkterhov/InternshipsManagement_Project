@@ -221,6 +221,7 @@
     <Compile Include="Models\UserRoles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utilities\ImageConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -249,7 +250,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Student.js" />
-    <Content Include="Views\Student\StudentProfile.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -313,10 +313,10 @@
     <Content Include="Views\StudentInternships\Details.cshtml" />
     <Content Include="Views\StudentInternships\Edit.cshtml" />
     <Content Include="Views\StudentInternships\Index.cshtml" />
+    <Content Include="Views\Student\StudentHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Utilities\" />
     <Folder Include="Views\Default\" />
     <Folder Include="Views\New\" />
   </ItemGroup>

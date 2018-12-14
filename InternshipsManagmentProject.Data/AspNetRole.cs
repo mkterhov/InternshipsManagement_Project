@@ -18,7 +18,6 @@ namespace InternshipsManagmentProject.Data
         public AspNetRole()
         {
             this.AspNetUsers = new HashSet<AspNetUser>();
-            this.AspNetUsers1 = new HashSet<AspNetUser>();
         }
     
         public string Id { get; set; }
@@ -26,7 +25,5 @@ namespace InternshipsManagmentProject.Data
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetUser> AspNetUsers1 { get; set; }
     }
 }

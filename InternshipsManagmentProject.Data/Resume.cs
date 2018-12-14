@@ -20,15 +20,13 @@ namespace InternshipsManagmentProject.Data
             this.StudentInternships = new HashSet<StudentInternship>();
             this.Students = new HashSet<Student>();
             this.AspNetUsers = new HashSet<AspNetUser>();
-            this.StudentInternships1 = new HashSet<StudentInternship1>();
-            this.AspNetUsers1 = new HashSet<AspNetUser>();
         }
     
         public string Id { get; set; }
         public string Name { get; set; }
+        public Nullable<bool> Deleted { get; set; }
         public string Path { get; set; }
         public string File { get; set; }
-        public Nullable<bool> Deleted { get; set; }
     
         public virtual File File1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -37,9 +35,5 @@ namespace InternshipsManagmentProject.Data
         public virtual ICollection<Student> Students { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StudentInternship1> StudentInternships1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetUser> AspNetUsers1 { get; set; }
     }
 }

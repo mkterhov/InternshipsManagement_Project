@@ -9,13 +9,19 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using InternshipsManagmentProject.Models;
+using InternshipsManagmentProject.Data;
+using System.IO;
+using File = InternshipsManagmentProject.Data.File;
+using System.Web.Routing;
+using System.Web.Security;
 
 namespace InternshipsManagmentProject.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-        //add a role managa
+        Entities entities = new Entities();
+        //add a role manager
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -81,6 +87,13 @@ namespace InternshipsManagmentProject.Controllers
             {
                 case SignInStatus.Success:
                     Session["UserId"] = UserManager.FindByEmail(model.Email).Id;
+                    //string role = Roles.GetRolesForUser().ToList().FirstOrDefault().ToString();
+               //     if (role == "Student")
+               //     {
+               //         return RedirectToAction("StudentProfile", new RouteValueDictionary(
+               //new { controller = "Student", action = "StudentProfile"}));
+               //     }
+                    
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -149,7 +162,7 @@ namespace InternshipsManagmentProject.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase Image)
         {
             if (ModelState.IsValid)
             {
@@ -161,14 +174,31 @@ namespace InternshipsManagmentProject.Controllers
                     await UserManager.AddToRoleAsync(user.Id, model.UserType.ToString());
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     Session["UserId"] = UserManager.FindByEmail(model.Email).Id;
-
+                    //Stream fs = Image.InputStream;
+                    //BinaryReader br = new BinaryReader(fs);
+                    //byte[] bytes = br.ReadBytes((Int32)fs.Length);
+                    //File file = new Data.File
+                    //{
+                    //    FileId = Guid.NewGuid().ToString(),
+                    //    FileName = Image.FileName,
+                    //    FileExtension = "jpg",
+                    //    Image = bytes
+                    //};
+                    //Image image = new Image
+                    //{
+                    //    Id = Guid.NewGuid().ToString(),
+                    //    File = file.FileId
+                    //};
+                    //entities.Files.Add(file);
+                    //entities.Images.Add(image);
+                    //entities.SaveChanges();
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Create","StudentsAccountDetails");
                 }
                 AddErrors(result);
             }
