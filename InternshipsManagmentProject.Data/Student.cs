@@ -18,7 +18,7 @@ namespace InternshipsManagmentProject.Data
         public Student()
         {
             this.StudentInternships = new HashSet<StudentInternship>();
-            this.Skills = new List<string>();
+            this.StudentInternships1 = new HashSet<StudentInternship1>();
         }
     
         public string StudentId { get; set; }
@@ -32,17 +32,23 @@ namespace InternshipsManagmentProject.Data
         public string LevelOfStudies { get; set; }
         public Nullable<bool> Available { get; set; }
         public string StudentCV { get; set; }
-
-
+        public string WebsiteLink { get; set; }
+        public string Faculty { get; set; }
+        public Nullable<bool> Deleted { get; set; }
         public string PhoneNumber { get; set; }
-        public string Website { get; set; }
+        //i came, i saw no argument for deletin fields, i won by default BOOM inapoi la lista de string-uri BOOM phone number BOOM city
+        //comon change it back again i'm ready GRRRR
+
         public string City { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<string> Skills { get; set; }
-
+        public Nullable<bool> Subscribed { get; set; }
+    
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Resume Resume { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StudentInternship> StudentInternships { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StudentInternship1> StudentInternships1 { get; set; }
     }
 }

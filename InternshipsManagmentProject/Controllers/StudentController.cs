@@ -8,6 +8,8 @@ namespace InternshipsManagmentProject.Controllers
 {
     public class StudentController : Controller
     {
+        private Entities db = new Entities();
+
         Student student = new Student
         {
             Name = "Abdu",
@@ -20,7 +22,10 @@ namespace InternshipsManagmentProject.Controllers
         };
 
         public StudentController() {
-            Console.WriteLine("CONSTRUCTOR");
+            //Student stdb = db.Students.Where<Student>(student, new Func<Student, bool>(student));
+            AspNetUser user = new AspNetUser();
+            user.Email = "kaboom@akbar.ji";
+            student.AspNetUser = user;
             StudentInternship si0 = new StudentInternship();
             Internship i0 = new Internship
             {
@@ -88,7 +93,7 @@ namespace InternshipsManagmentProject.Controllers
                 //load image pls
             }
             ViewBag.Selection = selection;
-            if (createOrUpdateStudent.Name!=null) {
+            if (createOrUpdateStudent!= null && createOrUpdateStudent.Name != null) {
                 student = createOrUpdateStudent;
             }
             return View(student);
@@ -98,6 +103,11 @@ namespace InternshipsManagmentProject.Controllers
         {
             return View(new Student());
         }
+
+        public void StudentAvailable() {
+            student.Available = !student.Available;
+        }
+
         [HttpPost]
         public void StudentUpdate()
         {

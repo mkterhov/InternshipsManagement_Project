@@ -140,25 +140,49 @@
                     <h3>Setari</h3>
                     Disponibil: 
                     
-                    @if (Model.Available!=null&&(bool)Model.Available)
+                    @if (Model.Available != null && (bool)Model.Available)
                     {
                     <label class="switch">
-                        <input type="checkbox" checked/>
+                        <input type="checkbox" id="cbAvailable" checked/>
                         <span class="slider round"></span>
                     </label>
                     }
                     else {
                     <label class="switch">
-                        <input type="checkbox" />
+                        <input type="checkbox" id="cbAvailable"/>
                         <span class="slider round"></span>
                     </label>
                     }
+
+                    <form action="/Student/StudentProfile" method="get" class="form_student">
+                        <input type="hidden" name="selection" value="2" />
+                        <input type="hidden" name="createOrUpdateStudent" value=@Model />
+                        <table id="form_table">
+                            <tr>
+                                <td>Email:</td>
+                                <td><input type="text" id="input_email" name="Email" value=""></td>
+                            </tr>
+                            <tr>
+                                <td>New Password:</td>
+                                <td><input type="text" id="input_password" name="Password"></td>
+                            </tr>
+                            <tr>
+                                <td>New Password Confirm:</td>
+                                <td><input type="text" id="input_password_confirm" name="Password_Confirm"></td>
+                            </tr>
+                            <tr>
+                                <td>Old Password:</td>
+                                <td><input type="text" id="input_password_old" name="Password_Old"></td>
+                            </tr>
+                        </table>
+                        <input id="settings_submit" type="submit" value="Save Changes">
+                    </form>
                     
                 </div>
                 <div>
                     <h3>Editare Cont</h3>
                     <div id="partialTest">
-                        @Html.Partial("StudentRegister", new InternshipsManagmentProject.Data.Student());
+                        @Html.Partial("StudentRegister", Model);
                     </div>
                 </div>
                 <div>
@@ -184,7 +208,8 @@
     }
     $(()=> {
         RefreshMenu();
-        FormSetup("Save Changes");
+        $("#form_button").val("Save Changes");
+        $("#form_submit").val("Save Changes");
         $(".internship>div").slideUp(0);
         $("#menu>li").click(function () {
             $("#menu>li:nth-child(" + (sel + 1) + ")").attr("class", "menu_grayed");
@@ -194,6 +219,13 @@
         });
         $(".internship_drop").click(function () {
             $(this).siblings("div").slideToggle(300);
+        });
+        $("cbAvailable").change(function () {
+            alert("AAA");
+            $.ajax({
+                url: "/Student/StudentAvailable",
+                context: this.checked
+            });
         });
     });
 </script>
