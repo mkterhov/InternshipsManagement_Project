@@ -25,8 +25,6 @@ namespace InternshipsManagmentProject.Data
             this.Students = new HashSet<Student>();
             this.AspNetRoles = new HashSet<AspNetRole>();
             this.Resumes = new HashSet<Resume>();
-            this.AspNetRoles1 = new HashSet<AspNetRole>();
-            this.Resumes1 = new HashSet<Resume>();
         }
     
         public string Id { get; set; }
@@ -61,9 +59,5 @@ namespace InternshipsManagmentProject.Data
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Resume> Resumes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetRole> AspNetRoles1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Resume> Resumes1 { get; set; }
     }
 }

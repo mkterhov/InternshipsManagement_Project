@@ -8,9 +8,9 @@ namespace InternshipsManagmentProject.Models
 {
     public class HomeStudent
     {
-        List<string> ListOfIdsOfAppliedInternships;
+        public List<string> ListOfIdsOfAppliedInternships { get; set; }
         //List<string> Categories;
         //string Keywords;
-        List<Internship> Internships;
+        public List<Internship> Internships { get; set; }
     }
 }

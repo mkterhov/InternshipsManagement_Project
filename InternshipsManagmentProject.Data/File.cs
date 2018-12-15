@@ -19,8 +19,8 @@ namespace InternshipsManagmentProject.Data
         {
             this.Images = new HashSet<Image>();
             this.Resumes = new HashSet<Resume>();
-            this.StudentInternships = new HashSet<StudentInternship1>();
-            this.StudentInternships1 = new HashSet<StudentInternship1>();
+            this.StudentInternships = new HashSet<StudentInternship>();
+            this.StudentInternships1 = new HashSet<StudentInternship>();
             this.Comments = new HashSet<Comment>();
             this.Emails = new HashSet<Email>();
             this.Internships = new HashSet<Internship>();
@@ -32,7 +32,6 @@ namespace InternshipsManagmentProject.Data
         public Nullable<long> Size { get; set; }
         public byte[] Image { get; set; }
         public byte[] File1 { get; set; }
-        public byte[] File11 { get; set; }
         public Nullable<bool> Deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -40,9 +39,9 @@ namespace InternshipsManagmentProject.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Resume> Resumes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StudentInternship1> StudentInternships { get; set; }
+        public virtual ICollection<StudentInternship> StudentInternships { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StudentInternship1> StudentInternships1 { get; set; }
+        public virtual ICollection<StudentInternship> StudentInternships1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

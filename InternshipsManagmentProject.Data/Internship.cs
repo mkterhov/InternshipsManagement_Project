@@ -18,7 +18,6 @@ namespace InternshipsManagmentProject.Data
         public Internship()
         {
             this.StudentInternships = new HashSet<StudentInternship>();
-            this.StudentInternships1 = new HashSet<StudentInternship1>();
             this.Comments = new HashSet<Comment>();
             this.Files = new HashSet<File>();
         }
@@ -29,10 +28,10 @@ namespace InternshipsManagmentProject.Data
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public string Description { get; set; }
+        public string Category { get; set; }
         public string City { get; set; }
         public Nullable<int> PositionsAvailable { get; set; }
         public string InternshipPostPhoto { get; set; }
-        public string Category { get; set; }
         public string Title { get; set; }
         public Nullable<System.DateTime> DeadlineApplications { get; set; }
         public string TypeJob { get; set; }
@@ -48,8 +47,6 @@ namespace InternshipsManagmentProject.Data
         public virtual Recruiter Recruiter { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StudentInternship> StudentInternships { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StudentInternship1> StudentInternships1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

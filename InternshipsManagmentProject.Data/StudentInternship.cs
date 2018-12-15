@@ -24,7 +24,14 @@ namespace InternshipsManagmentProject.Data
         public Nullable<bool> StatusOfApplication { get; set; }
         public string StudentResumeId { get; set; }
         public Nullable<bool> StarredForFurtherReview { get; set; }
+        public Nullable<bool> Deleted { get; set; }
+        public string FileTwo { get; set; }
+        public string FileThree { get; set; }
+        public string Stage { get; set; }
+        public Nullable<bool> Hidden { get; set; }
     
+        public virtual File File { get; set; }
+        public virtual File File1 { get; set; }
         public virtual Internship Internship { get; set; }
         public virtual Resume Resume { get; set; }
         public virtual Student Student { get; set; }
