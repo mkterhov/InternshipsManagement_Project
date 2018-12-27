@@ -1,5 +1,6 @@
 ﻿var probs;
-function FormSetup(submitName) {
+function FormSetup() {
+    $("#form_button").val();
     $("#addNewSkill").click(() => {
         $("#skillsList").append('<li><input name="Skills" value="' + $("#input_newSkill").val() + '"/>' + '</li>');
         $("#input_newSkill").val("");
@@ -13,11 +14,10 @@ function FormSetup(submitName) {
     $('#input_image').on('input', (e) => alert($('#input_image').val()));
     $('#input_lastName').on('input', (e) => RefreshSubmit());
     $('#input_birthday').on('input', (e) => RefreshSubmit());
-    $("#form_button").hover(() => $("#form_button").val(probs), () => $("#form_button").val(submitName));
+    $("#form_button").hover(() => $("#form_button").val(probs), () => $("#form_button").val($("#form_submit").val()));
 }
 function RefreshSubmit() {
     probs = "";
-    alert($('#input_image').val());
     if ($("#input_name").val().length == 0) {
         probs += "Nume ";
     }
