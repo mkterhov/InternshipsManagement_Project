@@ -62,7 +62,6 @@
     <Compile Include="AspNetUserLogin.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Class1.cs" />
     <Compile Include="Comment.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -100,6 +99,7 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Repos\InternshipRepository.cs" />
     <Compile Include="Repos\RepositoryInternshipsManagment.cs" />
     <Compile Include="Internship.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
@@ -124,6 +124,7 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Utilities\DataBaseInitializer.cs" />
+    <Compile Include="Utilities\DataResponseHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 namespace InternshipsManagmentProject.Data.Interfaces
 {
     //NOT TO BE USED YET, UNDER DEVELOPMENT
-    class RepositoryInternshipsManagment : IRepository
-    {
+    public class RepositoryInternshipsManagment {  
         private readonly Entities _DataContext;
 
         public RepositoryInternshipsManagment(Entities DataContext)

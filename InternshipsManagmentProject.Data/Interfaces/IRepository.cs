@@ -6,25 +6,12 @@ using System.Threading.Tasks;
 
 namespace InternshipsManagmentProject.Data.Interfaces
 {
-    internal interface IRepository
+    public interface IRepository
     {
-        File GetFileById(string idFile);
+        File GetById(string guid);
 
-        Resume GetResumeById(string idResume);
-
-        Image GetImageById(string idImage);
-
-
-        IEnumerable<Internship> GetInternshipsByCategory(string category);
-        IEnumerable<Internship> GetAllInternships();
-
-        IEnumerable<Student> GetAllStudents();
-        Student GetStudentByUserName(string username);
-
-        IEnumerable<Internship> GetAllInternshipsByFirm(string FirmName);
-        StudentInternship GetApplicationByUserNameAndInternshipId(string username, string id);
-
-        bool SaveAll();
         void AddEntity<T>(T newItem) where T : class;
+
+        void UpdateEntity<T>(T newItem, string guid) where T : class;
     }
 }

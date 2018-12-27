@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InternshipsManagmentProject.Data
+namespace InternshipsManagementProject.Logic.Sercice
 {
-    public class Class1
+    class StudentService
     {
     }
 }
