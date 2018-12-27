@@ -32,6 +32,10 @@
             @Html.ActionLink("Student", "StudentProfile", "Student");
         </li>
         <li>
+            //Open the Student Profile page
+            @Html.ActionLink("StudentHomeApply", "StudentHome", "Student");
+        </li>
+        <li>
             //Jump directly into a menu, optional parameter, default = 0
             @Html.ActionLink("Student Edit Profile", "StudentProfile", "Student", new { selection = 3 }, null);
         </li>
