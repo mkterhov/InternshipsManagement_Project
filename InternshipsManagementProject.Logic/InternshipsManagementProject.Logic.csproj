@@ -41,15 +41,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Models\LogicResponseHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sercice\FirmService.cs" />
     <Compile Include="Sercice\InternshipService.cs" />
     <Compile Include="Sercice\RecruterService.cs" />
     <Compile Include="Sercice\StudentService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\InternshipsManagmentProject.Data\InternshipsManagmentProject.Data.csproj">
       <Project>{2b872a8c-c533-4416-99d3-8bb14d5e4424}</Project>

@@ -13,12 +13,18 @@ namespace InternshipsManagmentProject.Controllers
     public class InternshipsController : Controller
     {
         private Entities db = new Entities();
+        private InternshipsManagementProject.Logic.Sercice.InternshipService service = new InternshipsManagementProject.Logic.Sercice.InternshipService();
 
         // GET: Internships
         public ActionResult Index()
         {
-            var internships = db.Internships.Include(i => i.Firm).Include(i => i.Image).Include(i => i.Recruiter);
-            return View(internships.ToList());
+            //var internships = db.Internships.Include(i => i.Firm).Include(i => i.Image).Include(i => i.Recruiter);
+            service = new InternshipsManagementProject.Logic.Sercice.InternshipService();
+            var internships = service.GetAll();
+            if (internships.Status)
+                return View(internships.Content.ToList());
+            else
+                return View("~\\Shared\\Error.cshtml");
         }
         
 

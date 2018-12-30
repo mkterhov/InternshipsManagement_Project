@@ -79,5 +79,23 @@ namespace InternshipsManagmentProject.Data.Repos
                 }
             }
         }
+
+        public DataResponseHandler<IEnumerable<Internship>> GetAll()
+        {
+            using (var context = new Entities())
+            {
+                try
+                {
+                    var role = new DataResponseHandler<IEnumerable<Internship>> { Succes = true };
+                    role.Container = context.Internships.ToList();
+
+                    return role;
+                }
+                catch (Exception ex)
+                {
+                    return new DataResponseHandler<IEnumerable<Internship>> { Succes = false };
+                }
+            }
+        }
     }
 }

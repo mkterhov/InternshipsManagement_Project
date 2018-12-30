@@ -334,6 +334,10 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\InternshipsManagementProject.Logic\InternshipsManagementProject.Logic.csproj">
+      <Project>{9a360413-a5f3-4f6b-988b-dec306ace062}</Project>
+      <Name>InternshipsManagementProject.Logic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InternshipsManagmentProject.Data\InternshipsManagmentProject.Data.csproj">
       <Project>{2b872a8c-c533-4416-99d3-8bb14d5e4424}</Project>
       <Name>InternshipsManagmentProject.Data</Name>

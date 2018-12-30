@@ -13,12 +13,12 @@ namespace InternshipsManagementProject.Logic.Sercice
 
         public FirmService(string connectionString)
         {
-            this.repo = new RepositoryInternshipsManagment();
+            //this.repo = new RepositoryInternshipsManagment();
         }
 
         public string GetFirmById(string guid)
         {
-
+            return string.Empty;
         }
     }
 }
