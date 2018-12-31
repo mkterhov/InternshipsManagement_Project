@@ -18,7 +18,6 @@ namespace InternshipsManagmentProject.Data
         public Student()
         {
             this.StudentInternships = new HashSet<StudentInternship>();
-            this.StudentInternships1 = new HashSet<StudentInternship1>();
         }
     
         public string StudentId { get; set; }
@@ -42,7 +41,5 @@ namespace InternshipsManagmentProject.Data
         public virtual Resume Resume { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StudentInternship> StudentInternships { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StudentInternship1> StudentInternships1 { get; set; }
     }
 }

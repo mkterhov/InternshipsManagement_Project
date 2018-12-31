@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="InternshipsManagmentProjectDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="InternshipsManagmentProjectDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -242,6 +242,16 @@
           <Property Name="Deleted" Type="bit" />
           <Property Name="Skills" Type="varchar" MaxLength="500" />
           <Property Name="Subscribed" Type="bit" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="UserResumeMapTable">
           <Key>
@@ -664,6 +674,7 @@
           <EntitySet Name="Resumes" EntityType="Self.Resumes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentInternship" EntityType="Self.StudentInternship" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserResumeMapTable" EntityType="Self.UserResumeMapTable" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AspNetUsers_Images" Association="Self.FK_AspNetUsers_Images">
             <End Role="Images" EntitySet="Images" />
@@ -794,7 +805,8 @@
             <End Role="UserResumeMapTable" EntitySet="UserResumeMapTable" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InternshipsManagmentProjectDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -815,7 +827,6 @@
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
-          <NavigationProperty Name="AspNetUsers1" Relationship="InternshipsManagmentProjectDatabaseModel.AspNetUserRoles1" FromRole="AspNetRole" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
@@ -855,6 +866,7 @@
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ProfilePhoto" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Image" Relationship="Self.FK_AspNetUsers_Images" FromRole="AspNetUsers" ToRole="Images" />
@@ -864,9 +876,16 @@
           <NavigationProperty Name="Students" Relationship="Self.FK_Students_AspNetUsers" FromRole="AspNetUsers" ToRole="Students" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
           <NavigationProperty Name="Resumes" Relationship="Self.UserResumeMapTable" FromRole="AspNetUsers" ToRole="Resumes" />
-          <Property Name="Deleted" Type="Boolean" />
-          <NavigationProperty Name="AspNetRoles1" Relationship="InternshipsManagmentProjectDatabaseModel.AspNetUserRoles1" FromRole="AspNetUser" ToRole="AspNetRole" />
-          <NavigationProperty Name="Resumes1" Relationship="InternshipsManagmentProjectDatabaseModel.UserResumeMapTable1" FromRole="AspNetUser" ToRole="Resume" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="140" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Files" Relationship="Self.CommentsFiles" FromRole="Comments" ToRole="Files" />
+          <NavigationProperty Name="Internships" Relationship="Self.InternshipComments" FromRole="Comments" ToRole="Internships" />
         </EntityType>
         <EntityType Name="Email">
           <Key>
@@ -879,10 +898,10 @@
           <Property Name="Content" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SenderId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ReceiverId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Emails_AspNetUsers" FromRole="Emails" ToRole="AspNetUsers" />
           <NavigationProperty Name="AspNetUser1" Relationship="Self.FK_Emails_AspNetUsers1" FromRole="Emails" ToRole="AspNetUsers" />
-          <Property Name="Deleted" Type="Boolean" />
-          <NavigationProperty Name="Files" Relationship="InternshipsManagmentProjectDatabaseModel.EmailFiles" FromRole="Email" ToRole="File" />
+          <NavigationProperty Name="Files" Relationship="Self.EmailFiles" FromRole="Emails" ToRole="Files" />
         </EntityType>
         <EntityType Name="File">
           <Key>
@@ -894,15 +913,14 @@
           <Property Name="Size" Type="Int64" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="File1" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Deleted" Type="Boolean" />
           <NavigationProperty Name="Images" Relationship="Self.FK_Images_Files" FromRole="Files" ToRole="Images" />
           <NavigationProperty Name="Resumes" Relationship="Self.FK_Resumes_Files" FromRole="Files" ToRole="Resumes" />
-          <Property Name="File11" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="Deleted" Type="Boolean" />
-          <NavigationProperty Name="StudentInternships" Relationship="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Files" FromRole="File" ToRole="StudentInternship1" />
-          <NavigationProperty Name="StudentInternships1" Relationship="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Files1" FromRole="File" ToRole="StudentInternship1" />
-          <NavigationProperty Name="Comments" Relationship="InternshipsManagmentProjectDatabaseModel.CommentsFiles" FromRole="File" ToRole="Comment" />
-          <NavigationProperty Name="Emails" Relationship="InternshipsManagmentProjectDatabaseModel.EmailFiles" FromRole="File" ToRole="Email" />
-          <NavigationProperty Name="Internships" Relationship="InternshipsManagmentProjectDatabaseModel.InternshipsFiles" FromRole="File" ToRole="Internship" />
+          <NavigationProperty Name="StudentInternships" Relationship="Self.FK_StudentInternship_Files" FromRole="Files" ToRole="StudentInternship" />
+          <NavigationProperty Name="StudentInternships1" Relationship="Self.FK_StudentInternship_Files1" FromRole="Files" ToRole="StudentInternship" />
+          <NavigationProperty Name="Comments" Relationship="Self.CommentsFiles" FromRole="Files" ToRole="Comments" />
+          <NavigationProperty Name="Emails" Relationship="Self.EmailFiles" FromRole="Files" ToRole="Emails" />
+          <NavigationProperty Name="Internships" Relationship="Self.InternshipsFiles" FromRole="Files" ToRole="Internships" />
         </EntityType>
         <EntityType Name="Firm">
           <Key>
@@ -913,10 +931,10 @@
           <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="NumberOfEmployees" Type="Int32" />
           <Property Name="Logo" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" />
           <NavigationProperty Name="Image" Relationship="Self.FK_Firms_Images" FromRole="Firms" ToRole="Images" />
           <NavigationProperty Name="Internships" Relationship="Self.FK_Internships_Firms1" FromRole="Firms" ToRole="Internships" />
           <NavigationProperty Name="Recruiters" Relationship="Self.FK_Recruiters_Firms" FromRole="Firms" ToRole="Recruiters" />
-          <Property Name="Deleted" Type="Boolean" />
         </EntityType>
         <EntityType Name="Image">
           <Key>
@@ -926,11 +944,11 @@
           <Property Name="Name" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="File" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_AspNetUsers_Images" FromRole="Images" ToRole="AspNetUsers" />
           <NavigationProperty Name="File1" Relationship="Self.FK_Images_Files" FromRole="Images" ToRole="Files" />
           <NavigationProperty Name="Firms" Relationship="Self.FK_Firms_Images" FromRole="Images" ToRole="Firms" />
           <NavigationProperty Name="Internships" Relationship="Self.FK_Internships_Images" FromRole="Images" ToRole="Internships" />
-          <Property Name="Deleted" Type="Boolean" />
         </EntityType>
         <EntityType Name="Internship">
           <Key>
@@ -942,15 +960,11 @@
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="City" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="PositionsAvailable" Type="Int32" />
           <Property Name="InternshipPostPhoto" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Firm" Relationship="Self.FK_Internships_Firms1" FromRole="Internships" ToRole="Firms" />
-          <NavigationProperty Name="Image" Relationship="Self.FK_Internships_Images" FromRole="Internships" ToRole="Images" />
-          <NavigationProperty Name="Recruiter" Relationship="Self.FK_Internships_Recruiters1" FromRole="Internships" ToRole="Recruiters" />
-          <NavigationProperty Name="StudentInternships" Relationship="Self.FK_StudentInternship_Internships1" FromRole="Internships" ToRole="StudentInternship" />
-          <Property Name="Category" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DeadlineApplications" Type="DateTime" Precision="3" />
           <Property Name="TypeJob" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Department" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
@@ -959,9 +973,12 @@
           <Property Name="Hidden" Type="Boolean" />
           <Property Name="Duration" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="LastUpdated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="StudentInternships1" Relationship="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Internships11" FromRole="Internship" ToRole="StudentInternship1" />
-          <NavigationProperty Name="Comments" Relationship="InternshipsManagmentProjectDatabaseModel.InternshipComments" FromRole="Internship" ToRole="Comment" />
-          <NavigationProperty Name="Files" Relationship="InternshipsManagmentProjectDatabaseModel.InternshipsFiles" FromRole="Internship" ToRole="File" />
+          <NavigationProperty Name="Firm" Relationship="Self.FK_Internships_Firms1" FromRole="Internships" ToRole="Firms" />
+          <NavigationProperty Name="Image" Relationship="Self.FK_Internships_Images" FromRole="Internships" ToRole="Images" />
+          <NavigationProperty Name="Recruiter" Relationship="Self.FK_Internships_Recruiters1" FromRole="Internships" ToRole="Recruiters" />
+          <NavigationProperty Name="StudentInternships" Relationship="Self.FK_StudentInternship_Internships1" FromRole="Internships" ToRole="StudentInternship" />
+          <NavigationProperty Name="Comments" Relationship="Self.InternshipComments" FromRole="Internships" ToRole="Comments" />
+          <NavigationProperty Name="Files" Relationship="Self.InternshipsFiles" FromRole="Internships" ToRole="Files" />
         </EntityType>
         <EntityType Name="Recruiter">
           <Key>
@@ -974,10 +991,10 @@
           <Property Name="ContactEmail" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Bio" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Recruiters_AspNetUsers" FromRole="Recruiters" ToRole="AspNetUsers" />
           <NavigationProperty Name="Firm" Relationship="Self.FK_Recruiters_Firms" FromRole="Recruiters" ToRole="Firms" />
           <NavigationProperty Name="Internships" Relationship="Self.FK_Internships_Recruiters1" FromRole="Recruiters" ToRole="Internships" />
-          <Property Name="Deleted" Type="Boolean" />
         </EntityType>
         <EntityType Name="Resume">
           <Key>
@@ -985,15 +1002,13 @@
           </Key>
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" />
           <Property Name="Path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="File" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="File1" Relationship="Self.FK_Resumes_Files" FromRole="Resumes" ToRole="Files" />
           <NavigationProperty Name="StudentInternships" Relationship="Self.FK_StudentInternship_Resumes" FromRole="Resumes" ToRole="StudentInternship" />
           <NavigationProperty Name="Students" Relationship="Self.FK_Students_Resumes" FromRole="Resumes" ToRole="Students" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.UserResumeMapTable" FromRole="Resumes" ToRole="AspNetUsers" />
-          <Property Name="Deleted" Type="Boolean" />
-          <NavigationProperty Name="StudentInternships1" Relationship="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Resumes1" FromRole="Resume" ToRole="StudentInternship1" />
-          <NavigationProperty Name="AspNetUsers1" Relationship="InternshipsManagmentProjectDatabaseModel.UserResumeMapTable1" FromRole="Resume" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="StudentInternship">
           <Key>
@@ -1010,6 +1025,13 @@
           <Property Name="StatusOfApplication" Type="Boolean" />
           <Property Name="StudentResumeId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="StarredForFurtherReview" Type="Boolean" />
+          <Property Name="Deleted" Type="Boolean" />
+          <Property Name="FileTwo" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FileThree" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Stage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Hidden" Type="Boolean" />
+          <NavigationProperty Name="File" Relationship="Self.FK_StudentInternship_Files" FromRole="StudentInternship" ToRole="Files" />
+          <NavigationProperty Name="File1" Relationship="Self.FK_StudentInternship_Files1" FromRole="StudentInternship" ToRole="Files" />
           <NavigationProperty Name="Internship" Relationship="Self.FK_StudentInternship_Internships1" FromRole="StudentInternship" ToRole="Internships" />
           <NavigationProperty Name="Resume" Relationship="Self.FK_StudentInternship_Resumes" FromRole="StudentInternship" ToRole="Resumes" />
           <NavigationProperty Name="Student" Relationship="Self.FK_StudentInternship_Students1" FromRole="StudentInternship" ToRole="Students" />
@@ -1029,15 +1051,14 @@
           <Property Name="LevelOfStudies" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Available" Type="Boolean" />
           <Property Name="StudentCV" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Students_AspNetUsers" FromRole="Students" ToRole="AspNetUsers" />
-          <NavigationProperty Name="Resume" Relationship="Self.FK_Students_Resumes" FromRole="Students" ToRole="Resumes" />
-          <NavigationProperty Name="StudentInternships" Relationship="Self.FK_StudentInternship_Students1" FromRole="Students" ToRole="StudentInternship" />
           <Property Name="WebsiteLink" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Faculty" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Deleted" Type="Boolean" />
           <Property Name="Skills" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Subscribed" Type="Boolean" />
-          <NavigationProperty Name="StudentInternships1" Relationship="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Students11" FromRole="Student" ToRole="StudentInternship1" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Students_AspNetUsers" FromRole="Students" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Resume" Relationship="Self.FK_Students_Resumes" FromRole="Students" ToRole="Resumes" />
+          <NavigationProperty Name="StudentInternships" Relationship="Self.FK_StudentInternship_Students1" FromRole="Students" ToRole="StudentInternship" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -1161,6 +1182,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StudentInternship_Files">
+          <End Role="Files" Type="Self.File" Multiplicity="0..1" />
+          <End Role="StudentInternship" Type="Self.StudentInternship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Files">
+              <PropertyRef Name="FileId" />
+            </Principal>
+            <Dependent Role="StudentInternship">
+              <PropertyRef Name="FileTwo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentInternship_Files1">
+          <End Role="Files" Type="Self.File" Multiplicity="0..1" />
+          <End Role="StudentInternship" Type="Self.StudentInternship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Files">
+              <PropertyRef Name="FileId" />
+            </Principal>
+            <Dependent Role="StudentInternship">
+              <PropertyRef Name="FileThree" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Firms_Images">
           <End Role="Images" Type="Self.Image" Multiplicity="0..1" />
           <End Role="Firms" Type="Self.Firm" Multiplicity="*" />
@@ -1273,6 +1318,22 @@
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
+        <Association Name="CommentsFiles">
+          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
+          <End Role="Files" Type="Self.File" Multiplicity="*" />
+        </Association>
+        <Association Name="EmailFiles">
+          <End Role="Emails" Type="Self.Email" Multiplicity="*" />
+          <End Role="Files" Type="Self.File" Multiplicity="*" />
+        </Association>
+        <Association Name="InternshipComments">
+          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
+          <End Role="Internships" Type="Self.Internship" Multiplicity="*" />
+        </Association>
+        <Association Name="InternshipsFiles">
+          <End Role="Files" Type="Self.File" Multiplicity="*" />
+          <End Role="Internships" Type="Self.Internship" Multiplicity="*" />
+        </Association>
         <Association Name="UserResumeMapTable">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
           <End Role="Resumes" Type="Self.Resume" Multiplicity="*" />
@@ -1283,6 +1344,7 @@
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
           <EntitySet Name="Emails" EntityType="Self.Email" />
           <EntitySet Name="Files" EntityType="Self.File" />
           <EntitySet Name="Firms" EntityType="Self.Firm" />
@@ -1329,6 +1391,14 @@
             <End Role="Files" EntitySet="Files" />
             <End Role="Resumes" EntitySet="Resumes" />
           </AssociationSet>
+          <AssociationSet Name="FK_StudentInternship_Files" Association="Self.FK_StudentInternship_Files">
+            <End Role="Files" EntitySet="Files" />
+            <End Role="StudentInternship" EntitySet="StudentInternships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentInternship_Files1" Association="Self.FK_StudentInternship_Files1">
+            <End Role="Files" EntitySet="Files" />
+            <End Role="StudentInternship" EntitySet="StudentInternships" />
+          </AssociationSet>
           <AssociationSet Name="FK_Firms_Images" Association="Self.FK_Firms_Images">
             <End Role="Images" EntitySet="Images" />
             <End Role="Firms" EntitySet="Firms" />
@@ -1369,457 +1439,304 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <AssociationSet Name="CommentsFiles" Association="Self.CommentsFiles">
+            <End Role="Comments" EntitySet="Comments" />
+            <End Role="Files" EntitySet="Files" />
+          </AssociationSet>
+          <AssociationSet Name="EmailFiles" Association="Self.EmailFiles">
+            <End Role="Emails" EntitySet="Emails" />
+            <End Role="Files" EntitySet="Files" />
+          </AssociationSet>
+          <AssociationSet Name="InternshipComments" Association="Self.InternshipComments">
+            <End Role="Comments" EntitySet="Comments" />
+            <End Role="Internships" EntitySet="Internships" />
+          </AssociationSet>
+          <AssociationSet Name="InternshipsFiles" Association="Self.InternshipsFiles">
+            <End Role="Files" EntitySet="Files" />
+            <End Role="Internships" EntitySet="Internships" />
+          </AssociationSet>
           <AssociationSet Name="UserResumeMapTable" Association="Self.UserResumeMapTable">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Resumes" EntitySet="Resumes" />
           </AssociationSet>
-          <EntitySet Name="C__MigrationHistory1" EntityType="InternshipsManagmentProjectDatabaseModel.C__MigrationHistory1" />
-          <EntitySet Name="Comments" EntityType="InternshipsManagmentProjectDatabaseModel.Comment" />
-          <EntitySet Name="StudentInternship1" EntityType="InternshipsManagmentProjectDatabaseModel.StudentInternship1" />
-          <AssociationSet Name="FK_StudentInternship_Files" Association="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Files">
-            <End Role="File" EntitySet="Files" />
-            <End Role="StudentInternship1" EntitySet="StudentInternship1" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StudentInternship_Files1" Association="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Files1">
-            <End Role="File" EntitySet="Files" />
-            <End Role="StudentInternship1" EntitySet="StudentInternship1" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StudentInternship_Internships11" Association="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Internships11">
-            <End Role="Internship" EntitySet="Internships" />
-            <End Role="StudentInternship1" EntitySet="StudentInternship1" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StudentInternship_Resumes1" Association="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Resumes1">
-            <End Role="Resume" EntitySet="Resumes" />
-            <End Role="StudentInternship1" EntitySet="StudentInternship1" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StudentInternship_Students11" Association="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Students11">
-            <End Role="Student" EntitySet="Students" />
-            <End Role="StudentInternship1" EntitySet="StudentInternship1" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles1" Association="InternshipsManagmentProjectDatabaseModel.AspNetUserRoles1">
-            <End Role="AspNetRole" EntitySet="AspNetRoles" />
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="CommentsFiles" Association="InternshipsManagmentProjectDatabaseModel.CommentsFiles">
-            <End Role="Comment" EntitySet="Comments" />
-            <End Role="File" EntitySet="Files" />
-          </AssociationSet>
-          <AssociationSet Name="EmailFiles" Association="InternshipsManagmentProjectDatabaseModel.EmailFiles">
-            <End Role="Email" EntitySet="Emails" />
-            <End Role="File" EntitySet="Files" />
-          </AssociationSet>
-          <AssociationSet Name="InternshipComments" Association="InternshipsManagmentProjectDatabaseModel.InternshipComments">
-            <End Role="Comment" EntitySet="Comments" />
-            <End Role="Internship" EntitySet="Internships" />
-          </AssociationSet>
-          <AssociationSet Name="InternshipsFiles" Association="InternshipsManagmentProjectDatabaseModel.InternshipsFiles">
-            <End Role="File" EntitySet="Files" />
-            <End Role="Internship" EntitySet="Internships" />
-          </AssociationSet>
-          <AssociationSet Name="UserResumeMapTable1" Association="InternshipsManagmentProjectDatabaseModel.UserResumeMapTable1">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="Resume" EntitySet="Resumes" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="C__MigrationHistory1">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Comment">
-          <Key>
-            <PropertyRef Name="CommentId" />
-          </Key>
-          <Property Name="CommentId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Content" Type="String" Nullable="false" MaxLength="140" FixedLength="false" Unicode="true" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Files" Relationship="InternshipsManagmentProjectDatabaseModel.CommentsFiles" FromRole="Comment" ToRole="File" />
-          <NavigationProperty Name="Internships" Relationship="InternshipsManagmentProjectDatabaseModel.InternshipComments" FromRole="Comment" ToRole="Internship" />
-        </EntityType>
-        <EntityType Name="StudentInternship1">
-          <Key>
-            <PropertyRef Name="StudentId" />
-            <PropertyRef Name="InternshipId" />
-          </Key>
-          <Property Name="StudentId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="InternshipId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="StudentUserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="Completed" Type="Boolean" />
-          <Property Name="Updates" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="SubmitedResume" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="StatusOfApplication" Type="Boolean" />
-          <Property Name="StudentResumeId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="StarredForFurtherReview" Type="Boolean" />
-          <Property Name="Deleted" Type="Boolean" />
-          <Property Name="FileTwo" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="FileThree" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Stage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Hidden" Type="Boolean" />
-          <NavigationProperty Name="File" Relationship="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Files" FromRole="StudentInternship1" ToRole="File" />
-          <NavigationProperty Name="File1" Relationship="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Files1" FromRole="StudentInternship1" ToRole="File" />
-          <NavigationProperty Name="Internship" Relationship="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Internships11" FromRole="StudentInternship1" ToRole="Internship" />
-          <NavigationProperty Name="Resume" Relationship="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Resumes1" FromRole="StudentInternship1" ToRole="Resume" />
-          <NavigationProperty Name="Student" Relationship="InternshipsManagmentProjectDatabaseModel.FK_StudentInternship_Students11" FromRole="StudentInternship1" ToRole="Student" />
-        </EntityType>
-        <Association Name="FK_StudentInternship_Files">
-          <End Type="InternshipsManagmentProjectDatabaseModel.File" Role="File" Multiplicity="0..1" />
-          <End Type="InternshipsManagmentProjectDatabaseModel.StudentInternship1" Role="StudentInternship1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="File">
-              <PropertyRef Name="FileId" />
-            </Principal>
-            <Dependent Role="StudentInternship1">
-              <PropertyRef Name="FileTwo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StudentInternship_Files1">
-          <End Type="InternshipsManagmentProjectDatabaseModel.File" Role="File" Multiplicity="0..1" />
-          <End Type="InternshipsManagmentProjectDatabaseModel.StudentInternship1" Role="StudentInternship1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="File">
-              <PropertyRef Name="FileId" />
-            </Principal>
-            <Dependent Role="StudentInternship1">
-              <PropertyRef Name="FileThree" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StudentInternship_Internships11">
-          <End Type="InternshipsManagmentProjectDatabaseModel.Internship" Role="Internship" Multiplicity="1" />
-          <End Type="InternshipsManagmentProjectDatabaseModel.StudentInternship1" Role="StudentInternship1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Internship">
-              <PropertyRef Name="InternshipId" />
-            </Principal>
-            <Dependent Role="StudentInternship1">
-              <PropertyRef Name="InternshipId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StudentInternship_Resumes1">
-          <End Type="InternshipsManagmentProjectDatabaseModel.Resume" Role="Resume" Multiplicity="0..1" />
-          <End Type="InternshipsManagmentProjectDatabaseModel.StudentInternship1" Role="StudentInternship1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Resume">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StudentInternship1">
-              <PropertyRef Name="SubmitedResume" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StudentInternship_Students11">
-          <End Type="InternshipsManagmentProjectDatabaseModel.Student" Role="Student" Multiplicity="1" />
-          <End Type="InternshipsManagmentProjectDatabaseModel.StudentInternship1" Role="StudentInternship1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Student">
-              <PropertyRef Name="StudentId" />
-            </Principal>
-            <Dependent Role="StudentInternship1">
-              <PropertyRef Name="StudentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="AspNetUserRoles1">
-          <End Type="InternshipsManagmentProjectDatabaseModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
-          <End Type="InternshipsManagmentProjectDatabaseModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
-        </Association>
-        <Association Name="CommentsFiles">
-          <End Type="InternshipsManagmentProjectDatabaseModel.Comment" Role="Comment" Multiplicity="*" />
-          <End Type="InternshipsManagmentProjectDatabaseModel.File" Role="File" Multiplicity="*" />
-        </Association>
-        <Association Name="EmailFiles">
-          <End Type="InternshipsManagmentProjectDatabaseModel.Email" Role="Email" Multiplicity="*" />
-          <End Type="InternshipsManagmentProjectDatabaseModel.File" Role="File" Multiplicity="*" />
-        </Association>
-        <Association Name="InternshipComments">
-          <End Type="InternshipsManagmentProjectDatabaseModel.Comment" Role="Comment" Multiplicity="*" />
-          <End Type="InternshipsManagmentProjectDatabaseModel.Internship" Role="Internship" Multiplicity="*" />
-        </Association>
-        <Association Name="InternshipsFiles">
-          <End Type="InternshipsManagmentProjectDatabaseModel.File" Role="File" Multiplicity="*" />
-          <End Type="InternshipsManagmentProjectDatabaseModel.Internship" Role="Internship" Multiplicity="*" />
-        </Association>
-        <Association Name="UserResumeMapTable1">
-          <End Type="InternshipsManagmentProjectDatabaseModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
-          <End Type="InternshipsManagmentProjectDatabaseModel.Resume" Role="Resume" Multiplicity="*" />
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="InternshipsManagmentProjectDatabaseModelStoreContainer" CdmEntityContainer="Entities">
-    <EntitySetMapping Name="AspNetRoles">
-      <EntityTypeMapping TypeName="IsTypeOf(InternshipsManagmentProjectDatabaseModel.AspNetRole)">
-        <MappingFragment StoreEntitySet="AspNetRoles">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="AspNetUserClaims">
-      <EntityTypeMapping TypeName="IsTypeOf(InternshipsManagmentProjectDatabaseModel.AspNetUserClaim)">
-        <MappingFragment StoreEntitySet="AspNetUserClaims">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
-          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="AspNetUserLogins">
-      <EntityTypeMapping TypeName="IsTypeOf(InternshipsManagmentProjectDatabaseModel.AspNetUserLogin)">
-        <MappingFragment StoreEntitySet="AspNetUserLogins">
-          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="AspNetUsers">
-      <EntityTypeMapping TypeName="IsTypeOf(InternshipsManagmentProjectDatabaseModel.AspNetUser)">
-        <MappingFragment StoreEntitySet="AspNetUsers">
-          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-          <ScalarProperty Name="UserName" ColumnName="UserName" />
-          <ScalarProperty Name="ProfilePhoto" ColumnName="ProfilePhoto" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Emails">
-      <EntityTypeMapping TypeName="IsTypeOf(InternshipsManagmentProjectDatabaseModel.Email)">
-        <MappingFragment StoreEntitySet="Emails">
-          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="From" ColumnName="From" />
-          <ScalarProperty Name="To" ColumnName="To" />
-          <ScalarProperty Name="Subject" ColumnName="Subject" />
-          <ScalarProperty Name="Content" ColumnName="Content" />
-          <ScalarProperty Name="SenderId" ColumnName="SenderId" />
-          <ScalarProperty Name="ReceiverId" ColumnName="ReceiverId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Files">
-      <EntityTypeMapping TypeName="IsTypeOf(InternshipsManagmentProjectDatabaseModel.File)">
-        <MappingFragment StoreEntitySet="Files">
-          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="File11" ColumnName="File" />
-                <ScalarProperty Name="FileId" ColumnName="FileId" />
-          <ScalarProperty Name="FileName" ColumnName="FileName" />
-          <ScalarProperty Name="FileExtension" ColumnName="FileExtension" />
-          <ScalarProperty Name="Size" ColumnName="Size" />
-          <ScalarProperty Name="Image" ColumnName="Image" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Firms">
-      <EntityTypeMapping TypeName="IsTypeOf(InternshipsManagmentProjectDatabaseModel.Firm)">
-        <MappingFragment StoreEntitySet="Firms">
-          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="FirmId" ColumnName="FirmId" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="NumberOfEmployees" ColumnName="NumberOfEmployees" />
-          <ScalarProperty Name="Logo" ColumnName="Logo" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Images">
-      <EntityTypeMapping TypeName="IsTypeOf(InternshipsManagmentProjectDatabaseModel.Image)">
-        <MappingFragment StoreEntitySet="Images">
-          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Path" ColumnName="Path" />
-          <ScalarProperty Name="File" ColumnName="File" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Internships">
-      <EntityTypeMapping TypeName="IsTypeOf(InternshipsManagmentProjectDatabaseModel.Internship)">
-        <MappingFragment StoreEntitySet="Internships">
-          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
-                <ScalarProperty Name="Hidden" ColumnName="Hidden" />
-                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="Keywords" ColumnName="Keywords" />
-                <ScalarProperty Name="Department" ColumnName="Department" />
-                <ScalarProperty Name="TypeJob" ColumnName="TypeJob" />
-                <ScalarProperty Name="DeadlineApplications" ColumnName="DeadlineApplications" />
-                <ScalarProperty Name="InternshipId" ColumnName="InternshipId" />
-          <ScalarProperty Name="FirmOrganizerId" ColumnName="FirmOrganizerId" />
-          <ScalarProperty Name="RecruiterResponsibleId" ColumnName="RecruiterResponsibleId" />
-          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="City" ColumnName="City" />
-          <ScalarProperty Name="PositionsAvailable" ColumnName="PositionsAvailable" />
-          <ScalarProperty Name="InternshipPostPhoto" ColumnName="InternshipPostPhoto" />
-          <ScalarProperty Name="Category" ColumnName="Category" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Recruiters">
-      <EntityTypeMapping TypeName="IsTypeOf(InternshipsManagmentProjectDatabaseModel.Recruiter)">
-        <MappingFragment StoreEntitySet="Recruiters">
-          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="RecruiterId" ColumnName="RecruiterId" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="FirmId" ColumnName="FirmId" />
-          <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
-          <ScalarProperty Name="Bio" ColumnName="Bio" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Resumes">
-      <EntityTypeMapping TypeName="IsTypeOf(InternshipsManagmentProjectDatabaseModel.Resume)">
-        <MappingFragment StoreEntitySet="Resumes">
-          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Path" ColumnName="Path" />
-          <ScalarProperty Name="File" ColumnName="File" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Students">
-      <EntityTypeMapping TypeName="IsTypeOf(InternshipsManagmentProjectDatabaseModel.Student)">
-        <MappingFragment StoreEntitySet="Students">
-          <ScalarProperty Name="Subscribed" ColumnName="Subscribed" />
-                <ScalarProperty Name="Skills" ColumnName="Skills" />
-                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="Faculty" ColumnName="Faculty" />
-                <ScalarProperty Name="WebsiteLink" ColumnName="WebsiteLink" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="University" ColumnName="University" />
-          <ScalarProperty Name="Domain" ColumnName="Domain" />
-          <ScalarProperty Name="Bio" ColumnName="Bio" />
-          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
-          <ScalarProperty Name="LevelOfStudies" ColumnName="LevelOfStudies" />
-          <ScalarProperty Name="Available" ColumnName="Available" />
-          <ScalarProperty Name="StudentCV" ColumnName="StudentCV" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <AssociationSetMapping Name="AspNetUserRoles" TypeName="InternshipsManagmentProjectDatabaseModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-      </AssociationSetMapping>
-    <AssociationSetMapping Name="UserResumeMapTable" TypeName="InternshipsManagmentProjectDatabaseModel.UserResumeMapTable" StoreEntitySet="UserResumeMapTable">
-      </AssociationSetMapping>
-          <EntitySetMapping Name="C__MigrationHistory1">
-            <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.C__MigrationHistory1">
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="InternshipsManagmentProjectDatabaseModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
-                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
                 <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ProfilePhoto" ColumnName="ProfilePhoto" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.Comment">
               <MappingFragment StoreEntitySet="Comments">
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="Content" ColumnName="Content" />
                 <ScalarProperty Name="CommentId" ColumnName="CommentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StudentInternship1">
-            <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.StudentInternship1">
-              <MappingFragment StoreEntitySet="StudentInternship">
-                <ScalarProperty Name="Hidden" ColumnName="Hidden" />
-                <ScalarProperty Name="Stage" ColumnName="Stage" />
-                <ScalarProperty Name="FileThree" ColumnName="FileThree" />
-                <ScalarProperty Name="FileTwo" ColumnName="FileTwo" />
-                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="StarredForFurtherReview" ColumnName="StarredForFurtherReview" />
-                <ScalarProperty Name="StudentResumeId" ColumnName="StudentResumeId" />
-                <ScalarProperty Name="StatusOfApplication" ColumnName="StatusOfApplication" />
-                <ScalarProperty Name="SubmitedResume" ColumnName="SubmitedResume" />
-                <ScalarProperty Name="Updates" ColumnName="Updates" />
-                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="StudentUserId" ColumnName="StudentUserId" />
-                <ScalarProperty Name="InternshipId" ColumnName="InternshipId" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles1" TypeName="InternshipsManagmentProjectDatabaseModel.AspNetUserRoles1" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetUser">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="AspNetRole">
+          <EntitySetMapping Name="Emails">
+            <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.Email">
+              <MappingFragment StoreEntitySet="Emails">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="From" ColumnName="From" />
+                <ScalarProperty Name="To" ColumnName="To" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="SenderId" ColumnName="SenderId" />
+                <ScalarProperty Name="ReceiverId" ColumnName="ReceiverId" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Files">
+            <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.File">
+              <MappingFragment StoreEntitySet="Files">
+                <ScalarProperty Name="FileId" ColumnName="FileId" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FileExtension" ColumnName="FileExtension" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="File1" ColumnName="File" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Firms">
+            <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.Firm">
+              <MappingFragment StoreEntitySet="Firms">
+                <ScalarProperty Name="FirmId" ColumnName="FirmId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NumberOfEmployees" ColumnName="NumberOfEmployees" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.Image">
+              <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="File" ColumnName="File" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Internships">
+            <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.Internship">
+              <MappingFragment StoreEntitySet="Internships">
+                <ScalarProperty Name="InternshipId" ColumnName="InternshipId" />
+                <ScalarProperty Name="FirmOrganizerId" ColumnName="FirmOrganizerId" />
+                <ScalarProperty Name="RecruiterResponsibleId" ColumnName="RecruiterResponsibleId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="PositionsAvailable" ColumnName="PositionsAvailable" />
+                <ScalarProperty Name="InternshipPostPhoto" ColumnName="InternshipPostPhoto" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="DeadlineApplications" ColumnName="DeadlineApplications" />
+                <ScalarProperty Name="TypeJob" ColumnName="TypeJob" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Keywords" ColumnName="Keywords" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Hidden" ColumnName="Hidden" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recruiters">
+            <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.Recruiter">
+              <MappingFragment StoreEntitySet="Recruiters">
+                <ScalarProperty Name="RecruiterId" ColumnName="RecruiterId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirmId" ColumnName="FirmId" />
+                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+                <ScalarProperty Name="Bio" ColumnName="Bio" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resumes">
+            <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.Resume">
+              <MappingFragment StoreEntitySet="Resumes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="File" ColumnName="File" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentInternships">
+            <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.StudentInternship">
+              <MappingFragment StoreEntitySet="StudentInternship">
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="InternshipId" ColumnName="InternshipId" />
+                <ScalarProperty Name="StudentUserId" ColumnName="StudentUserId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="Updates" ColumnName="Updates" />
+                <ScalarProperty Name="SubmitedResume" ColumnName="SubmitedResume" />
+                <ScalarProperty Name="StatusOfApplication" ColumnName="StatusOfApplication" />
+                <ScalarProperty Name="StudentResumeId" ColumnName="StudentResumeId" />
+                <ScalarProperty Name="StarredForFurtherReview" ColumnName="StarredForFurtherReview" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="FileTwo" ColumnName="FileTwo" />
+                <ScalarProperty Name="FileThree" ColumnName="FileThree" />
+                <ScalarProperty Name="Stage" ColumnName="Stage" />
+                <ScalarProperty Name="Hidden" ColumnName="Hidden" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.Student">
+              <MappingFragment StoreEntitySet="Students">
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="University" ColumnName="University" />
+                <ScalarProperty Name="Domain" ColumnName="Domain" />
+                <ScalarProperty Name="Bio" ColumnName="Bio" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="LevelOfStudies" ColumnName="LevelOfStudies" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+                <ScalarProperty Name="StudentCV" ColumnName="StudentCV" />
+                <ScalarProperty Name="WebsiteLink" ColumnName="WebsiteLink" />
+                <ScalarProperty Name="Faculty" ColumnName="Faculty" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Skills" ColumnName="Skills" />
+                <ScalarProperty Name="Subscribed" ColumnName="Subscribed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="InternshipsManagmentProjectDatabaseModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="InternshipsManagmentProjectDatabaseModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="CommentsFiles" TypeName="InternshipsManagmentProjectDatabaseModel.CommentsFiles" StoreEntitySet="CommentsFiles">
-            <EndProperty Name="File">
-              <ScalarProperty Name="FileId" ColumnName="FileId" />
-            </EndProperty>
-            <EndProperty Name="Comment">
+            <EndProperty Name="Comments">
               <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+            </EndProperty>
+            <EndProperty Name="Files">
+              <ScalarProperty Name="FileId" ColumnName="FileId" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="EmailFiles" TypeName="InternshipsManagmentProjectDatabaseModel.EmailFiles" StoreEntitySet="EmailFiles">
-            <EndProperty Name="File">
-              <ScalarProperty Name="FileId" ColumnName="IdFile" />
-            </EndProperty>
-            <EndProperty Name="Email">
+            <EndProperty Name="Emails">
               <ScalarProperty Name="Id" ColumnName="IdEmail" />
+            </EndProperty>
+            <EndProperty Name="Files">
+              <ScalarProperty Name="FileId" ColumnName="IdFile" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="InternshipComments" TypeName="InternshipsManagmentProjectDatabaseModel.InternshipComments" StoreEntitySet="InternshipComments">
-            <EndProperty Name="Internship">
-              <ScalarProperty Name="InternshipId" ColumnName="InternshipId" />
-            </EndProperty>
-            <EndProperty Name="Comment">
+            <EndProperty Name="Comments">
               <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+            </EndProperty>
+            <EndProperty Name="Internships">
+              <ScalarProperty Name="InternshipId" ColumnName="InternshipId" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="InternshipsFiles" TypeName="InternshipsManagmentProjectDatabaseModel.InternshipsFiles" StoreEntitySet="InternshipsFiles">
-            <EndProperty Name="Internship">
-              <ScalarProperty Name="InternshipId" ColumnName="InternshipId" />
-            </EndProperty>
-            <EndProperty Name="File">
+            <EndProperty Name="Files">
               <ScalarProperty Name="FileId" ColumnName="FileId" />
             </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="UserResumeMapTable1" TypeName="InternshipsManagmentProjectDatabaseModel.UserResumeMapTable1" StoreEntitySet="UserResumeMapTable">
-            <EndProperty Name="Resume">
-              <ScalarProperty Name="Id" ColumnName="IdResume" />
+            <EndProperty Name="Internships">
+              <ScalarProperty Name="InternshipId" ColumnName="InternshipId" />
             </EndProperty>
-            <EndProperty Name="AspNetUser">
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="UserResumeMapTable" TypeName="InternshipsManagmentProjectDatabaseModel.UserResumeMapTable" StoreEntitySet="UserResumeMapTable">
+            <EndProperty Name="AspNetUsers">
               <ScalarProperty Name="Id" ColumnName="IdUser" />
             </EndProperty>
+            <EndProperty Name="Resumes">
+              <ScalarProperty Name="Id" ColumnName="IdResume" />
+            </EndProperty>
           </AssociationSetMapping>
-  </EntityContainerMapping>
-</Mapping></edmx:Mappings>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -1833,7 +1750,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

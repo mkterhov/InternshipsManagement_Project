@@ -52,7 +52,7 @@ namespace InternshipsManagementProject.Logic.Sercice
             Image image, string internshipId, string internshipPostPhoto,
             string keywords, DateTime lastUpdated, int positionsAvailable, Recruiter recruiter,
             string recruiterResponsibleId, DateTime startDate, ICollection<StudentInternship> studentInternships,
-            ICollection<StudentInternship1> studentInternships1, string title, string typeJob)
+            ICollection<StudentInternship> studentInternships1, string title, string typeJob)
         {
             var result = _repository.AddEntity(
                 new Internship
@@ -80,7 +80,6 @@ namespace InternshipsManagementProject.Logic.Sercice
                     RecruiterResponsibleId = recruiterResponsibleId,
                     StartDate = startDate,
                     StudentInternships = studentInternships,
-                    StudentInternships1 = studentInternships1,
                     Title = title,
                     TypeJob = typeJob
                 });
@@ -102,7 +101,7 @@ namespace InternshipsManagementProject.Logic.Sercice
             Image image, string internshipId, string internshipPostPhoto,
             string keywords, DateTime lastUpdated, int positionsAvailable, Recruiter recruiter,
             string recruiterResponsibleId, DateTime startDate, ICollection<StudentInternship> studentInternships,
-            ICollection<StudentInternship1> studentInternships1, string title, string typeJob)
+            ICollection<StudentInternship> studentInternships1, string title, string typeJob)
         {
             var result = _repository.UpdateEntity(
                 new Internship
@@ -130,7 +129,6 @@ namespace InternshipsManagementProject.Logic.Sercice
                     RecruiterResponsibleId = recruiterResponsibleId,
                     StartDate = startDate,
                     StudentInternships = studentInternships,
-                    StudentInternships1 = studentInternships1,
                     Title = title,
                     TypeJob = typeJob
                 },

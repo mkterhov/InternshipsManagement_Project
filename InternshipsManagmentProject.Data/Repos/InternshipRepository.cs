@@ -66,7 +66,6 @@ namespace InternshipsManagmentProject.Data.Repos
                     oldItem.RecruiterResponsibleId = newItem.RecruiterResponsibleId;
                     oldItem.StartDate = newItem.StartDate;
                     oldItem.StudentInternships = newItem.StudentInternships;
-                    oldItem.StudentInternships1 = newItem.StudentInternships1;
                     oldItem.Title = newItem.Title;
                     oldItem.TypeJob = newItem.TypeJob;
 

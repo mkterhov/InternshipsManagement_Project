@@ -68,9 +68,6 @@
     <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="C__MigrationHistory1.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -99,15 +96,18 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Repos\InternshipRepository.cs" />
-    <Compile Include="Repos\RepositoryInternshipsManagment.cs" />
     <Compile Include="Internship.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recruiter.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repos\Class1.cs" />
+    <Compile Include="Repos\InternshipRepository.cs" />
+    <Compile Include="Repos\Repository.cs" />
+    <Compile Include="Repos\RepositoryGenericDRH.cs" />
+    <Compile Include="Repos\RepositoryInternshipsManagment.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resume.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -115,9 +115,6 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="StudentInternship.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StudentInternship1.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
@@ -136,7 +133,6 @@
     </EntityDeploy>
     <None Include="DataModel.edmx.diagram">
       <DependentUpon>DataModel.edmx</DependentUpon>
-      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
