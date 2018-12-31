@@ -22,6 +22,11 @@ namespace InternshipsManagmentProject.Data.Repos
 
             _dbContextCreator = dbContextCreator;
         }
+        public RepositoryGenericDRH()
+        {
+            Func<Entities> contextCreator = () => new Entities();
+            _dbContextCreator = contextCreator;
+        }
         //FINDS BY PRIMARY KEY
         public DataResponseHandler<TEntity> GetById(params object[] pks)
         {

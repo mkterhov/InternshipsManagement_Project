@@ -20,6 +20,11 @@ namespace InternshipsManagmentProject.Data.Repos
 
             _dbContextCreator = dbContextCreator;
         }
+        public Repository()
+        {
+            Func<Entities> contextCreator = () => new Entities();
+            _dbContextCreator = contextCreator;
+        }
         //FINDS BY PRIMARY KEY
         public TEntity GetById(params object[] pks)
         {
