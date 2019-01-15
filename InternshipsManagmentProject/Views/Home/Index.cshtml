@@ -1,15 +1,14 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-@{  
+@{
     //example of usage, possible errors
     //check if it's not null, and also if user is authenticated
     //be careful if it is used before login/register, can cause errors
-    string user_id="";
-    if (User.Identity.IsAuthenticated && Session["UserId"]!=null)
+    string user_id = "", role = "";
+    if (User.Identity.IsAuthenticated && Session["UserId"] != null)
     {
         user_id = Session["UserId"].ToString();
-
     }
 }
 @*session variable usage example*@

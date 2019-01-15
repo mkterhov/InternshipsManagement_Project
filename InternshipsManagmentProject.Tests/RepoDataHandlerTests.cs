@@ -14,7 +14,7 @@ namespace InternshipsManagmentProject.Tests
     {
         static Func<Entities> contextCreator = () => new Entities();
 
-        static RepositoryGenericDRH<Firm> instance = new RepositoryGenericDRH<Firm>(dbContextCreator: contextCreator);
+        static RepositoryGenericDRH<Firm> instance = new RepositoryGenericDRH<Firm>();
 
 
         [TestMethod]

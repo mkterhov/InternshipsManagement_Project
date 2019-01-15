@@ -16,7 +16,7 @@ namespace InternshipsManagmentProject.Tests
         Firm lastAdded;
         static Func<Entities> contextCreator = () => new Entities();
 
-        private static Repository<Firm> instance = new Repository<Firm>(dbContextCreator: contextCreator);
+        private static Repository<Firm> instance = new Repository<Firm>();
 
 
         [TestMethod]
