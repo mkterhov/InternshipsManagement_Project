@@ -87,13 +87,15 @@ namespace InternshipsManagmentProject.Controllers
             {
                 case SignInStatus.Success:
                     Session["UserId"] = UserManager.FindByEmail(model.Email).Id;
-                    //string role = Roles.GetRolesForUser().ToList().FirstOrDefault().ToString();
-               //     if (role == "Student")
-               //     {
-               //         return RedirectToAction("StudentProfile", new RouteValueDictionary(
-               //new { controller = "Student", action = "StudentProfile"}));
-               //     }
-                    
+                    Session["Role"] = UserManager.GetRoles(UserManager.FindByEmail(model.Email).Id).FirstOrDefault();
+
+                    string role = Session["Role"].ToString();
+                    if (role == "Student")
+                    {
+                        return RedirectToAction("StudentProfile", new RouteValueDictionary(
+                        new { controller = "Student", action = "StudentProfile" }));
+                    }
+
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -174,24 +176,8 @@ namespace InternshipsManagmentProject.Controllers
                     await UserManager.AddToRoleAsync(user.Id, model.UserType.ToString());
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     Session["UserId"] = UserManager.FindByEmail(model.Email).Id;
-                    //Stream fs = Image.InputStream;
-                    //BinaryReader br = new BinaryReader(fs);
-                    //byte[] bytes = br.ReadBytes((Int32)fs.Length);
-                    //File file = new Data.File
-                    //{
-                    //    FileId = Guid.NewGuid().ToString(),
-                    //    FileName = Image.FileName,
-                    //    FileExtension = "jpg",
-                    //    Image = bytes
-                    //};
-                    //Image image = new Image
-                    //{
-                    //    Id = Guid.NewGuid().ToString(),
-                    //    File = file.FileId
-                    //};
-                    //entities.Files.Add(file);
-                    //entities.Images.Add(image);
-                    //entities.SaveChanges();
+                    Session["Role"] = UserManager.GetRoles(UserManager.FindByEmail(model.Email).Id).FirstOrDefault();
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
