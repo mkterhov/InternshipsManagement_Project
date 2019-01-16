@@ -39,9 +39,7 @@ namespace InternshipsManagmentProject.Controllers
         // GET: StudentInternships/Create
         public ActionResult Create()
         {
-            ViewBag.InternshipId = new SelectList(db.Internships, "InternshipId", "FirmOrganizerId");
-            ViewBag.SubmitedResume = new SelectList(db.Resumes, "Id", "Name");
-            ViewBag.StudentId = new SelectList(db.Students, "StudentId", "Name");
+           
             return View();
         }
 
@@ -54,6 +52,10 @@ namespace InternshipsManagmentProject.Controllers
         {
             if (ModelState.IsValid)
             {
+               // ViewBag.InternshipId = id;
+                //ViewBag.SubmitedResume = new SelectList(db.Resumes, "Id", "Name");
+                //ViewBag.StudentId = new SelectList(db.Students, "StudentId", "Name");
+                ViewBag.StudentId = Session["UserId"];
                 db.StudentInternships.Add(studentInternship);
                 db.SaveChanges();
                 return RedirectToAction("Index");

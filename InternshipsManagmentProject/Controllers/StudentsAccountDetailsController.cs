@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using InternshipsManagmentProject.Data;
 
 namespace InternshipsManagmentProject.Controllers
@@ -39,8 +40,8 @@ namespace InternshipsManagmentProject.Controllers
         // GET: StudentsAccountDetails/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email");
-            ViewBag.StudentCV = new SelectList(db.Resumes, "Id", "Name");
+            ViewBag.UserId = Session["UserId"];
+            //ViewBag.StudentCV = new SelectList(db.Resumes, "Id", "Name");
             return View();
         }
 
@@ -49,7 +50,7 @@ namespace InternshipsManagmentProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,LastName,UserId,University,Domain,Bio,Birthday,LevelOfStudies,Available,StudentCV")] Student student)
+        public ActionResult Create([Bind(Include = "Name,LastName,UserId,University,Domain,Bio,Birthday,Skills,LevelOfStudies,Available,StudentCV")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +58,9 @@ namespace InternshipsManagmentProject.Controllers
                 student.StudentId = guid;
                 db.Students.Add(student);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("StudentProfile", new RouteValueDictionary(
+                new { controller = "Student", action = "StudentProfile", idStudent = student.StudentId }));
+                //return RedirectToAction("StudentProfile","Student");
             }
 
             ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", student.UserId);

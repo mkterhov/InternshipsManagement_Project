@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 namespace InternshipsManagmentProject.Models
 {
@@ -85,6 +86,9 @@ namespace InternshipsManagmentProject.Models
         [DataType(DataType.Text)]
         [Display(Name = "UserType")]
         public UserRoles UserType { get; set; }
+
+        //[Display(Name = "Profile Photo")]
+        //public HttpPostedFileBase ProfilePhoto;
     }
 
     public class ResetPasswordViewModel
