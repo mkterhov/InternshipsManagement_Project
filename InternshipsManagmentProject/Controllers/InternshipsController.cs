@@ -18,11 +18,11 @@ namespace InternshipsManagmentProject.Controllers
         // GET: Internships
         public ActionResult Index()
         {
-            //var internships = db.Internships.Include(i => i.Firm).Include(i => i.Image).Include(i => i.Recruiter);
-            service = new InternshipsManagementProject.Logic.Sercice.InternshipService();
-            var internships = service.GetAll();
-            if (internships.Status)
-                return View(internships.Content.ToList());
+            var internships = db.Internships.Include(i => i.Firm).Include(i => i.Image).Include(i => i.Recruiter).ToList();
+            //service = new InternshipsManagementProject.Logic.Sercice.InternshipService();
+            //var internships = service.GetAll();
+            if (true)
+                return View(internships);
             else
                 return View("~\\Shared\\Error.cshtml");
         }

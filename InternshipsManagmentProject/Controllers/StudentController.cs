@@ -139,11 +139,11 @@ namespace InternshipsManagmentProject.Controllers
             return View(new Student());
         }
         [HttpPost]
-        public ActionResult StudentRegister([Bind(Include = "Name,LastName,UserId,University,Domain,Bio,Birthday,WebsiteLink,LevelOfStudies,Available,StudentCV")] Student createOrUpdateStudent)
+        public ActionResult StudentRegister([Bind(Include = "Name,LastName,UserId,University,Domain,Bio,Birthday,WebsiteLink,LevelOfStudies,Skills,Available,StudentCV")] Student createOrUpdateStudent)
         {
             if (ModelState.IsValid)
             {
-
+               
                 string studentId = entities.Students.Where(st => st.UserId == createOrUpdateStudent.UserId).ToList().FirstOrDefault().StudentId;
                 createOrUpdateStudent.StudentId = studentId;
 

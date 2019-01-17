@@ -141,21 +141,7 @@
                 </div>
                 <div>
                     <h3>Setari</h3>
-                    Disponibil: 
                     
-                    @if (Model.Available != null && (bool)Model.Available)
-                    {
-                    <label class="switch">
-                        <input type="checkbox" id="cbAvailable" checked/>
-                        <span class="slider round"></span>
-                    </label>
-                    }
-                    else {
-                    <label class="switch">
-                        <input type="checkbox" id="cbAvailable"/>
-                        <span class="slider round"></span>
-                    </label>
-                    }
 
                     <form action="/Student/StudentProfile" method="get" class="form_student">
                         <input type="hidden" name="selection" value="2" />
