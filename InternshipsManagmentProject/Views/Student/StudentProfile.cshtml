@@ -12,6 +12,7 @@
             <div id="panel_left">
                 <div class="profile_pic">Non deity viewer detected. Image will not be shown to protect their souls from obliteration with handsomeness.</div>
                 <div>@*@Model.N @Model.LastName*@</div>
+               
                 <br />
                 
                 <ul id="menu">
@@ -171,7 +172,7 @@
                 <div>
                     <h3>Editare Cont</h3>
                     <div id="partialTest">
-                        @Html.Partial("StudentRegister", new InternshipsManagmentProject.Data.Student());
+                        @Html.Partial("StudentRegister", Model);
                     </div>
                 </div>
                 <div>
@@ -210,7 +211,7 @@
             $(this).siblings("div").slideToggle(300);
         });
         $("cbAvailable").change(function () {
-            alert("AAA");
+            alert("ajax test");
             $.ajax({
                 url: "/Student/StudentAvailable",
                 context: this.checked
