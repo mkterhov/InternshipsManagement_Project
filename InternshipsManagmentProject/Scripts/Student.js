@@ -1,6 +1,5 @@
 ﻿var probs;
 function FormSetup() {
-    $("#form_button").val();
     $("#addNewSkill").click(() => {
         $("#skillsList").append('<li><input name="Skills" value="' + $("#input_newSkill").val() + '"/>' + '</li>');
         $("#input_newSkill").val("");
