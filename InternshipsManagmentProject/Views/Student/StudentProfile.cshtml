@@ -17,7 +17,6 @@
                 
                 <ul id="menu">
                     <li class="">Aplicarile Mele</li>
-                    <li>Notificari</li>
                     <li>Setari</li>
                     <li>Editare Cont</li>
                     <li>Log out</li>
@@ -132,13 +131,10 @@
                     }
                 </div>
                 <div>
-                    <h3>Notificari</h3>
-                </div>
-                <div>
                     <h3>Setari</h3>
+                    @Html.RenderPartial("~/Views/Manage/Index.cshtml", product)
                     
-                    @Html.ActionLink("Manage", "Index","Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-
+                    
                     @*<form action="/Student/StudentProfile" method="get" class="form_student">
                         <input type="hidden" name="selection" value="2" />
                         <input type="hidden" name="createOrUpdateStudent" value=@Model />
