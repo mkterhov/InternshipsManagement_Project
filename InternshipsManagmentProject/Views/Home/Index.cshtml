@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<InternshipsManagmentProject.Data.Internship>
 @{
-    ViewBag.Title = "Fii intern";
+    ViewBag.Title = "Fii-intern";
 }
 @{
     //example of usage, possible errors
@@ -39,50 +39,49 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <h2>Details</h2>
+                                <h2>Detalii</h2>
 
                                 <div>
-                                    <h4>Internship</h4>
                                     <hr />
                                     <dl class="dl-horizontal">
                                         <dt>
-                                            Title
+                                            Titlu
                                         </dt>
                                         <dd>
                                             @item.Title
                                         </dd>
                                         <dt>
-                                            StartDate
+                                            Data Inceput
                                         </dt>
                                         <dd>
                                             @item.StartDate
                                         </dd>
                                         <dt>
-                                            EndDate
+                                            Data Sfarsit
                                         </dt>
                                         <dd>
                                             @item.EndDate
                                         </dd>
                                         <dt>
-                                            Description
+                                            Descriere
                                         </dt>
                                         <dd>
                                             @item.Description
                                         </dd>
                                         <dt>
-                                            City
+                                            Oras
                                         </dt>
                                         <dd>
                                             @item.City
                                         </dd>
                                         <dt>
-                                            Positions
+                                            Numar pozitii disponibile
                                         </dt>
                                         <dd>
                                             @item.PositionsAvailable
                                         </dd>
                                         <dt>
-                                            Category
+                                            Categorie
                                         </dt>
                                         <dd>
                                             @item.Category
@@ -91,7 +90,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
                             </div>
                         </div>
                     </div>
@@ -104,7 +103,7 @@
                     if (Session["Role"].ToString() == "Recruiter")
                     {
                         <td>
-                            <div>@Html.ActionLink("Edit", "Edit", new { id = item.InternshipId }, new { @class = "btn btn-warning" })</div>
+                            <div>@Html.ActionLink("Editeaza", "Edit", new { id = item.InternshipId }, new { @class = "btn btn-warning" })</div>
                         </td>
                         <td>
                             <div>
@@ -113,7 +112,7 @@
                         </td>
 
                         <td>
-                            <div>@Html.ActionLink("Delete", "Delete", new { id = item.InternshipId }, new { @class = "btn btn-danger" })</div>
+                            <div>@Html.ActionLink("Sterge", "Delete", new { id = item.InternshipId }, new { @class = "btn btn-danger" })</div>
                         </td>
 
                     }
@@ -130,7 +129,7 @@
                 {
                     @*apply to be worked on*@
                     <td>
-                        <div> @Html.ActionLink("Aplica internship", "Create", "StudentInternships", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
+                        <div> @Html.ActionLink("Aplica internship", "Login", "Account", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
                     </td>
                 }
             }
