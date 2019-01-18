@@ -34,26 +34,44 @@
             <div class="form-group">
                 @*need to submit a boolean somehow, not sure how exactly to do it with the switch will look into it,
                 until then this can be used to change it and somehow then show the effect on the switch*@
-                <td>@Html.LabelFor(model => model.Available, htmlAttributes: new { @class = "control-label col-md-2" })</td> 
+                <td>@Html.LabelFor(model => model.Available, htmlAttributes: new { @class = "control-label col-md-2" })</td>
                 <td>
                     <div class="col-md-10">
                         <div class="checkbox">
-                            @Html.EditorFor(model => model.Available)
-                            @Html.ValidationMessageFor(model => model.Available, "", new { @class = "text-danger" })
+                            Disponibil:
+
+                            @if (Model.Available != null && (bool)Model.Available)
+                            {
+                                <label class="switch">
+                                    <input type="checkbox" id="cbAvailable" name ="Available"checked />
+                                    <span class="slider round"></span>
+                                </label>
+                            }
+                            else
+                            {
+                                <label class="switch">
+                                    <input type="checkbox" id="cbAvailable" name ="Available" />
+                                    <span class="slider round"></span>
+                                </label>
+                            }
+                            @*@Html.EditorFor(model => model.Available)
+                            @Html.ValidationMessageFor(model => model.Available, "", new { @class = "text-danger" })*@
                         </div>
                     </div>
                 </td>
             </div>
         </tr>
-       
-        @*<tr> are not in this model, will see how to push them in here
+
+        @*<tr>
+            are not in this model, will see how to push them in here
             <td>
                 Oras:
             </td>
             <td>
-                <input type="text" id="input_city" name="City" value=@Model.City>
+                <input type="text" id="level_of_studies" name="LevelOfStudies" value=@Model.LevelOfStudies>
             </td>
-        </tr>
+        </tr>*@
+        @*
         <tr>
             <td>
                 Telefon:

@@ -12,27 +12,81 @@ namespace InternshipsManagmentProject.Controllers
 {
     public class InternshipsController : Controller
     {
+        List<Internship> ins = new List<Internship>
+            {
+                new Internship()
+                {
+                    Title = "internship",
+                    Comments = new List<Comment> { new Comment() { Content = "This is a comment" }, new Comment() { Content = "This is another comment" } },
+                    Category = "cat",
+                    City = "Oz",
+                    Department = "dep",
+                    Description = "des",
+                    EndDate = new DateTime(),
+                    StartDate = new DateTime(),
+                    Keywords = "keys",
+                    Recruiter = new Recruiter() { Name = "name", UserId = "id" },
+                    PositionsAvailable = 30,
+                    Deleted = false,
+                    Hidden = false,
+                    InternshipId = "in_id_test",
+                    RecruiterResponsibleId = "r_id",
+                    TypeJob = "type_job",
+                    Duration = "duration",
+                    InternshipPostPhoto = "photo",
+                    FirmOrganizerId = "f_id",
+                    StudentInternships = null,
+                    DeadlineApplications = new DateTime(),
+                    LastUpdated = new DateTime(),
+                    Files = null,
+                    Firm = new Firm() { Name = "Firm", Logo = "logo", Description = "desc", Deleted = false, FirmId = "f_id" },
+                    Image = null
+                }
+            };
+
         private Entities db = new Entities();
+        private InternshipsManagementProject.Logic.Sercice.InternshipService service = new InternshipsManagementProject.Logic.Sercice.InternshipService();
 
         // GET: Internships
         public ActionResult Index()
         {
-            var internships = db.Internships.Include(i => i.Firm).Include(i => i.Image).Include(i => i.Recruiter);
-            return View(internships.ToList());
+            //var internships = db.Internships.Include(i => i.Firm).Include(i => i.Image).Include(i => i.Recruiter);
+            service = new InternshipsManagementProject.Logic.Sercice.InternshipService();
+            var internships = service.GetAll();
+
+            if(internships.Content.Count() == 0) return View(ins);
+            if (internships.Status)
+                return View(internships.Content.ToList());
+            else
+                return View("~\\Shared\\Error.cshtml");
         }
-        
+
 
         // GET: Internships/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(string id, string comm_txt = null, string comm_file = null)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            if (id == "in_id_test")
+            {
+                if (comm_txt != null) {
+                    Comment c = new Comment() { CommentId = "100percentunique", Content = comm_txt, DateCreated = new DateTime() };
+                    if (comm_file != null) c.Files = new List<File>() { new Data.File() { FileName = comm_file } };
+                    ins[0].Comments.Add(c);
+                }
+                return View(ins[0]);
+            }
             Internship internship = db.Internships.Find(id);
             if (internship == null)
             {
                 return HttpNotFound();
+            }
+            if (comm_txt != null) {
+                Comment c = new Comment() { CommentId = "100percentunique", Content = comm_txt, DateCreated = new DateTime() };
+                if (comm_file != null) c.Files = new List<File>() { new Data.File() { FileName = comm_file } };
+                internship.Comments.Add(c);
             }
             return View(internship);
         }
@@ -74,6 +128,10 @@ namespace InternshipsManagmentProject.Controllers
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (id == "in_id_test")
+            {
+                return View(ins[0]);
             }
             Internship internship = db.Internships.Find(id);
             if (internship == null)

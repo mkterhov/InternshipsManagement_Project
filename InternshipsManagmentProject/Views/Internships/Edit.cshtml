@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FirmOrganizerId, "FirmOrganizerId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("FirmOrganizerId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.EditorFor(model => model.FirmOrganizerId, new { htmlAttributes =  new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.FirmOrganizerId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -28,7 +28,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.RecruiterResponsibleId, "RecruiterResponsibleId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("RecruiterResponsibleId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.EditorFor(model => model.RecruiterResponsibleId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.RecruiterResponsibleId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -76,7 +76,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.InternshipPostPhoto, "InternshipPostPhoto", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("InternshipPostPhoto", null, htmlAttributes: new { @class = "form-control" })
+                @Html.EditorFor(model => model.InternshipPostPhoto, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.InternshipPostPhoto, "", new { @class = "text-danger" })
             </div>
         </div>

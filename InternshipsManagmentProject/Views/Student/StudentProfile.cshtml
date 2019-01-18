@@ -12,6 +12,7 @@
             <div id="panel_left">
                 <div class="profile_pic">Non deity viewer detected. Image will not be shown to protect their souls from obliteration with handsomeness.</div>
                 <div>@*@Model.N @Model.LastName*@</div>
+               
                 <br />
                 
                 <ul id="menu">
@@ -141,21 +142,7 @@
                 </div>
                 <div>
                     <h3>Setari</h3>
-                    Disponibil: 
                     
-                    @if (Model.Available != null && (bool)Model.Available)
-                    {
-                    <label class="switch">
-                        <input type="checkbox" id="cbAvailable" checked/>
-                        <span class="slider round"></span>
-                    </label>
-                    }
-                    else {
-                    <label class="switch">
-                        <input type="checkbox" id="cbAvailable"/>
-                        <span class="slider round"></span>
-                    </label>
-                    }
 
                     <form action="/Student/StudentProfile" method="get" class="form_student">
                         <input type="hidden" name="selection" value="2" />
@@ -185,7 +172,7 @@
                 <div>
                     <h3>Editare Cont</h3>
                     <div id="partialTest">
-                        @Html.Partial("StudentRegister", new InternshipsManagmentProject.Data.Student());
+                        @Html.Partial("StudentRegister", Model);
                     </div>
                 </div>
                 <div>
@@ -224,7 +211,7 @@
             $(this).siblings("div").slideToggle(300);
         });
         $("cbAvailable").change(function () {
-            alert("AAA");
+            alert("ajax test");
             $.ajax({
                 url: "/Student/StudentAvailable",
                 context: this.checked

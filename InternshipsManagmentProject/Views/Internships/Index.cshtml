@@ -85,7 +85,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalCenterTitle">@item.InternshipInQuestion.Title</h5>
+                            <h5 class="modal-title" id="exampleModalCenterTitle">@item.Title</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -107,7 +107,7 @@
                                         StartDate
                                     </dt>
                                     <dd>
-                                        @model.StartDate
+                                        @item.StartDate
                                     </dd>
                                     <dt>
                                         EndDate
@@ -153,6 +153,7 @@
             @Html.ActionLink("Edit", "Edit", new { id = item.InternshipId }) |
             @Html.ActionLink("Details", "Details", new { id = item.InternshipId }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.InternshipId })
+            @*apply to be worked on*@
             @Html.ActionLink("Apply", "StudentInternship", "Create", new { id = item.InternshipId }, null)
 
         </td>
