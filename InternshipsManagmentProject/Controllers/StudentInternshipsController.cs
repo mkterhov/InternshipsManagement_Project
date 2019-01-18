@@ -78,7 +78,7 @@ namespace InternshipsManagmentProject.Controllers
         //}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SubmitedResume")] StudentInternship studentInternship, HttpPostedFileBase SubmitedResume, string internshipId = null)
+        public ActionResult Create([Bind(Include = "SubmitedResume,Updates")] StudentInternship studentInternship, HttpPostedFileBase SubmitedResume, string internshipId = null)
         {
             if (ModelState.IsValid)
             {
@@ -94,6 +94,10 @@ namespace InternshipsManagmentProject.Controllers
                 studentInternship.StudentId = studId;
                 studentInternship.StatusOfApplication = false;  
                 studentInternship.StudentUserId = userId;
+                studentInternship.Completed = false;
+                studentInternship.StarredForFurtherReview = false;
+                studentInternship.Hidden = false;
+                
 
                 Data.Resume fileToSave = new Data.Resume();
 

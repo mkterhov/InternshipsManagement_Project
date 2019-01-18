@@ -165,7 +165,7 @@ namespace InternshipsManagmentProject.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase Image)
+        public async Task<ActionResult> SubmitRegister(RegisterViewModel model, HttpPostedFileBase Image)
         {
             if (ModelState.IsValid)
             {
@@ -196,7 +196,7 @@ namespace InternshipsManagmentProject.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return RedirectToAction("Register", "Account");
         }
 
         //
