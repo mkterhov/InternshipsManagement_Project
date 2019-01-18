@@ -1,14 +1,12 @@
 ﻿@model InternshipsManagmentProject.Data.Student
 @{
-    ViewBag.Title = "Student Register";
+    ViewBag.Title = "Inregistrare Cont";
 }
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <link href="~/Content/Student.css" rel="stylesheet" />
 <script src="/Scripts/Student.js"></script>
 <div>
-    
-    @*<form action="/Student/StudentProfile" method="get" class="form_student" id="studentform">*@
-    @using (Html.BeginForm("StudentRegister", "Student", FormMethod.Post, new { @class = "form_student",@id= "studentform", role = "form", enctype = "multipart/form-data" })) {
+   @using (Html.BeginForm("StudentRegister", "Student", FormMethod.Post, new { @class = "form_student",@id= "studentform", role = "form", enctype = "multipart/form-data" })) {
 
     <input type="hidden" name="selection" value="3" />
     <input type="hidden" name="UserId" id="UserId" value="@Session["UserId"]" />
@@ -16,7 +14,9 @@
     <table id="form_table">
         <tr>
             <td>
-                Nume:
+                <label class="control-label col-md-10">
+                    Nume:
+                </label>
             </td>
             <td>
                 <input type="text" id="input_name" name="Name" value=@Model.Name>
@@ -24,65 +24,21 @@
         </tr>
         <tr>
             <td>
-                Prenume:
+                <label class="control-label col-md-10">
+                    Prenume:
+                </label>
             </td>
             <td>
                 <input type="text" id="input_lastName" name="LastName" value=@Model.LastName>
             </td>
         </tr>
-        <tr>
-            <div class="form-group">
-                @*need to submit a boolean somehow, not sure how exactly to do it with the switch will look into it,
-                until then this can be used to change it and somehow then show the effect on the switch*@
-                <td>@Html.LabelFor(model => model.Available, htmlAttributes: new { @class = "control-label col-md-2" })</td>
-                <td>
-                    <div class="col-md-10">
-                        <div class="checkbox">
-                            Disponibil:
-
-                            @if (Model.Available != null && (bool)Model.Available)
-                            {
-                                <label class="switch">
-                                    <input type="checkbox" id="cbAvailable" name ="Available"checked />
-                                    <span class="slider round"></span>
-                                </label>
-                            }
-                            else
-                            {
-                                <label class="switch">
-                                    <input type="checkbox" id="cbAvailable" name ="Available" />
-                                    <span class="slider round"></span>
-                                </label>
-                            }
-                            @*@Html.EditorFor(model => model.Available)
-                            @Html.ValidationMessageFor(model => model.Available, "", new { @class = "text-danger" })*@
-                        </div>
-                    </div>
-                </td>
-            </div>
-        </tr>
-
-        @*<tr>
-            are not in this model, will see how to push them in here
-            <td>
-                Oras:
-            </td>
-            <td>
-                <input type="text" id="level_of_studies" name="LevelOfStudies" value=@Model.LevelOfStudies>
-            </td>
-        </tr>*@
-        @*
+        
+        
         <tr>
             <td>
-                Telefon:
-            </td>
-            <td>
-                <input type="text" id="input_phoneNumber" name="PhoneNumber" value=@Model.PhoneNumber>
-            </td>
-        </tr>*@
-        <tr>
-            <td>
-                Universitate:
+                <label class="control-label col-md-10">
+                    Universitate:
+                </label>
             </td>
             <td>
                 <input type="text" id="input_university" name="University" value=@Model.University>
@@ -90,7 +46,9 @@
         </tr>
         <tr>
             <td>
-                Domeniu:
+                <label class="control-label col-md-10">
+                    Domeniu:
+                </label>
             </td>
             <td>
                 <input type="text" id="input_domain" name="Domain" value=@Model.Domain>
@@ -99,7 +57,9 @@
 
         <tr>
             <td>
-                Link Github:
+                <label class="control-label col-md-10">
+                    Link Github:
+                </label>
             </td>
             <td>
                 <input type="text" id="input_linkGithub" name="WebsiteLink" value=@Model.WebsiteLink>
@@ -107,7 +67,9 @@
         </tr>
         <tr>
             <td>
-                Data Nasterii:
+                <label class="control-label col-md-10">
+                    Data Nasterii:
+                </label>
             </td>
             <td>
                 <input type="date" id="input_birthday" name="Birthday" value=@Model.Birthday>
@@ -115,34 +77,27 @@
         </tr>
         <tr>
             <td>
-                Aptitudini:
-                <ul id="skillsList">
-                    @* look this up to see how to work with in the backend, Michael?  *@
-                    @if (Model.Skills != null)
-                    {
-                        foreach (var itemSkill in Model.Skills.Split('#').ToList())
-                        {
-                            <li>
-                                <input name="Skills" value="@itemSkill" readonly />
-                            </li>
-                        }
-                    }
-                </ul>
+                <label class="control-label col-md-10">
+                    Aptitudini:
+                </label>
+            </td>
+            <td>
+                <input type="text" id="skills" name="Skills" value=@Model.Skills />
             </td>
         </tr>
         <tr>
-            <td><input type="text" id="input_newSkill" value="New Skill"></td>
-            <td> <input type="button" id="addNewSkill" value="+" /></td>
-        </tr>
-        <tr>
             <td>
-                Poza Profil:
+                <label class="control-label col-md-10">
+                    Poza Profil:
+                </label>
                 <input type="file" name="imagePath" id="input_image" />
             </td>
         </tr>
         <tr>
             <td>
-                Bio:
+                <label class="control-label col-md-10">
+                    Descriere:
+                </label>
                 <textarea name="Bio" id="input_bio" rows="5" cols="50">@Model.Bio</textarea>
             </td>
         </tr>
@@ -152,7 +107,6 @@
         <input id="form_submit" type="submit" value="Register Student">
     </div>
     }
-    @*</form>*@
 </div>
 <script>
     $(FormSetup());
