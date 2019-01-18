@@ -99,7 +99,7 @@ namespace InternshipsManagmentProject.Controllers
                 studentInternship.Completed = false;
                 studentInternship.StarredForFurtherReview = false;
                 studentInternship.Hidden = false;
-                
+
 
                 Data.Resume fileToSave = new Data.Resume();
 
@@ -110,7 +110,7 @@ namespace InternshipsManagmentProject.Controllers
                     string GuidFileName = Guid.NewGuid().ToString() + ".pdf";
                     var pathToSave = Path.Combine(directoryToSave, GuidFileName);
                     SubmitedResume.SaveAs(pathToSave);
-                    fileToSave.Name = fileName;
+                    fileToSave.Name = GuidFileName;
                     fileToSave.Path = pathToSave;
                     fileToSave.Id = Guid.NewGuid().ToString();
                 }
