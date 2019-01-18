@@ -1,27 +1,24 @@
 ﻿using InternshipsManagementProject.Logic.Models;
 using InternshipsManagmentProject.Data;
+using InternshipsManagmentProject.Data.Repos;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InternshipsManagementProject.Logic.Sercice
 {
     public class InternshipService
     {
-        private InternshipsManagmentProject.Data.Repos.InternshipRepository _repository = new InternshipsManagmentProject.Data.Repos.InternshipRepository();
+        private RepositoryGenericDRH<Internship> _repo = new RepositoryGenericDRH<Internship>();
+
 
         public void InternsipService()
         {
-            this._repository = new InternshipsManagmentProject.Data.Repos.InternshipRepository();
-
-            
+            this._repo = new RepositoryGenericDRH<Internship>();
         }
 
         public LogicResponseHandler<Internship> GetById(string id)
         {
-            var result = _repository.GetById(id);
+            var result = _repo.GetById(id);
             if (result.Succes)
             {
                 return new LogicResponseHandler<Internship> { Content = result.Container, Status = result.Succes };
@@ -34,7 +31,7 @@ namespace InternshipsManagementProject.Logic.Sercice
 
         public LogicResponseHandler<IEnumerable<Internship>> GetAll()
         {
-            var result = _repository.GetAll();
+            var result = _repo.GetAll();
             if (result.Succes)
             {
                 return new LogicResponseHandler<IEnumerable<Internship>> { Content = result.Container, Status = result.Succes };
@@ -54,7 +51,7 @@ namespace InternshipsManagementProject.Logic.Sercice
             string recruiterResponsibleId, DateTime startDate, ICollection<StudentInternship> studentInternships,
             ICollection<StudentInternship> studentInternships1, string title, string typeJob)
         {
-            var result = _repository.AddEntity(
+            var result = _repo.AddEntity(
                 new Internship
                 {
                     Category = category,
@@ -103,7 +100,7 @@ namespace InternshipsManagementProject.Logic.Sercice
             string recruiterResponsibleId, DateTime startDate, ICollection<StudentInternship> studentInternships,
             ICollection<StudentInternship> studentInternships1, string title, string typeJob)
         {
-            var result = _repository.UpdateEntity(
+            var result = _repo.UpdateEntity(
                 new Internship
                 {
                     Category = category,
@@ -131,8 +128,7 @@ namespace InternshipsManagementProject.Logic.Sercice
                     StudentInternships = studentInternships,
                     Title = title,
                     TypeJob = typeJob
-                },
-                oldGuid);
+                });
 
             if (result.Succes)
             {
