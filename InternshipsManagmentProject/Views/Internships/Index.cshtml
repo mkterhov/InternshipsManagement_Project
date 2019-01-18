@@ -129,8 +129,18 @@
                 if (Session["Role"].ToString() == "Student")
                 {
                     @*apply to be worked on*@
+                    bool apply = true;
+                    foreach (var i in item.StudentInternships) {
+                        if (i.StudentUserId.ToString() == Session["UserId"].ToString()) { apply = false; }
+                    }
+
                     <td>
-                       <div>@Html.ActionLink("Apply", "Create", "StudentInternships", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
+                        @if(apply){
+                            <div>@Html.ActionLink("Apply", "Create", "StudentInternships", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
+                        }
+                        else{
+                            <div>Already Applied</div>
+                        }
                     </td>
                 }
             }

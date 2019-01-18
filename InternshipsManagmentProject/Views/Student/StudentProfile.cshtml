@@ -35,10 +35,8 @@
 
                                 <span class="internship_drop"><strong>\/ <strong>@item.Internship.Title</strong></strong></span>
 
-                                @if (!(bool)item.StatusOfApplication)
+                                @if (item.Stage == "rejected")
                                 {
-                                    if (item.Internship.Title == "Yet Another Internship")
-                                    {
                                         <ol class="progress progress--large">
                                             <li class="is-complete" data-step="">Sent CV</li>
                                             <li class="is-complete" data-step="">Response</li>
@@ -48,9 +46,8 @@
                                             <br />
                                             You have been rejected... womp womp womp...
                                         </div>
-                                    }
-                                    else
-                                    {
+                                }
+                                else if (item.Stage == "0"){
                                         <ol class="progress progress--large">
                                             <li class="is-active" data-step="">Sent CV</li>
                                             <li class="" data-step="">Response</li>
@@ -63,9 +60,8 @@
                                             <br />
                                             <input type="submit" value="Sent CV" disabled>
                                         </div>
-                                    }
                                 }
-                                else if ((bool)item.StatusOfApplication && !(bool)item.Completed)
+                                else if (item.Stage == "1")
                                 {
                                     <ol class="progress progress--large">
                                         <li class="is-complete" data-step="">Sent CV</li>
@@ -80,7 +76,7 @@
                                         <input type="submit" value="Waiting Response" disabled>
                                     </div>
                                 }
-                                else if ((bool)item.Completed && !(bool)item.StarredForFurtherReview)
+                                else if (item.Stage == "2")
                                 {
                                     <ol class="progress progress--large">
                                         <li class="is-complete" data-step="">Sent CV</li>
@@ -96,7 +92,7 @@
                                         <input type="submit" value="Refuse" formaction="/Student/StudentFirmResponse/?response=false&id=@item.Internship.InternshipId">
                                     </div>
                                 }
-                                else if ((bool)item.StarredForFurtherReview)
+                                else if (item.Stage == "3")
                                 {
                                     <ol class="progress progress--large">
                                         <li class="is-complete" data-step="">Sent CV</li>
@@ -131,8 +127,6 @@
                                         No idea how you got here...
                                     </div>
                                 }
-
-
                             </div>
                         }
                     }
@@ -143,8 +137,9 @@
                 <div>
                     <h3>Setari</h3>
                     
+                    @Html.ActionLink("Manage", "Index","Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
 
-                    <form action="/Student/StudentProfile" method="get" class="form_student">
+                    @*<form action="/Student/StudentProfile" method="get" class="form_student">
                         <input type="hidden" name="selection" value="2" />
                         <input type="hidden" name="createOrUpdateStudent" value=@Model />
                         <table id="form_table">
@@ -166,7 +161,7 @@
                             </tr>
                         </table>
                         <input id="settings_submit" type="submit" value="Save Changes">
-                    </form>
+                    </form>*@
                     
                 </div>
                 <div>
