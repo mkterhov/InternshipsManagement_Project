@@ -43,7 +43,7 @@ namespace InternshipsManagementProject.Logic.Sercice
         }
 
         public LogicResponseHandler<string> AddEntity(bool deleted, string description,
-            Image image, ICollection<Recruiter> recruiters, ICollection<Firm> internships,
+            Image image, ICollection<Recruiter> recruiters, ICollection<Internship> internships,
             string firmId, string logo, string name, int numberOfEmployees)
         {
             var result = _repo.AddEntity(
@@ -77,7 +77,8 @@ namespace InternshipsManagementProject.Logic.Sercice
             Image image, string internshipId, string internshipPostPhoto,
             string keywords, DateTime lastUpdated, int positionsAvailable, Recruiter recruiter,
             string recruiterResponsibleId, DateTime startDate, ICollection<StudentInternship> studentInternships,
-            ICollection<StudentInternship> studentInternships1, string title, string typeJob)
+            ICollection<StudentInternship> studentInternships1, string title, string typeJob, string firmId,
+            ICollection<Internship> internships, string logo, string name)
         {
             var result = _repo.UpdateEntity(
                 new Firm
@@ -88,9 +89,9 @@ namespace InternshipsManagementProject.Logic.Sercice
                    Image = image,
                    Internships = internships,
                    Logo = logo,
-                   Name = name,
-                   NumberOfEmployees= numberOfEmployees,
-                   Recruiters = recruiters
+                   Name = name
+                   //NumberOfEmployees= numberOfEmployees,
+                   //Recruiters = recruiters
                 });
 
             if (result.Succes)
