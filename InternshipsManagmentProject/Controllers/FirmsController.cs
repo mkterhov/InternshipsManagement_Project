@@ -134,10 +134,11 @@ namespace InternshipsManagmentProject.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult HomeFirm(String id)
+        public ActionResult HomeFirm()
         {
-            Firm firm = db.Firms.Find(id);
-            List<Internship> internships = Enumerable.ToList(db.Internships.Where(x => x.FirmOrganizerId == firm.FirmId).AsEnumerable());
+            var idFirm = Session["FirmId"].ToString();
+            Firm firm = db.Firms.Find(idFirm);
+            List<Internship> internships = db.Internships.Where(x => x.FirmOrganizerId == firm.FirmId).ToList();
             HomeFirm homeFirma = new HomeFirm(firm, internships);
             return View(homeFirma);
         }

@@ -315,7 +315,7 @@
     <Content Include="Views\StudentInternships\Edit.cshtml" />
     <Content Include="Views\StudentInternships\Index.cshtml" />
     <Content Include="Views\Student\StudentHome.cshtml" />
-    <Content Include="Views\Firms\HomeFirma.cshtml" />
+    <Content Include="Views\Firms\HomeFirm.cshtml" />
     <Content Include="Views\Firms\GestApl.cshtml" />
   </ItemGroup>
   <ItemGroup>

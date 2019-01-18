@@ -88,7 +88,7 @@ namespace InternshipsManagmentProject.Controllers
                 case SignInStatus.Success:
                     Session["UserId"] = UserManager.FindByEmail(model.Email).Id;
                     Session["Role"] = UserManager.GetRoles(UserManager.FindByEmail(model.Email).Id).FirstOrDefault();
-
+                    string userId = Session["UserId"].ToString();
                     string role = Session["Role"].ToString();
                     if (role == "Student")
                     {
@@ -96,7 +96,14 @@ namespace InternshipsManagmentProject.Controllers
                         return RedirectToAction("StudentProfile", new RouteValueDictionary(
                         new { controller = "Student", action = "StudentProfile" }));
                     }
+                    if (role=="Recruiter")
+                    {
+                        Recruiter recruiter = entities.Recruiters.Where(a => a.UserId == userId).FirstOrDefault();
+                        Firm firm = recruiter.Firm;
+                        Session["FirmId"] = firm.FirmId;
+                        return RedirectToLocal(returnUrl);
 
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
