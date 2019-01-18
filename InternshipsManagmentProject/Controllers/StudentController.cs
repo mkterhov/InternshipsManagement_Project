@@ -110,25 +110,35 @@ namespace InternshipsManagmentProject.Controllers
         [HttpGet]
         public ActionResult StudentProfile(string idStudent=null, int selection = 0, string imagePath = "")
         {
-            string UserId = Session["UserId"].ToString();
-            if (idStudent != null)
-            {
-                student = entities.Students.Find(idStudent);
-            }
-            if (idStudent == null)
+            if (Session != null && Session["UserId"] != null)
             {
                 
-                student = entities.Students.Where(user => user.UserId == UserId).ToList().FirstOrDefault() ;
+                    string UserId = Session["UserId"].ToString();
+                    if (idStudent != null)
+                    {
+                        student = entities.Students.Find(idStudent);
+                    }
+                    if (idStudent == null)
+                    {
+
+                        student = entities.Students.Where(user => user.UserId == UserId).ToList().FirstOrDefault();
+                    }
+                    if (imagePath.Length > 0)
+                    {
+                        //load image pls
+                    }
+
+                    ViewBag.Selection = selection;
+                    //if (createOrUpdateStudent.Name!=null) {
+                    //    student = createOrUpdateStudent;
+                    //}
+                    return View(student);
+                
             }
-            if (imagePath.Length>0) {
-                //load image pls
+            else
+            {
+                return View("~/Shared/Error.cshtml");
             }
-            
-            ViewBag.Selection = selection;
-            //if (createOrUpdateStudent.Name!=null) {
-            //    student = createOrUpdateStudent;
-            //}
-            return View(student);
         }
 
         public ActionResult StudentRegister()

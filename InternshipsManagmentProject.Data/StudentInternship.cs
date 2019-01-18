@@ -11,7 +11,8 @@ namespace InternshipsManagmentProject.Data
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class StudentInternship
     {
         public string StudentId { get; set; }
@@ -19,7 +20,11 @@ namespace InternshipsManagmentProject.Data
         public string StudentUserId { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<bool> Completed { get; set; }
+
+        [DisplayName("Observatii")]
         public string Updates { get; set; }
+
+        [DisplayName("CV")]
         public string SubmitedResume { get; set; }
         public Nullable<bool> StatusOfApplication { get; set; }
         public string StudentResumeId { get; set; }
