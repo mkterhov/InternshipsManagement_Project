@@ -100,14 +100,16 @@
             @{
                 if (User.Identity.IsAuthenticated)
                 {
-                    if (Session["Role"].ToString() == "Recruiter")
+                    if (Session != null)
                     {
+                        if (Session["Role"].ToString() == "Recruiter")
+                        {
                         <td>
                             <div>@Html.ActionLink("Editeaza", "Edit", new { id = item.InternshipId }, new { @class = "btn btn-warning" })</div>
                         </td>
                         <td>
                             <div>
-                                @Html.ActionLink("Gestioneaza Aplicanti", "Index", "StudentInternships", new { id = item.InternshipId}, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Gestioneaza Aplicanti", "Index", "StudentInternships", new { id = item.InternshipId }, new { @class = "btn btn-primary" })
                             </div>
                         </td>
 
@@ -115,13 +117,14 @@
                             <div>@Html.ActionLink("Sterge", "Delete", new { id = item.InternshipId }, new { @class = "btn btn-danger" })</div>
                         </td>
 
-                    }
-                    if (Session["Role"].ToString() == "Student")
-                    {
+                        }
+                        if (Session["Role"].ToString() == "Student")
+                        {
                         @*apply to be worked on*@
                         <td>
                             <div>@Html.ActionLink("Aplica internship", "Create", "StudentInternships", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
                         </td>
+                        }
                     }
                 }
 

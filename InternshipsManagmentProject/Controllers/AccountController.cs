@@ -92,7 +92,6 @@ namespace InternshipsManagmentProject.Controllers
                     string role = Session["Role"].ToString();
                     if (role == "Student")
                     {
-
                         return RedirectToAction("StudentProfile", new RouteValueDictionary(
                         new { controller = "Student", action = "StudentProfile" }));
                     }
