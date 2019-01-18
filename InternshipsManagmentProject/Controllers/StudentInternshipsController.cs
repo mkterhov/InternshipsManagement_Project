@@ -87,36 +87,38 @@ namespace InternshipsManagmentProject.Controllers
                 //ViewBag.SubmitedResume = new SelectList(db.Resumes, "Id", "Name");
                 //ViewBag.StudentId = new SelectList(db.Students, "StudentId", "Name");
                 studentInternship.StudentId = Session["UserId"].ToString();
-                studentInternship.Stage = "Applied";
+                studentInternship.Stage = "0";
                 studentInternship.DateCreated =DateTime.Today;
                 studentInternship.InternshipId = Session["InternshipId"].ToString();
                 var studId = db.Students.Where(st => st.UserId == userId).FirstOrDefault().StudentId;
                 studentInternship.StudentId = studId;
-                studentInternship.StatusOfApplication = false;  
+                studentInternship.StatusOfApplication = false;
+                studentInternship.Completed = false;
+                studentInternship.StarredForFurtherReview = false;
                 studentInternship.StudentUserId = userId;
                 studentInternship.Completed = false;
                 studentInternship.StarredForFurtherReview = false;
                 studentInternship.Hidden = false;
                 
 
-                Data.Resume fileToSave = new Data.Resume();
+                //Data.Resume fileToSave = new Data.Resume();
 
-                if (SubmitedResume != null)
-                {
-                    var fileName = Path.GetFileName(SubmitedResume.FileName);
-                    var directoryToSave = Server.MapPath(Url.Content(ContentPath));
-                    string GuidFileName = Guid.NewGuid().ToString() + ".pdf";
-                    var pathToSave = Path.Combine(directoryToSave, GuidFileName);
-                    SubmitedResume.SaveAs(pathToSave);
-                    fileToSave.Name = fileName;
-                    fileToSave.Path = pathToSave;
-                    fileToSave.Id = Guid.NewGuid().ToString();
-                }
-                db.Resumes.Add(fileToSave);
-                studentInternship.Resume = fileToSave;
+                //if (SubmitedResume != null)
+                //{
+                //    var fileName = Path.GetFileName(SubmitedResume.FileName);
+                //    var directoryToSave = Server.MapPath(Url.Content(ContentPath));
+                //    string GuidFileName = Guid.NewGuid().ToString() + ".pdf";
+                //    var pathToSave = Path.Combine(directoryToSave, GuidFileName);
+                //    SubmitedResume.SaveAs(pathToSave);
+                //    fileToSave.Name = fileName;
+                //    fileToSave.Path = pathToSave;
+                //    fileToSave.Id = Guid.NewGuid().ToString();
+                //}
+                //db.Resumes.Add(fileToSave);
+                //studentInternship.Resume = fileToSave;
                 db.StudentInternships.Add(studentInternship);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("StudentProfile","Student");
             }
 
             ViewBag.InternshipId = new SelectList(db.Internships, "InternshipId", "FirmOrganizerId", studentInternship.InternshipId);
