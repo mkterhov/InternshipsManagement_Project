@@ -6,11 +6,11 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <link href="~/Content/Student.css" rel="stylesheet" />
 <script src="/Scripts/Student.js"></script>
-<table>
+<table class="table-responsive">
     <tr>
-        <td id="parent_left">
+        <td c id="parent_left">
             <div id="panel_left">
-                <div class="profile_pic">Non deity viewer detected. Image will not be shown to protect their souls from obliteration with handsomeness.</div>
+                <div><img class="profile_pic img-circle" src="@Url.Content("~/Content/Images/"+@Model.AspNetUser.Image.Name)" alt="Profile Photo" /></div>
                 <div>@*@Model.N @Model.LastName*@</div>
                
                 <br />
