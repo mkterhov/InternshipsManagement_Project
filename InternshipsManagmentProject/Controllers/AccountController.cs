@@ -189,7 +189,7 @@ namespace InternshipsManagmentProject.Controllers
                         return RedirectToAction("Create", "StudentsAccountDetails");
 
                     }
-                    return RedirectToAction("Home", "Home");
+                    return RedirectToAction("Create", "RecruitersAccountDetails");
                 }
                 AddErrors(result);
             }

@@ -1,0 +1,44 @@
+﻿@model InternshipsManagmentProject.Models.FirmViewModels.HomeFirm
+
+@{
+    ViewBag.Title = "Home " + Model.Firm.Name;
+}
+<h2>@Model.Firm.Name</h2>
+
+<form asp-controller="FirmsController" asp-action="Cauta">
+    <p>
+        <input type="text" name="SearchString" placeholder="Nume internship">
+        <input type="submit" value="Cauta internship" />
+    </p>
+</form>
+
+<br />
+<h4>
+    @Html.ActionLink("Adauga internship", "Create")
+</h4>
+
+<br />
+<table class="table">
+    @foreach (var item in Model.FirmInternships)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Title, "DetailsInternship", new { id = item.InternshipId })
+            </td>
+            <td>
+                Nr aplicanti: @item.PositionsAvailable
+            </td>
+            <td>
+                @Html.ActionLink("Editare", "EditInternship", new { id = item.InternshipId })
+            </td>
+            <td>
+                @Html.ActionLink("Gestioneaza Aplicanti", "GestApl", new { id = item.InternshipId })
+            </td>
+            <td>
+                @Html.ActionLink("Ascunde", "Ascunde", new { id = item.InternshipId })
+            </td>
+        </tr>
+    }
+
+</table>
+

@@ -8,9 +8,17 @@ namespace InternshipsManagmentProject.Models
 {
     public class HomeStudent
     {
+        public HomeStudent() { }
+        public HomeStudent(Student student, List<Internship> internships, List<String> list)
+        {
+            Student = student;
+            Internships = internships;
+            ListOfIdsOfAppliedInternships = list;
+        }
+
         public List<string> ListOfIdsOfAppliedInternships { get; set; }
-        //List<string> Categories;
-        //string Keywords;
         public List<Internship> Internships { get; set; }
+        public Student Student { get; set; }
+
     }
 }

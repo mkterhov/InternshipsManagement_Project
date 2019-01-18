@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using InternshipsManagmentProject.Data;
 using InternshipsManagmentProject.Data.Interfaces;
+using InternshipsManagmentProject.Models.FirmViewModels;
 
 namespace InternshipsManagmentProject.Controllers
 {
@@ -131,6 +132,20 @@ namespace InternshipsManagmentProject.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult HomeFirm(String id)
+        {
+            Firm firm = db.Firms.Find(id);
+            List<Internship> internships = Enumerable.ToList(db.Internships.Where(x => x.FirmOrganizerId == firm.FirmId).AsEnumerable());
+            HomeFirm homeFirma = new HomeFirm(firm, internships);
+            return View(homeFirma);
+        }
+        public ActionResult GestApl()
+        {
+            List<Student> lista = Enumerable.ToList(db.Students.AsEnumerable());
+            GestAplicanti gestApl = new GestAplicanti(lista);
+            return View(gestApl);
         }
     }
 }

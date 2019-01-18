@@ -8,8 +8,12 @@ namespace InternshipsManagmentProject.Models.FirmViewModels
 {
     public class HomeFirm
     {
-        List<Internship> FirmInternships;
-        //string SearchKeyword;
-
+        public HomeFirm(Firm firm, List<Internship> internships)
+        {
+            Firm = firm;
+            FirmInternships = internships;
+        }
+        public Firm Firm;
+        public List<Internship> FirmInternships;
     }
 }

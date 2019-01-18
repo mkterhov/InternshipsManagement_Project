@@ -30,6 +30,7 @@ namespace InternshipsManagmentProject.Controllers
             HomeStudent homeStudent = new HomeStudent();
             string UserId = Session["UserId"].ToString();
             Student student = entities.Students.Where(user => user.UserId == UserId).FirstOrDefault();
+            homeStudent.ListOfIdsOfAppliedInternships = new List<string>();
             if (student != null && student.StudentInternships.Count > 0)
             {
                 foreach(var studentInternship in student.StudentInternships.ToList()){
@@ -37,6 +38,7 @@ namespace InternshipsManagmentProject.Controllers
 
                 }
             }
+            homeStudent.Student = student;
             homeStudent.Internships = entities.Internships.ToList();
             return View(homeStudent);
         }
@@ -181,5 +183,6 @@ namespace InternshipsManagmentProject.Controllers
         {
 
         }
+        
     }
 }

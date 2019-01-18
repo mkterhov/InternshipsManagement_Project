@@ -8,7 +8,11 @@ namespace InternshipsManagmentProject.Models.FirmViewModels
 {
     public class GestAplicanti
     {
-        List<Student> StudentiAplicanti;
+        public GestAplicanti(List<Student> list)
+        {
+            StudentiAplicanti = list;
+        }
+        public List<Student> StudentiAplicanti;
 
     }
 }

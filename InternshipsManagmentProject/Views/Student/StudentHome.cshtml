@@ -1,58 +1,39 @@
 ﻿@model InternshipsManagmentProject.Models.HomeStudent
+@{
+    ViewBag.Title = "Home " + Model.Student.Name;
+}
 
-
-<h1>Internships</h1>
-@Model.Internships
-
+<br>
+<form asp-controller="StudentController" asp-action="Cauta">
+    <p>
+        <input type="text" name="SearchString" placeholder="Nume internship">
+        <input type="submit" value="Cauta internship" />
+    </p>
+</form>
 
 <table class="table">
-
-    @{ int count = 0;}
-    @foreach (var internship in Model.Internships)
+    @foreach (var item in Model.Internships)
     {
-        if (count == 0)
-        {
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => internship.Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => internship.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => internship.City)
-                </th>
-
-                <th>
-                    @Html.DisplayNameFor(model => internship.Firm.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => internship.Category)
-                </th>
-            </tr>
-        } else {
+        <tr>
             <td>
-                @Html.DisplayFor(modelItem => internship.Title)
+                @Html.ActionLink(item.Title, "Details", "Internships", routeValues: new { id = item.InternshipId }, htmlAttributes: new { id = item.InternshipId })
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => internship.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(model => internship.City)
-            </td>
-
-            <td>
-                @Html.DisplayFor(model => internship.Firm.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(model => internship.Category)
-            </td>
-            <td>
-                @Html.ActionLink("Apply", "StudentInternship", "Create", new { id = internship.InternshipId }, null)
-            </td>
-        }
-        count++;
-
+            @if (Model.ListOfIdsOfAppliedInternships.Contains(item.InternshipId))
+            {
+                <td>
+                    Ai aplicat deja
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.ActionLink("Aplica", "Create", "StudentInternship",new { idInternship = item.InternshipId }, new { idInternship = item.InternshipId })
+                </td>
+            }
+        </tr>
     }
 
 </table>
+
+
+

@@ -69,11 +69,19 @@ namespace InternshipsManagmentProject.Controllers
         // GET: RecruitersAccountDetails/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id == null)
+            if(Session["UserId"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                id = Session["UserId"].ToString();
             }
-            Recruiter recruiter = db.Recruiters.Find(id);
+            else
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
+            
+            Recruiter recruiter = db.Recruiters.Where(x => x.UserId == id).FirstOrDefault();
             if (recruiter == null)
             {
                 return HttpNotFound();
