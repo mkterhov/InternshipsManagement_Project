@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<InternshipsManagmentProject.Data.Internship>
+@{
     ViewBag.Title = "Fii intern";
 }
 @{
@@ -12,11 +13,152 @@
         user_role = Session["Role"].ToString();
     }
 }
-@*session variable usage example*@
-<p>@user_id</p>
-<p>@user_role</p>
+<br />
+<br/>
 
-<div class="jumbotron">
+<table class="table">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+
+            <td>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
+                    Vezi detalii
+                </button>
+
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">@item.Title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h2>Details</h2>
+
+                                <div>
+                                    <h4>Internship</h4>
+                                    <hr />
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            Title
+                                        </dt>
+                                        <dd>
+                                            @item.Title
+                                        </dd>
+                                        <dt>
+                                            StartDate
+                                        </dt>
+                                        <dd>
+                                            @item.StartDate
+                                        </dd>
+                                        <dt>
+                                            EndDate
+                                        </dt>
+                                        <dd>
+                                            @item.EndDate
+                                        </dd>
+                                        <dt>
+                                            Description
+                                        </dt>
+                                        <dd>
+                                            @item.Description
+                                        </dd>
+                                        <dt>
+                                            City
+                                        </dt>
+                                        <dd>
+                                            @item.City
+                                        </dd>
+                                        <dt>
+                                            Positions
+                                        </dt>
+                                        <dd>
+                                            @item.PositionsAvailable
+                                        </dd>
+                                        <dt>
+                                            Category
+                                        </dt>
+                                        <dd>
+                                            @item.Category
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+
+            @{
+                if (User.Identity.IsAuthenticated)
+                {
+                    if (Session["Role"].ToString() == "Recruiter")
+                    {
+                        <td>
+                            <div>@Html.ActionLink("Edit", "Edit", new { id = item.InternshipId }, new { @class = "btn btn-warning" })</div>
+                        </td>
+                        <td>
+                            <div>
+                                @Html.ActionLink("Gestioneaza Aplicanti", "Index", "StudentInternships", new { id = item.InternshipId}, new { @class = "btn btn-primary" })
+                            </div>
+                        </td>
+
+                        <td>
+                            <div>@Html.ActionLink("Delete", "Delete", new { id = item.InternshipId }, new { @class = "btn btn-danger" })</div>
+                        </td>
+
+                    }
+                    if (Session["Role"].ToString() == "Student")
+                    {
+                        @*apply to be worked on*@
+                        <td>
+                            <div>@Html.ActionLink("Aplica internship", "Create", "StudentInternships", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
+                        </td>
+                    }
+                }
+
+                else
+                {
+                    @*apply to be worked on*@
+                    <td>
+                        <div> @Html.ActionLink("Aplica internship", "Create", "StudentInternships", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
+                    </td>
+                }
+            }
+
+        </tr>
+                }
+
+</table>
+
+
+
+@*<table class="table">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Title, "Details", "Internships", routeValues: new { id = item.InternshipId }, htmlAttributes: new { id = item.InternshipId })
+            </td>
+    
+                <td>
+                    @Html.ActionLink("Aplica", "Login", "Account", new { idInternship = item.InternshipId }, new { idInternship = item.InternshipId })
+                </td>
+        </tr>
+    }
+
+</table>*@
+
+@*<div class="jumbotron">
     <h2>Working Links For Different entities and actions</h2>
     <h6>development use only</h6>
     <ul>
@@ -57,4 +199,4 @@
         </li>
     </ul>
 
-</div>
+</div>*@

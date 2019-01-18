@@ -17,8 +17,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Fii intern", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
+                
+                    @Html.ActionLink("Fii-intern", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                
+                </div>
             <div class="navbar-collapse collapse">
                 
                 @Html.Partial("_LoginPartial")
@@ -29,7 +31,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Fii intern</p>
+            <p>&copy; @DateTime.Now.Year - Fii-intern</p>
         </footer>
     </div>
 

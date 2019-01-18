@@ -50,15 +50,16 @@ namespace InternshipsManagmentProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,LastName,FirmId,ContactEmail,Bio,UserId")] Recruiter recruiter)
+        public ActionResult Create([Bind(Include = "Name,LastName,FirmId,ContactEmail,Bio")] Recruiter recruiter)
         {
             if (ModelState.IsValid)
             {
                 string guid = Guid.NewGuid().ToString();
                 recruiter.RecruiterId = guid;
+                recruiter.UserId = Session["UserId"].ToString();
                 db.Recruiters.Add(recruiter);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("HomeFirma", "Firms");
             }
 
             ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", recruiter.UserId);

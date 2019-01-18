@@ -134,9 +134,11 @@ namespace InternshipsManagmentProject.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult HomeFirm(String id)
+        public ActionResult HomeFirma()
         {
-            Firm firm = db.Firms.Find(id);
+            var userId = Session["UserId"].ToString();
+            Recruiter recruiter = db.Recruiters.Where(a => a.UserId == userId).FirstOrDefault();
+            Firm firm = recruiter.Firm;
             List<Internship> internships = Enumerable.ToList(db.Internships.Where(x => x.FirmOrganizerId == firm.FirmId).AsEnumerable());
             HomeFirm homeFirma = new HomeFirm(firm, internships);
             return View(homeFirma);

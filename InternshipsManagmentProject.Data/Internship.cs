@@ -11,7 +11,8 @@ namespace InternshipsManagmentProject.Data
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class Internship
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -32,6 +33,8 @@ namespace InternshipsManagmentProject.Data
         public string City { get; set; }
         public Nullable<int> PositionsAvailable { get; set; }
         public string InternshipPostPhoto { get; set; }
+
+        [DisplayName("Titlu")]
         public string Title { get; set; }
         public Nullable<System.DateTime> DeadlineApplications { get; set; }
         public string TypeJob { get; set; }
