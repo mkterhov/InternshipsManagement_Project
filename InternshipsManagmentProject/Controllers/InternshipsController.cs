@@ -50,13 +50,13 @@ namespace InternshipsManagmentProject.Controllers
         // GET: Internships
         public ActionResult Index()
         {
-            //var internships = db.Internships.Include(i => i.Firm).Include(i => i.Image).Include(i => i.Recruiter);
+            var internships = db.Internships.Include(i => i.Firm).Include(i => i.Image).Include(i => i.Recruiter);
             service = new InternshipsManagementProject.Logic.Sercice.InternshipService();
-            var internships = service.GetAll();
+            //var internships = service.GetAll();
 
-            if(internships.Content.Count() == 0) return View(ins);
-            if (internships.Status)
-                return View(internships.Content.ToList());
+            if(internships.Count() == 0) return View(ins);
+            if (internships.Count()>0)
+                return View(internships.ToList());
             else
                 return View("~\\Shared\\Error.cshtml");
         }

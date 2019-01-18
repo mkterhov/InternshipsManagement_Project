@@ -82,7 +82,7 @@ namespace InternshipsManagmentProject.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, false, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -92,6 +92,7 @@ namespace InternshipsManagmentProject.Controllers
                     string role = Session["Role"].ToString();
                     if (role == "Student")
                     {
+
                         return RedirectToAction("StudentProfile", new RouteValueDictionary(
                         new { controller = "Student", action = "StudentProfile" }));
                     }
@@ -189,7 +190,7 @@ namespace InternshipsManagmentProject.Controllers
                         return RedirectToAction("Create", "StudentsAccountDetails");
 
                     }
-                    return RedirectToAction("Home", "Home");
+                    return RedirectToAction("Create","RecruitersAccountDetails");
                 }
                 AddErrors(result);
             }
