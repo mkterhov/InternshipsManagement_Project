@@ -99,23 +99,23 @@ namespace InternshipsManagmentProject.Controllers
                 studentInternship.Completed = false;
                 studentInternship.StarredForFurtherReview = false;
                 studentInternship.Hidden = false;
-                
 
-                //Data.Resume fileToSave = new Data.Resume();
 
-                //if (SubmitedResume != null)
-                //{
-                //    var fileName = Path.GetFileName(SubmitedResume.FileName);
-                //    var directoryToSave = Server.MapPath(Url.Content(ContentPath));
-                //    string GuidFileName = Guid.NewGuid().ToString() + ".pdf";
-                //    var pathToSave = Path.Combine(directoryToSave, GuidFileName);
-                //    SubmitedResume.SaveAs(pathToSave);
-                //    fileToSave.Name = fileName;
-                //    fileToSave.Path = pathToSave;
-                //    fileToSave.Id = Guid.NewGuid().ToString();
-                //}
-                //db.Resumes.Add(fileToSave);
-                //studentInternship.Resume = fileToSave;
+                Data.Resume fileToSave = new Data.Resume();
+
+                if (SubmitedResume != null)
+                {
+                    var fileName = Path.GetFileName(SubmitedResume.FileName);
+                    var directoryToSave = Server.MapPath(Url.Content(ContentPath));
+                    string GuidFileName = Guid.NewGuid().ToString() + ".pdf";
+                    var pathToSave = Path.Combine(directoryToSave, GuidFileName);
+                    SubmitedResume.SaveAs(pathToSave);
+                    fileToSave.Name = fileName;
+                    fileToSave.Path = pathToSave;
+                    fileToSave.Id = Guid.NewGuid().ToString();
+                }
+                db.Resumes.Add(fileToSave);
+                studentInternship.Resume = fileToSave;
                 db.StudentInternships.Add(studentInternship);
                 db.SaveChanges();
                 return RedirectToAction("StudentProfile","Student");
