@@ -11,7 +11,8 @@
         <td id="parent_left">
             <div id="panel_left">
                 <div class="profile_pic">Non deity viewer detected. Image will not be shown to protect their souls from obliteration with handsomeness.</div>
-                @Model.Name @Model.LastName
+                <div>@*@Model.N @Model.LastName*@</div>
+               
                 <br />
                 
                 <ul id="menu">
@@ -27,110 +28,107 @@
             <div id="panel_right">
                 <div>
                     <h3>Aplicarile Mele</h3>
-                    @foreach (var item in Model.StudentInternships)
-                    {
-                        <div class="internship">
+                    @if(Model.StudentInternships!=null){
+                        foreach (var item in Model.StudentInternships)
+                        {
+                            <div class="internship">
 
-                            <span class="internship_drop"><strong>\/ <strong>@item.Internship.Title</strong></strong></span> 
+                                <span class="internship_drop"><strong>\/ <strong>@item.Internship.Title</strong></strong></span>
 
-                            @if (!(bool)item.StatusOfApplication)
-                            {
-                                if (item.Internship.Title == "Yet Another Internship")
+                                @if (item.Stage == "rejected")
                                 {
-                                <ol class="progress progress--large">
-                                    <li class="is-complete" data-step="">Sent CV</li>
-                                    <li class="is-complete" data-step="">Response</li>
-                                    <li class="is-active progress__last red" data-step="">Rejected</li>
-                                </ol>
-                                <div>
-                                    <br />
-                                    You have been rejected... womp womp womp...
-                                </div>
+                                        <ol class="progress progress--large">
+                                            <li class="is-complete" data-step="">Sent CV</li>
+                                            <li class="is-complete" data-step="">Response</li>
+                                            <li class="is-active progress__last red" data-step="">Rejected</li>
+                                        </ol>
+                                        <div>
+                                            <br />
+                                            You have been rejected... womp womp womp...
+                                        </div>
                                 }
-                                else {
+                                else if (item.Stage == "0"){
+                                        <ol class="progress progress--large">
+                                            <li class="is-active" data-step="">Sent CV</li>
+                                            <li class="" data-step="">Response</li>
+                                            <li class="" data-step="">Accepted</li>
+                                            <li class="" data-step="">In Progress</li>
+                                            <li class="progress__last" data-step="">Review</li>
+                                        </ol>
+                                        <div>
+                                            You've sent your CV.
+                                            <br />
+                                            <input type="submit" value="Sent CV" disabled>
+                                        </div>
+                                }
+                                else if (item.Stage == "1")
+                                {
                                     <ol class="progress progress--large">
-                                    <li class="is-active" data-step="">Sent CV</li>
-                                    <li class="" data-step="">Response</li>
-                                    <li class="" data-step="">Accepted</li>
-                                    <li class="" data-step="">In Progress</li>
-                                    <li class="progress__last" data-step="">Review</li>
-                                </ol>
-                                <div>
-                                    You've sent your CV.
-                                    <br />
-                                    <input type="submit" value="Sent CV" disabled>
-                                </div>
+                                        <li class="is-complete" data-step="">Sent CV</li>
+                                        <li class="is-active" data-step="">Response</li>
+                                        <li class="" data-step="">Accepted</li>
+                                        <li class="" data-step="">In Progress</li>
+                                        <li class="progress__last" data-step="">Review</li>
+                                    </ol>
+                                    <div>
+                                        The firm has received your CV.
+                                        <br />
+                                        <input type="submit" value="Waiting Response" disabled>
+                                    </div>
                                 }
-                            }
-                            else if ((bool)item.StatusOfApplication && !(bool)item.Completed)
-                            {
-                                <ol class="progress progress--large">
-                                    <li class="is-complete" data-step="">Sent CV</li>
-                                    <li class="is-active" data-step="">Response</li>
-                                    <li class="" data-step="">Accepted</li>
-                                    <li class="" data-step="">In Progress</li>
-                                    <li class="progress__last" data-step="">Review</li>
-                                </ol>
-                                <div>
-                                    The firm has received your CV.
-                                    <br />
-                                    <input type="submit" value="Waiting Response" disabled>
-                                </div>
-                            }
-                            else if ((bool)item.Completed && !(bool)item.StarredForFurtherReview)
-                            {
-                                <ol class="progress progress--large">
-                                    <li class="is-complete" data-step="">Sent CV</li>
-                                    <li class="is-complete" data-step="">Response</li>
-                                    <li class="is-active green" data-step="">Accepted</li>
-                                    <li class="" data-step="">In Progress</li>
-                                    <li class="progress__last" data-step="">Review</li>
-                                </ol>
-                                <div>
-                                    The firm has accepted you!
-                                    <br />
-                                    <input type="submit" value="Accept" formaction="/Student/StudentFirmResponse/?response=true&id=@item.Internship.InternshipId">
-                                    <input type="submit" value="Refuse" formaction="/Student/StudentFirmResponse/?response=false&id=@item.Internship.InternshipId">
-                                </div>
-                            }
-                            else if ((bool)item.StarredForFurtherReview)
-                            {
-                                <ol class="progress progress--large">
-                                    <li class="is-complete" data-step="">Sent CV</li>
-                                    <li class="is-complete" data-step="">Response</li>
-                                    <li class="is-complete" data-step="">Accepted</li>
-                                    <li class="is-complete" data-step="">In Progress</li>
-                                    <li class="is-active yellow" data-step="">Review</li>
-                                </ol>
-                                <div>
-                                    Thank you for joining this internship. Please give us a feedback.
-                                    <br />
-                                    Rate:
-                                    <input type="submit" value="1" formaction="/Student/StudentFirmRating/?rating=1&id=@item.Internship.InternshipId">
-                                    <input type="submit" value="2" formaction="/Student/StudentFirmRating/?rating=2&id=@item.Internship.InternshipId">
-                                    <input type="submit" value="3" formaction="/Student/StudentFirmRating/?rating=3&id=@item.Internship.InternshipId">
-                                    <input type="submit" value="4" formaction="/Student/StudentFirmRating/?rating=4&id=@item.Internship.InternshipId">
-                                    <input type="submit" value="5" formaction="/Student/StudentFirmRating/?rating=5&id=@item.Internship.InternshipId">
-                                    Stars
-                                </div>
-                            }
-                            else
-                            {
-                                <ol class="progress progress--large">
-                                    <li class="is-complete" data-step="">Sent CV</li>
-                                    <li class="is-complete" data-step="">Response</li>
-                                    <li class="" data-step="">Accepted</li>
-                                    <li class="" data-step="">In Progress</li>
-                                    <li class="progress__last yellow" data-step="">Review</li>
-                                </ol>
-                                <div>
-                                    <br />
-                                    No idea how you got here...
-                                </div>
-                            }
-                            
-
-                        </div>
+                                else if (item.Stage == "2")
+                                {
+                                    <ol class="progress progress--large">
+                                        <li class="is-complete" data-step="">Sent CV</li>
+                                        <li class="is-complete" data-step="">Response</li>
+                                        <li class="is-active green" data-step="">Accepted</li>
+                                        <li class="" data-step="">In Progress</li>
+                                        <li class="progress__last" data-step="">Review</li>
+                                    </ol>
+                                    <div>
+                                        The firm has accepted you!
+                                        <br />
+                                        <input type="submit" value="Accept" formaction="/Student/StudentFirmResponse/?response=true&id=@item.Internship.InternshipId">
+                                        <input type="submit" value="Refuse" formaction="/Student/StudentFirmResponse/?response=false&id=@item.Internship.InternshipId">
+                                    </div>
+                                }
+                                else if (item.Stage == "3")
+                                {
+                                    <ol class="progress progress--large">
+                                        <li class="is-complete" data-step="">Sent CV</li>
+                                        <li class="is-complete" data-step="">Response</li>
+                                        <li class="is-complete" data-step="">Accepted</li>
+                                        <li class="is-complete" data-step="">In Progress</li>
+                                        <li class="is-active yellow" data-step="">Review</li>
+                                    </ol>
+                                    <div>
+                                        Thank you for joining this internship. Please give us a feedback.
+                                        <br />
+                                        Rate:
+                                        <input type="submit" value="1" formaction="/Student/StudentFirmRating/?rating=1&id=@item.Internship.InternshipId">
+                                        <input type="submit" value="2" formaction="/Student/StudentFirmRating/?rating=2&id=@item.Internship.InternshipId">
+                                        <input type="submit" value="3" formaction="/Student/StudentFirmRating/?rating=3&id=@item.Internship.InternshipId">
+                                        <input type="submit" value="4" formaction="/Student/StudentFirmRating/?rating=4&id=@item.Internship.InternshipId">
+                                        <input type="submit" value="5" formaction="/Student/StudentFirmRating/?rating=5&id=@item.Internship.InternshipId">
+                                        Stars
+                                    </div>
+                                }
+                                else
+                                {
+                                    <ol class="progress progress--large">
+                                        <li class="is-complete" data-step="">Sent CV</li>
+                                        <li class="is-complete" data-step="">Response</li>
+                                        <li class="" data-step="">Accepted</li>
+                                        <li class="" data-step="">In Progress</li>
+                                        <li class="progress__last yellow" data-step="">Review</li>
+                                    </ol>
+                                    <div>
+                                        <br />
+                                        No idea how you got here...
+                                    </div>
+                                }
+                            </div>
+                        }
                     }
                 </div>
                 <div>
@@ -138,27 +136,38 @@
                 </div>
                 <div>
                     <h3>Setari</h3>
-                    Disponibil: 
                     
-                    @if (Model.Available!=null&&(bool)Model.Available)
-                    {
-                    <label class="switch">
-                        <input type="checkbox" checked/>
-                        <span class="slider round"></span>
-                    </label>
-                    }
-                    else {
-                    <label class="switch">
-                        <input type="checkbox" />
-                        <span class="slider round"></span>
-                    </label>
-                    }
+                    @Html.ActionLink("Manage", "Index","Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+
+                    @*<form action="/Student/StudentProfile" method="get" class="form_student">
+                        <input type="hidden" name="selection" value="2" />
+                        <input type="hidden" name="createOrUpdateStudent" value=@Model />
+                        <table id="form_table">
+                            <tr>
+                                <td>Email:</td>
+                                <td><input type="text" id="input_email" name="Email" value=""></td>
+                            </tr>
+                            <tr>
+                                <td>New Password:</td>
+                                <td><input type="text" id="input_password" name="Password"></td>
+                            </tr>
+                            <tr>
+                                <td>New Password Confirm:</td>
+                                <td><input type="text" id="input_password_confirm" name="Password_Confirm"></td>
+                            </tr>
+                            <tr>
+                                <td>Old Password:</td>
+                                <td><input type="text" id="input_password_old" name="Password_Old"></td>
+                            </tr>
+                        </table>
+                        <input id="settings_submit" type="submit" value="Save Changes">
+                    </form>*@
                     
                 </div>
                 <div>
                     <h3>Editare Cont</h3>
                     <div id="partialTest">
-                        @Html.Partial("StudentRegister", new InternshipsManagmentProject.Data.Student());
+                        @Html.Partial("StudentRegister", Model);
                     </div>
                 </div>
                 <div>
@@ -184,7 +193,8 @@
     }
     $(()=> {
         RefreshMenu();
-        FormSetup("Save Changes");
+        $("#form_button").val("Save Changes");
+        $("#form_submit").val("Save Changes");
         $(".internship>div").slideUp(0);
         $("#menu>li").click(function () {
             $("#menu>li:nth-child(" + (sel + 1) + ")").attr("class", "menu_grayed");
@@ -194,6 +204,13 @@
         });
         $(".internship_drop").click(function () {
             $(this).siblings("div").slideToggle(300);
+        });
+        $("cbAvailable").change(function () {
+            alert("ajax test");
+            $.ajax({
+                url: "/Student/StudentAvailable",
+                context: this.checked
+            });
         });
     });
 </script>

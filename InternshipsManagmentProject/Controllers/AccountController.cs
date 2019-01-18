@@ -9,13 +9,19 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using InternshipsManagmentProject.Models;
+using InternshipsManagmentProject.Data;
+using System.IO;
+using File = InternshipsManagmentProject.Data.File;
+using System.Web.Routing;
+using System.Web.Security;
 
 namespace InternshipsManagmentProject.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-        //add a role managa
+        Entities entities = new Entities();
+        //add a role manager
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -76,11 +82,21 @@ namespace InternshipsManagmentProject.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, false, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
                     Session["UserId"] = UserManager.FindByEmail(model.Email).Id;
+                    Session["Role"] = UserManager.GetRoles(UserManager.FindByEmail(model.Email).Id).FirstOrDefault();
+
+                    string role = Session["Role"].ToString();
+                    if (role == "Student")
+                    {
+
+                        return RedirectToAction("StudentProfile", new RouteValueDictionary(
+                        new { controller = "Student", action = "StudentProfile" }));
+                    }
+
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -149,7 +165,7 @@ namespace InternshipsManagmentProject.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase Image)
         {
             if (ModelState.IsValid)
             {
@@ -161,14 +177,20 @@ namespace InternshipsManagmentProject.Controllers
                     await UserManager.AddToRoleAsync(user.Id, model.UserType.ToString());
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     Session["UserId"] = UserManager.FindByEmail(model.Email).Id;
+                    Session["Role"] = UserManager.GetRoles(UserManager.FindByEmail(model.Email).Id).FirstOrDefault();
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string role = Session["Role"].ToString();
+                    if (role == "Student")
+                    {
+                        return RedirectToAction("Create", "StudentsAccountDetails");
 
-                    return RedirectToAction("Index", "Home");
+                    }
+                    return RedirectToAction("Create","RecruitersAccountDetails");
                 }
                 AddErrors(result);
             }

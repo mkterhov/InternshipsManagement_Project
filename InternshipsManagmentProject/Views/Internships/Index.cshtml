@@ -11,7 +11,7 @@
 </p>
 <table class="table">
     <tr>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.StartDate)
         </th>
         <th>
@@ -27,7 +27,7 @@
             @Html.DisplayNameFor(model => model.PositionsAvailable)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Category)
+            @Html.DisplayNameFor(model => model.Category)*@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
@@ -46,7 +46,7 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.StartDate)
         </td>
         <td>
@@ -63,7 +63,7 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Category)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
@@ -77,10 +77,120 @@
             @Html.DisplayFor(modelItem => item.Recruiter.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.InternshipId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.InternshipId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.InternshipId })
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
+                LookUpDetails
+            </button>
+
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">@item.Title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h2>Details</h2>
+
+                            <div>
+                                <h4>Internship</h4>
+                                <hr />
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        Title
+                                    </dt>
+                                    <dd>
+                                        @item.Title
+                                    </dd>
+                                    <dt>
+                                        StartDate
+                                    </dt>
+                                    <dd>
+                                        @item.StartDate
+                                    </dd>
+                                    <dt>
+                                        EndDate
+                                    </dt>
+                                    <dd>
+                                        @item.EndDate
+                                    </dd>
+                                    <dt>
+                                        Description
+                                    </dt>
+                                    <dd>
+                                        @item.Description
+                                    </dd>
+                                    <dt>
+                                        City
+                                    </dt>
+                                    <dd>
+                                        @item.City
+                                    </dd>
+                                    <dt>
+                                        Positions
+                                    </dt>
+                                    <dd>
+                                        @item.PositionsAvailable
+                                    </dd>
+                                    <dt>
+                                        Category
+                                    </dt>
+                                    <dd>
+                                        @item.Category
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </td>
+
+        @{
+            if (User.Identity.IsAuthenticated)
+            {
+                if (Session["Role"].ToString() == "Recruiter")
+                {
+                    <td>
+                        <div>@Html.ActionLink("Edit", "Edit", new { id = item.InternshipId }, new { @class = "btn btn-warning" })</div>
+                    </td>
+                    <td>
+                        <div>@Html.ActionLink("Details", "Details", new { id = item.InternshipId }, new { @class = "btn btn-info" })</div>
+                    </td>
+
+                    <td>
+                        <div>@Html.ActionLink("Delete", "Delete", new { id = item.InternshipId }, new { @class = "btn btn-danger" })</div>
+                    </td>
+
+                }
+                if (Session["Role"].ToString() == "Student")
+                {
+                    @*apply to be worked on*@
+                    <td>
+                       <div>@Html.ActionLink("Apply", "Create", "StudentInternships", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
+                    </td>
+                }
+            }
+
+            else
+            {
+                @*apply to be worked on*@
+                @:<div> @Html.ActionLink("Apply", "Create", "StudentInternships", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
+
+
+
+
+
+
+
+
+            }
+        }
+
     </tr>
 }
 

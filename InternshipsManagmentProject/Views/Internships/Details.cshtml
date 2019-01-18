@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Details";
 }
-
 <h2>Details</h2>
 
 <div>
@@ -90,8 +89,39 @@
             @Html.DisplayFor(model => model.Recruiter.Name)
         </dd>
 
+        <dd>
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+
     </dl>
 </div>
+Comments:
+@if (Model.Comments != null)
+{
+    foreach (var item in Model.Comments)
+    {
+        <div><strong>@item.Content</strong> posted on <em>@item.DateCreated</em> </div>
+        if (item.Files != null && item.Files.Count > 0)
+        {
+            <span>Attachments:</span>
+            foreach (var file in item.Files)
+            {
+                <div><em>>@file.FileName</em></div>
+            }
+
+        }
+    }
+}
+====================
+@using (Html.BeginForm("Details", "Internships", FormMethod.Get, new { role = "form", enctype = "multipart/form-data" }))
+{
+    <input type="text" name="id" readonly value=@Model.InternshipId style="display:none" />
+    <span>Comment:</span><input type="text" name="comm_txt" /><br />
+    <span>File:</span><input type="file" name="comm_file" />
+    <input type="submit" value="Submit" />
+}
+====================
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.InternshipId }) |
     @Html.ActionLink("Back to List", "Index")
