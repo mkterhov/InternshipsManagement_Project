@@ -97,8 +97,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Sterge internship" class="btn btn-default" /> |
-            @Html.ActionLink("Inapoi la lista", "Index", "Home")
+            <input type="submit" value="Sterge internship" class="btn btn-danger" />
+            @Html.ActionLink("Inapoi la lista", "Index", "Home", null, new { @class="btn btn-primary" })
         </div>
     }
 </div>

@@ -103,7 +103,7 @@ namespace InternshipsManagmentProject.Controllers
             {
                 db.Entry(recruiter).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", recruiter.UserId);
             ViewBag.FirmId = new SelectList(db.Firms, "FirmId", "Name", recruiter.FirmId);
