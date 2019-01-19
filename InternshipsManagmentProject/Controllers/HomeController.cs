@@ -10,10 +10,18 @@ namespace InternshipsManagmentProject.Controllers
     public class HomeController : Controller
     {
         private Entities db = new Entities();
+        [HttpGet]
         public ActionResult Index()
         {
 
             var internships = db.Internships.AsEnumerable();
+            return View(internships);
+        }
+
+        [HttpPost]
+        public ActionResult Index(string search)
+        {
+            var internships = db.Internships.Where(x => x.Title.Contains(search) || x.Title.Equals(search));
             return View(internships);
         }
 

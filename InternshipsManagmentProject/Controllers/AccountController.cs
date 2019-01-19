@@ -452,6 +452,7 @@ namespace InternshipsManagmentProject.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Session.Remove("Role");
             return RedirectToAction("Index", "Home");
         }
 
