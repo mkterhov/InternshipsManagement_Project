@@ -228,6 +228,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Login.css" />
+    <Content Include="Content\simple_sidebar.css" />
     <Content Include="Content\Student.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -315,9 +317,11 @@
     <Content Include="Views\StudentInternships\Edit.cshtml" />
     <Content Include="Views\StudentInternships\Index.cshtml" />
     <Content Include="Views\Student\StudentHome.cshtml" />
-    <Content Include="Views\Firms\HomeFirm.cshtml" />
+    <Content Include="Views\Firms\HomeFirma.cshtml" />
     <Content Include="Views\Firms\GestApl.cshtml" />
+    <Content Include="Views\Shared\Date.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
+    <Content Include="Views\Firms\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

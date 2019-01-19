@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -15,6 +16,7 @@ namespace InternshipsManagmentProject.Controllers
     public class FirmsController : Controller
     {
         private Entities db = new Entities();
+        private const string ContentPath = "~/Content/Images/";
 
         // GET: Firms
         public ActionResult Index()
@@ -51,12 +53,27 @@ namespace InternshipsManagmentProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,Description,NumberOfEmployees,Logo")] Firm firm)
+        public ActionResult Create([Bind(Include = "Name,Description,NumberOfEmployees")] Firm firm, HttpPostedFileBase Logo)
         {
             if (ModelState.IsValid)
             {
                 string guid = Guid.NewGuid().ToString();
                 firm.FirmId = guid;
+                Image logoFirm = new Image();
+                if (Logo != null)
+                {
+                    var fileName = Path.GetFileName(Logo.FileName);
+                    var directoryToSave = Server.MapPath(Url.Content(ContentPath));
+                    string GuidFileName = Guid.NewGuid().ToString() + ".jpg";
+                    var pathToSave = Path.Combine(directoryToSave, GuidFileName);
+                    Logo.SaveAs(pathToSave);
+                    logoFirm.Name = GuidFileName;
+                    logoFirm.Path = pathToSave;
+                    logoFirm.Id = Guid.NewGuid().ToString();
+                    db.Images.Add(logoFirm);
+                    firm.Image = logoFirm;
+                }
+                
                 db.Firms.Add(firm);
                 db.SaveChanges();
                 return RedirectToAction("Index");
