@@ -16,6 +16,19 @@
 <br />
 <br/>
 
+@if (Session != null)
+{
+    if (Session["Role"] != null)
+    {
+        if (Session["Role"].ToString() == ("Recruiter"))
+        {
+            <h4>
+                @Html.ActionLink("Adauga internship", "Create", "Internships")
+            </h4>
+        }
+    }
+}
+
 <table class="table">
     @foreach (var item in Model)
     {
@@ -109,7 +122,7 @@
                             if (Session["Role"].ToString() == "Recruiter")
                             {
                         <td>
-                            <div>@Html.ActionLink("Editeaza", "Edit", new { id = item.InternshipId }, new { @class = "btn btn-warning" })</div>
+                            <div>@Html.ActionLink("Editeaza", "Edit", "Internships", new { id = item.InternshipId }, new { @class = "btn btn-warning" })</div>
                         </td>
                         <td>
                             <div>
@@ -118,18 +131,42 @@
                         </td>
 
                         <td>
-                            <div>@Html.ActionLink("Sterge", "Delete", new { id = item.InternshipId }, new { @class = "btn btn-danger" })</div>
+                            <div>@Html.ActionLink("Sterge", "Delete", "Internships", new { id = item.InternshipId }, new { @class = "btn btn-danger" })</div>
                         </td>
 
                             }
                             if (Session["Role"].ToString() == "Student")
                             {
-                        @*apply to be worked on*@
-                        <td>
-                            <div>@Html.ActionLink("Aplica internship", "Create", "StudentInternships", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
-                        </td>
+                                bool apply = true;
+                                foreach (var i in item.StudentInternships)
+                                {
+                                    if (i.StudentUserId.ToString() == Session["UserId"].ToString()) { apply = false; }
+                                }
+
+                                <td>
+                                    @if (apply)
+                                    {
+                                        <div>@Html.ActionLink("Apply", "Create", "StudentInternships", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
+                                    }
+                                    else
+                                    {
+                                        <div>Already Applied</div>
+                                    }
+                                </td>
                             }
                         }
+                        else
+                        {
+                            <td>
+                                <div> @Html.ActionLink("Aplica internship", "Login", "Account", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
+                            </td>
+                        }
+                    }
+                    else
+                    {
+                        <td>
+                            <div> @Html.ActionLink("Aplica internship", "Login", "Account", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
+                        </td>
                     }
                 }
                 else

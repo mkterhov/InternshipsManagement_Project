@@ -157,6 +157,7 @@ namespace InternshipsManagmentProject.Controllers
             Recruiter recruiter = db.Recruiters.Where(a => a.UserId == userId).FirstOrDefault();
             Firm firm = recruiter.Firm;
             List<Internship> internships = Enumerable.ToList(db.Internships.Where(x => x.FirmOrganizerId == firm.FirmId).AsEnumerable());
+
             HomeFirm homeFirma = new HomeFirm(firm, internships);
             return View(homeFirma);
         }

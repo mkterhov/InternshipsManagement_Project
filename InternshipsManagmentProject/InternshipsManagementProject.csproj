@@ -317,7 +317,7 @@
     <Content Include="Views\Student\StudentHome.cshtml" />
     <Content Include="Views\Firms\HomeFirma.cshtml" />
     <Content Include="Views\Firms\GestApl.cshtml" />
-    <Content Include="Views\Firms\Create.cshtml" />
+    <Content Include="Views\Shared\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

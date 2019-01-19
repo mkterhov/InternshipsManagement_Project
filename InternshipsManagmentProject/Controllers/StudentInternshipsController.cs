@@ -17,10 +17,12 @@ namespace InternshipsManagmentProject.Controllers
         private Entities db = new Entities();
 
         // GET: StudentInternships
-        public ActionResult Index()
+        public ActionResult Index(string id = null)
         {
-            var studentInternships = db.StudentInternships.Include(s => s.Internship).Include(s => s.Resume).Include(s => s.Student);
-            return View(studentInternships.ToList());
+            if (id == null) {
+                return View(db.StudentInternships.Include(s => s.Internship).Include(s => s.Resume).Include(s => s.Student).ToList());
+            }
+            return View(db.StudentInternships.Where(s => s.InternshipId == id).Include(s => s.Internship).Include(s => s.Resume).Include(s => s.Student).ToList());
         }
 
         // GET: StudentInternships/Details/5
@@ -100,7 +102,7 @@ namespace InternshipsManagmentProject.Controllers
                 studentInternship.StarredForFurtherReview = false;
                 studentInternship.Hidden = false;
 
-
+                
                 Data.Resume fileToSave = new Data.Resume();
 
                 if (SubmitedResume != null)
@@ -114,11 +116,15 @@ namespace InternshipsManagmentProject.Controllers
                     fileToSave.Path = pathToSave;
                     fileToSave.Id = Guid.NewGuid().ToString();
                     db.Resumes.Add(fileToSave);
+
                     studentInternship.Resume = fileToSave;
                 }
                 
+
                 db.StudentInternships.Add(studentInternship);
                 db.SaveChanges();
+
+
                 return RedirectToAction("StudentProfile","Student");
             }
 
@@ -128,20 +134,24 @@ namespace InternshipsManagmentProject.Controllers
             return View(studentInternship);
         }
         // GET: StudentInternships/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string id, string id2, string newStage = null)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            StudentInternship studentInternship = db.StudentInternships.Find(id);
+            StudentInternship studentInternship = db.StudentInternships.Where(st => st.StudentId == id && st.InternshipId == id2).ToList().FirstOrDefault();
             if (studentInternship == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.InternshipId = new SelectList(db.Internships, "InternshipId", "FirmOrganizerId", studentInternship.InternshipId);
-            ViewBag.SubmitedResume = new SelectList(db.Resumes, "Id", "Name", studentInternship.SubmitedResume);
-            ViewBag.StudentId = new SelectList(db.Students, "StudentId", "Name", studentInternship.StudentId);
+            if (newStage != null) {
+                studentInternship.Stage = newStage;
+                db.SaveChanges();
+            }
+            //ViewBag.InternshipId = new SelectList(db.Internships, "InternshipId", "FirmOrganizerId", studentInternship.InternshipId);
+            //ViewBag.SubmitedResume = new SelectList(db.Resumes, "Id", "Name", studentInternship.SubmitedResume);
+            //ViewBag.StudentId = new SelectList(db.Students, "StudentId", "Name", studentInternship.StudentId);
             return View(studentInternship);
         }
 
