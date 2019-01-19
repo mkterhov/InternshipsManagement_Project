@@ -113,9 +113,10 @@ namespace InternshipsManagmentProject.Controllers
                     fileToSave.Name = GuidFileName;
                     fileToSave.Path = pathToSave;
                     fileToSave.Id = Guid.NewGuid().ToString();
+                    db.Resumes.Add(fileToSave);
+                    studentInternship.Resume = fileToSave;
                 }
-                db.Resumes.Add(fileToSave);
-                studentInternship.Resume = fileToSave;
+                
                 db.StudentInternships.Add(studentInternship);
                 db.SaveChanges();
                 return RedirectToAction("StudentProfile","Student");
