@@ -94,16 +94,17 @@ namespace InternshipsManagmentProject.Controllers
                     string role = Session["Role"].ToString();
                     if (role == "Student")
                     {
-                        return RedirectToAction("StudentProfile", new RouteValueDictionary(
-                        new { controller = "Student", action = "StudentProfile" }));
+                        return RedirectToAction("Index", "Home");
+                        //return RedirectToAction("StudentProfile", new RouteValueDictionary(
+                        //new { controller = "Student", action = "StudentProfile" }));
                     }
                     if (role=="Recruiter")
                     {
                         Recruiter recruiter = entities.Recruiters.Where(a => a.UserId == userId).FirstOrDefault();
                         Firm firm = recruiter.Firm;
                         Session["FirmId"] = firm.FirmId;
-                        return RedirectToLocal(returnUrl);
-
+                        // return RedirectToLocal(returnUrl);
+                        return RedirectToAction("Index", "Home");
                     }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:

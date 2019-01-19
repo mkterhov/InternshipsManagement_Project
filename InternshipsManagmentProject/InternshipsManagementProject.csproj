@@ -319,6 +319,7 @@
     <Content Include="Views\Student\StudentHome.cshtml" />
     <Content Include="Views\Firms\HomeFirma.cshtml" />
     <Content Include="Views\Firms\GestApl.cshtml" />
+    <Content Include="Views\Shared\Date.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Firms\Create.cshtml" />
   </ItemGroup>
