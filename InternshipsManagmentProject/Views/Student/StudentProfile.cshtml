@@ -6,7 +6,10 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <link href="~/Content/Student.css" rel="stylesheet" />
 <script src="/Scripts/Student.js"></script>
-<table class="table-responsive">
+
+<h4>@Model.Name  @Model.LastName</h4>
+<table>
+
     <tr>
         <td c id="parent_left">
             <div id="panel_left">
@@ -108,6 +111,17 @@
                                         <input type="submit" value="4" formaction="/Student/StudentFirmRating/?rating=4&id=@item.Internship.InternshipId">
                                         <input type="submit" value="5" formaction="/Student/StudentFirmRating/?rating=5&id=@item.Internship.InternshipId">
                                         Stars
+                                    </div>
+                                }
+                                else if (item.Stage == "refused")
+                                {
+                                        <ol class="progress progress--large">
+                                            <li class="is-complete" data-step="">Sent CV</li>
+                                            <li class="is-complete" data-step="">Response</li>
+                                            <li class="is-active progress__last red" data-step="">Rejected</li>
+                                        </ol>
+                                    <div>
+                                        You have refused the Internship.
                                     </div>
                                 }
                                 else
