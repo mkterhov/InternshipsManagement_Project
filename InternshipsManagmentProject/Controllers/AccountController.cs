@@ -188,8 +188,9 @@ namespace InternshipsManagmentProject.Controllers
                     Session["UserId"] = UserManager.FindByEmail(model.Email).Id;
                     Session["Role"] = UserManager.GetRoles(UserManager.FindByEmail(model.Email).Id).FirstOrDefault();
 
-
+                    string id = Session["UserId"].ToString();
                     Data.Image fileToSave = new Data.Image();
+                    AspNetUser aspNetUser = entities.AspNetUsers.Find(id);
 
                     if (ProfilePhoto != null)
                     {
@@ -201,13 +202,12 @@ namespace InternshipsManagmentProject.Controllers
                         fileToSave.Name = GuidFileName;
                         fileToSave.Path = pathToSave;
                         fileToSave.Id = Guid.NewGuid().ToString();
+                        entities.Images.Add(fileToSave);
+                        aspNetUser.Image = fileToSave;
                     }
-                    string id = Session["UserId"].ToString();
 
-                    AspNetUser aspNetUser = entities.AspNetUsers.Find(id);
                         
-                    entities.Images.Add(fileToSave);
-                    aspNetUser.Image = fileToSave;
+                    
                     entities.Entry(aspNetUser).State = EntityState.Modified;
                     entities.SaveChanges();
 

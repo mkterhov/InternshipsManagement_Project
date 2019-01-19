@@ -4,7 +4,15 @@
     ViewBag.Title = "Aplicari";
 }
 
-<h2>Index</h2>
+@if (Model != null && Model.First() != null)
+{
+    <h2>@Model.First().Internship.Title</h2>
+}
+else
+{
+    <h2>Nimic</h2>
+}
+
 
 
 <table class="table">
@@ -13,25 +21,26 @@
             @Html.DisplayNameFor(model => model.Student.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Internship.Title)
+            @Html.DisplayNameFor(model => model.Student.LastName)
         </th>
         <th>
             Rezolva
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Student.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Internship.Title)
-        </td>
-        <td>
-            @Html.ActionLink("Rezolva", "Edit", new { id = item.StudentId, id2 = item.InternshipId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.LastName)
+            </td>
+            <td>
+                @Html.ActionLink("Rezolva", "Edit", new { id = item.StudentId, id2 = item.InternshipId })
+            </td>
+        </tr>
+    }
 
 </table>
