@@ -12,6 +12,7 @@ namespace InternshipsManagmentProject.Data
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
 
     public partial class Internship
     {
@@ -26,10 +27,12 @@ namespace InternshipsManagmentProject.Data
         public string InternshipId { get; set; }
         public string FirmOrganizerId { get; set; }
         public string RecruiterResponsibleId { get; set; }
-    
+
+        [DataType(DataType.Date)]
         [DisplayName("Data Inceput")]
         public System.DateTime StartDate { get; set; }
 
+        [DataType(DataType.Date)]
         [DisplayName("Data Sfarsit")]
         public System.DateTime EndDate { get; set; }
 
