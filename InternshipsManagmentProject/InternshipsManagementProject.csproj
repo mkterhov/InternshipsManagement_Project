@@ -318,6 +318,7 @@
     <Content Include="Views\Firms\HomeFirma.cshtml" />
     <Content Include="Views\Firms\GestApl.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
+    <Content Include="Views\Firms\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
