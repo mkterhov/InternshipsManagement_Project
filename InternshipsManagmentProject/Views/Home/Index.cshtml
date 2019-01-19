@@ -14,7 +14,9 @@
     }
 }
 <br />
-<br/>
+<br />
+
+
 
 @if (Session != null)
 {
@@ -29,9 +31,15 @@
     }
 }
 
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+                @Html.TextBox("Search") <button type="submit">Submit</button>
+    }
+
 <table class="table">
     @foreach (var item in Model)
-    {
+        {
+
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
@@ -55,7 +63,7 @@
                                 <h2>Detalii</h2>
 
                                 <div>
-                                    
+
                                     <hr />
                                     <dl class="dl-horizontal">
                                         <dt>
@@ -121,18 +129,18 @@
 
                             if (Session["Role"].ToString() == "Recruiter")
                             {
-                        <td>
-                            <div>@Html.ActionLink("Editeaza", "Edit", "Internships", new { id = item.InternshipId }, new { @class = "btn btn-warning" })</div>
-                        </td>
-                        <td>
-                            <div>
-                                @Html.ActionLink("Gestioneaza Aplicanti", "Index", "StudentInternships", new { id = item.InternshipId }, new { @class = "btn btn-primary" })
-                            </div>
-                        </td>
+                                <td>
+                                    <div>@Html.ActionLink("Editeaza", "Edit", "Internships", new { id = item.InternshipId }, new { @class = "btn btn-warning" })</div>
+                                </td>
+                                <td>
+                                    <div>
+                                        @Html.ActionLink("Gestioneaza Aplicanti", "Index", "StudentInternships", new { id = item.InternshipId }, new { @class = "btn btn-primary" })
+                                    </div>
+                                </td>
 
-                        <td>
-                            <div>@Html.ActionLink("Sterge", "Delete", "Internships", new { id = item.InternshipId }, new { @class = "btn btn-danger" })</div>
-                        </td>
+                                <td>
+                                    <div>@Html.ActionLink("Sterge", "Delete", "Internships", new { id = item.InternshipId }, new { @class = "btn btn-danger" })</div>
+                                </td>
 
                             }
                             if (Session["Role"].ToString() == "Student")
@@ -145,7 +153,7 @@
 
                                 <td>
                                     @if (apply)
-                                    {
+{
                                         <div>@Html.ActionLink("Apply", "Create", "StudentInternships", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
                                     }
                                     else
@@ -175,71 +183,71 @@
                     <td>
                         <div> @Html.ActionLink("Aplica internship", "Login", "Account", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
                     </td>
-                    }
                 }
+            }
 
         </tr>
-                }
+    }
 
 </table>
 
 
 
 @*<table class="table">
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.ActionLink(item.Title, "Details", "Internships", routeValues: new { id = item.InternshipId }, htmlAttributes: new { id = item.InternshipId })
-            </td>
-    
+        @foreach (var item in Model)
+        {
+            <tr>
                 <td>
-                    @Html.ActionLink("Aplica", "Login", "Account", new { idInternship = item.InternshipId }, new { idInternship = item.InternshipId })
+                    @Html.ActionLink(item.Title, "Details", "Internships", routeValues: new { id = item.InternshipId }, htmlAttributes: new { id = item.InternshipId })
                 </td>
-        </tr>
-    }
 
-</table>*@
+                    <td>
+                        @Html.ActionLink("Aplica", "Login", "Account", new { idInternship = item.InternshipId }, new { idInternship = item.InternshipId })
+                    </td>
+            </tr>
+        }
+
+    </table>*@
 
 @*<div class="jumbotron">
-    <h2>Working Links For Different entities and actions</h2>
-    <h6>development use only</h6>
-    <ul>
-        <li>
-            @Html.ActionLink("Firms", "Index", "Firms")
-            <i>CRUD FOR FIRM ENTITIES</i>
-        </li>
-        <li>
-            //Open the Student Register page
-            @Html.ActionLink("Student Register", "StudentRegister", "Student");
-        </li>
-        <li>
-            //Open the Student Profile page
-            @Html.ActionLink("Student", "StudentProfile", "Student");
-        </li>
-        <li>
-            //Open the Student Profile page
-            @Html.ActionLink("StudentHomeApply", "StudentHome", "Student");
-        </li>
-        <li>
-            //Jump directly into a menu, optional parameter, default = 0
-            @Html.ActionLink("Student Edit Profile", "StudentProfile", "Student", new { selection = 3 }, null);
-        </li>
-        <li>
-            @Html.ActionLink("Internships", "Index", "Internships")
-            <i>CRUD FOR Internships</i>
-        </li>
-        <li>
-            @Html.ActionLink("RecruiterDetails", "Index", "RecruitersAccountDetails")
-            <i>CRUD FOR RecruiterDetails</i>
-        </li>
-        <li>
-            @Html.ActionLink("StudentsDetails", "Index", "StudentsAccountDetails")
-            <i>CRUD FOR StudentAccount</i>
-        </li>
-        <li>
-            <i>CRUD FOR THE REST OF THE ENTITIES COMING SOON</i>
-        </li>
-    </ul>
+        <h2>Working Links For Different entities and actions</h2>
+        <h6>development use only</h6>
+        <ul>
+            <li>
+                @Html.ActionLink("Firms", "Index", "Firms")
+                <i>CRUD FOR FIRM ENTITIES</i>
+            </li>
+            <li>
+                //Open the Student Register page
+                @Html.ActionLink("Student Register", "StudentRegister", "Student");
+            </li>
+            <li>
+                //Open the Student Profile page
+                @Html.ActionLink("Student", "StudentProfile", "Student");
+            </li>
+            <li>
+                //Open the Student Profile page
+                @Html.ActionLink("StudentHomeApply", "StudentHome", "Student");
+            </li>
+            <li>
+                //Jump directly into a menu, optional parameter, default = 0
+                @Html.ActionLink("Student Edit Profile", "StudentProfile", "Student", new { selection = 3 }, null);
+            </li>
+            <li>
+                @Html.ActionLink("Internships", "Index", "Internships")
+                <i>CRUD FOR Internships</i>
+            </li>
+            <li>
+                @Html.ActionLink("RecruiterDetails", "Index", "RecruitersAccountDetails")
+                <i>CRUD FOR RecruiterDetails</i>
+            </li>
+            <li>
+                @Html.ActionLink("StudentsDetails", "Index", "StudentsAccountDetails")
+                <i>CRUD FOR StudentAccount</i>
+            </li>
+            <li>
+                <i>CRUD FOR THE REST OF THE ENTITIES COMING SOON</i>
+            </li>
+        </ul>
 
-</div>*@
+    </div>*@

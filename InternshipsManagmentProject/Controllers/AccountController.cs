@@ -183,7 +183,7 @@ namespace InternshipsManagmentProject.Controllers
                 if (result.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(user.Id, model.UserType.ToString());
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     Session["UserId"] = UserManager.FindByEmail(model.Email).Id;
                     Session["Role"] = UserManager.GetRoles(UserManager.FindByEmail(model.Email).Id).FirstOrDefault();
 
@@ -204,7 +204,7 @@ namespace InternshipsManagmentProject.Controllers
                     string id = Session["UserId"].ToString();
 
                     AspNetUser aspNetUser = entities.AspNetUsers.Find(id);
-                        
+
                     entities.Images.Add(fileToSave);
                     aspNetUser.Image = fileToSave;
                     entities.Entry(aspNetUser).State = EntityState.Modified;
@@ -222,7 +222,11 @@ namespace InternshipsManagmentProject.Controllers
                         return RedirectToAction("Create", "StudentsAccountDetails");
 
                     }
-                    return RedirectToAction("Create","RecruitersAccountDetails");
+                    return RedirectToAction("Create", "RecruitersAccountDetails");
+                }
+                else
+                {
+                    result = await UserManager.DeleteAsync(user);
                 }
                 AddErrors(result);
             }
