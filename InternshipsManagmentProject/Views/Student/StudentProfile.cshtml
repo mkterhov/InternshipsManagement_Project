@@ -32,8 +32,10 @@
             <div id="panel_right">
                 <div>
                     <h3>Aplicarile Mele</h3>
-                    @if (Model.StudentInternships != null)
+                    @if (Model.StudentInternships != null && Model.StudentInternships.Count > 0)
                     {
+
+
                         foreach (var item in Model.StudentInternships)
                         {
                             <div class="internship">
@@ -87,7 +89,7 @@
                                     <ol class="progress progress--large">
                                         <li class="is-complete" data-step="">Sent CV</li>
                                         <li class="is-complete" data-step="">Response</li>
-                                        <li class="is-active green" data-step="">Accepted</li>
+                                        <li class="is-active green2" data-step="">Accepted</li>
                                         <li class="" data-step="">In Progress</li>
                                         <li class="progress__last" data-step="">Review</li>
                                     </ol>
@@ -104,7 +106,7 @@
                                         <li class="is-complete" data-step="">Sent CV</li>
                                         <li class="is-complete" data-step="">Response</li>
                                         <li class="is-complete" data-step="">Accepted</li>
-                                        <li class="is-active" data-step="">In Progress</li>
+                                        <li class="is-active blue2" data-step="">In Progress</li>
                                         <li class="progress__last" data-step="">Review</li>
                                     </ol>
                                     <div>
@@ -172,6 +174,9 @@
                                 }
                             </div>
                         }
+                    }
+                    else {
+                        <div>Nu ai aplicat la niciun Internship.</div>
                     }
                 </div>
                 <div>

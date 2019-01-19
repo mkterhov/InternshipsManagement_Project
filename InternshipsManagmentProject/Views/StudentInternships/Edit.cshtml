@@ -3,9 +3,11 @@
 @{
     ViewBag.Title = "Student Internship";
 }
+<link href="~/Content/Student.css" rel="stylesheet" />
 
 @if (Model != null)
 {
+    <div><img class="profile_pic img-circle" src="@Url.Content("~/Content/Images/" + @Model.Student.AspNetUser.Image.Name)" alt="Profile Photo" /></div>
     if (Model.Student.Name != null && Model.Student.LastName != null)
     {
         <h4>@Model.Student.Name @Model.Student.LastName</h4>
@@ -31,20 +33,27 @@
 
 <br />
 <br />
+@if (Model.Student.Resume != null)
+{
+    <a href="@Url.Content("~/Content/Images/")@Model.Resume.Name">See the Resume</a>
+}
+else
+{
+    <div>Studentul nu a trimis CV.</div>
+}
 
-<a href="@Url.Content("~/Content/Images/")@Model.Resume.Name">See the Resume</a>
 
 <br />
 <br />
 
 @if (Model.Stage == "0")
 {
-    <div>@Html.ActionLink("Check Resume", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "1" }, new { @class = "btn primary" })</div>
+    <div>@Html.ActionLink("Verifica CV", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "1" }, new { @class = "btn primary" })</div>
 }
 else if (Model.Stage == "1")
 {
-    <div>@Html.ActionLink("Accept", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "2" }, new { @class = "btn primary" })</div>
-    <div>@Html.ActionLink("Reject", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "rejected" }, new { @class = "btn primary" })</div>
+    <div>@Html.ActionLink("Accepta", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "2" }, new { @class = "btn primary" })</div>
+    <div>@Html.ActionLink("Refuza", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "rejected" }, new { @class = "btn primary" })</div>
 }
 else if (Model.Stage == "2")
 {

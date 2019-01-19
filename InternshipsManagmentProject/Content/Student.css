@@ -106,10 +106,10 @@
 .progress > li.red_:after {
     background: red;
 }
-.progress > li.green_:after {
+.progress > li.green2:after {
     background: darkgreen;
 }
-.progress > li.blue_:after {
+.progress > li.blue2:after {
     background: darkblue;
 }
 
@@ -172,7 +172,7 @@
     content: attr(data-step);
     display: block;
     margin: 0 auto;
-    background: lightblue;
+    background: darkblue;
     width: 3em;
     height: 3em;
     text-align: center;
@@ -199,7 +199,7 @@
 }
 
 .progress > li.blue {
-    color: lightblue;
+    color: lightgreen;
 }
 
 .progress > li.green {
