@@ -7,7 +7,11 @@
 <link href="~/Content/Student.css" rel="stylesheet" />
 <script src="/Scripts/Student.js"></script>
 
-<h4>@Model.Name  @Model.LastName</h4>
+@if (Model != null && Model.Name != null && Model.LastName != null)
+{
+    <h4>@Model.Name  @Model.LastName</h4>
+}
+
 <table>
 
     <tr>
@@ -15,9 +19,9 @@
             <div id="panel_left">
                 <div><img class="profile_pic img-circle" src="@Url.Content("~/Content/Images/"+@Model.AspNetUser.Image.Name)" alt="Profile Photo" /></div>
                 <div>@*@Model.N @Model.LastName*@</div>
-               
+
                 <br />
-                
+
                 <ul id="menu">
                     <li class="">Aplicarile Mele</li>
                     <li>Editare Cont</li>
@@ -28,7 +32,8 @@
             <div id="panel_right">
                 <div>
                     <h3>Aplicarile Mele</h3>
-                    @if(Model.StudentInternships!=null){
+                    @if (Model.StudentInternships != null)
+                    {
                         foreach (var item in Model.StudentInternships)
                         {
                             <div class="internship">
@@ -37,29 +42,30 @@
 
                                 @if (item.Stage == "rejected")
                                 {
-                                        <ol class="progress progress--large">
-                                            <li class="is-complete" data-step="">Sent CV</li>
-                                            <li class="is-complete" data-step="">Response</li>
-                                            <li class="is-active progress__last red" data-step="">Rejected</li>
-                                        </ol>
-                                        <div>
-                                            <br />
-                                            You have been rejected... womp womp womp...
-                                        </div>
+                                    <ol class="progress progress--large">
+                                        <li class="is-complete" data-step="">Sent CV</li>
+                                        <li class="is-complete" data-step="">Response</li>
+                                        <li class="is-active progress__last red" data-step="">Rejected</li>
+                                    </ol>
+                                    <div>
+                                        <br />
+                                        You have been rejected... womp womp womp...
+                                    </div>
                                 }
-                                else if (item.Stage == "0"){
-                                        <ol class="progress progress--large">
-                                            <li class="is-active" data-step="">Sent CV</li>
-                                            <li class="" data-step="">Response</li>
-                                            <li class="" data-step="">Accepted</li>
-                                            <li class="" data-step="">In Progress</li>
-                                            <li class="progress__last" data-step="">Review</li>
-                                        </ol>
-                                        <div>
-                                            You've sent your CV.
-                                            <br />
-                                            <input type="submit" value="Sent CV" disabled>
-                                        </div>
+                                else if (item.Stage == "0")
+                                {
+                                    <ol class="progress progress--large">
+                                        <li class="is-active" data-step="">Sent CV</li>
+                                        <li class="" data-step="">Response</li>
+                                        <li class="" data-step="">Accepted</li>
+                                        <li class="" data-step="">In Progress</li>
+                                        <li class="progress__last" data-step="">Review</li>
+                                    </ol>
+                                    <div>
+                                        Ati trimis CV-ul.
+                                        <br />
+                                        <input type="submit" value="Sent CV" disabled>
+                                    </div>
                                 }
                                 else if (item.Stage == "1")
                                 {
@@ -71,7 +77,7 @@
                                         <li class="progress__last" data-step="">Review</li>
                                     </ol>
                                     <div>
-                                        The firm has received your CV.
+                                        CV-ul a fost primit de catre Firma.
                                         <br />
                                         <input type="submit" value="Waiting Response" disabled>
                                     </div>
@@ -86,13 +92,26 @@
                                         <li class="progress__last" data-step="">Review</li>
                                     </ol>
                                     <div>
-                                        The firm has accepted you!
+                                        Ati fost acceptat de firma!
                                         <br />
-                                        <input type="submit" value="Accept" formaction="/Student/StudentFirmResponse/?response=true&id=@item.Internship.InternshipId">
-                                        <input type="submit" value="Refuse" formaction="/Student/StudentFirmResponse/?response=false&id=@item.Internship.InternshipId">
+                                        <div>@Html.ActionLink("Accepta", "StudentStuff", "Student", new { id = item.Student.StudentId, id2 = item.Internship.InternshipId, newStage = "3" }, new { @class = "btn primary" })</div>
+                                        <div>@Html.ActionLink("Refuza", "StudentStuff", "Student", new { id = item.Student.StudentId, id2 = item.Internship.InternshipId, newStage = "refused" }, new { @class = "btn primary" })</div>
                                     </div>
                                 }
                                 else if (item.Stage == "3")
+                                {
+                                    <ol class="progress progress--large">
+                                        <li class="is-complete" data-step="">Sent CV</li>
+                                        <li class="is-complete" data-step="">Response</li>
+                                        <li class="is-complete" data-step="">Accepted</li>
+                                        <li class="is-active" data-step="">In Progress</li>
+                                        <li class="progress__last" data-step="">Review</li>
+                                    </ol>
+                                    <div>
+                                        Internship-ul se intampla.
+                                    </div>
+                                }
+                                else if (item.Stage == "4")
                                 {
                                     <ol class="progress progress--large">
                                         <li class="is-complete" data-step="">Sent CV</li>
@@ -102,26 +121,39 @@
                                         <li class="is-active yellow" data-step="">Review</li>
                                     </ol>
                                     <div>
-                                        Thank you for joining this internship. Please give us a feedback.
+                                        Multumim pentru participare. Feedback-ul este apreciat.
                                         <br />
                                         Rate:
-                                        <input type="submit" value="1" formaction="/Student/StudentFirmRating/?rating=1&id=@item.Internship.InternshipId">
-                                        <input type="submit" value="2" formaction="/Student/StudentFirmRating/?rating=2&id=@item.Internship.InternshipId">
-                                        <input type="submit" value="3" formaction="/Student/StudentFirmRating/?rating=3&id=@item.Internship.InternshipId">
-                                        <input type="submit" value="4" formaction="/Student/StudentFirmRating/?rating=4&id=@item.Internship.InternshipId">
-                                        <input type="submit" value="5" formaction="/Student/StudentFirmRating/?rating=5&id=@item.Internship.InternshipId">
+                                        <div>@Html.ActionLink("1", "StudentStuff", "Student", new { id = item.Student.StudentId, id2 = item.Internship.InternshipId, newStage = "done", rate = 1 }, new { @class = "btn primary" })</div>
+                                        <div>@Html.ActionLink("2", "StudentStuff", "Student", new { id = item.Student.StudentId, id2 = item.Internship.InternshipId, newStage = "done", rate = 2 }, new { @class = "btn primary" })</div>
+                                        <div>@Html.ActionLink("3", "StudentStuff", "Student", new { id = item.Student.StudentId, id2 = item.Internship.InternshipId, newStage = "done", rate = 3 }, new { @class = "btn primary" })</div>
+                                        <div>@Html.ActionLink("4", "StudentStuff", "Student", new { id = item.Student.StudentId, id2 = item.Internship.InternshipId, newStage = "done", rate = 4 }, new { @class = "btn primary" })</div>
+                                        <div>@Html.ActionLink("5", "StudentStuff", "Student", new { id = item.Student.StudentId, id2 = item.Internship.InternshipId, newStage = "done", rate = 5 }, new { @class = "btn primary" })</div>
                                         Stars
                                     </div>
                                 }
                                 else if (item.Stage == "refused")
                                 {
-                                        <ol class="progress progress--large">
-                                            <li class="is-complete" data-step="">Sent CV</li>
-                                            <li class="is-complete" data-step="">Response</li>
-                                            <li class="is-active progress__last red" data-step="">Rejected</li>
-                                        </ol>
+                                    <ol class="progress progress--large">
+                                        <li class="is-complete" data-step="">Sent CV</li>
+                                        <li class="is-complete" data-step="">Response</li>
+                                        <li class="is-active progress__last red" data-step="">Rejected</li>
+                                    </ol>
                                     <div>
-                                        You have refused the Internship.
+                                        Ati refuzat Internship-ul.
+                                    </div>
+                                }
+                                else if (item.Stage == "done")
+                                {
+                                    <ol class="progress progress--large">
+                                        <li class="is-complete" data-step="">Sent CV</li>
+                                        <li class="is-complete" data-step="">Response</li>
+                                        <li class="is-complete" data-step="">Accepted</li>
+                                        <li class="is-complete" data-step="">In Progress</li>
+                                        <li class="is-complete" data-step="">Review</li>
+                                    </ol>
+                                    <div>
+                                        Ati dat Rating.
                                     </div>
                                 }
                                 else
@@ -135,7 +167,7 @@
                                     </ol>
                                     <div>
                                         <br />
-                                        No idea how you got here...
+                                        Ponei zburatori
                                     </div>
                                 }
                             </div>

@@ -141,10 +141,30 @@ namespace InternshipsManagmentProject.Controllers
             }
         }
 
+
+        public ActionResult StudentStuff(string id, string id2, string newStage, string rate = null)
+        {
+            StudentInternship studentInternship = entities.StudentInternships.Where(st => st.StudentId == id && st.InternshipId == id2).ToList().FirstOrDefault();
+            if (studentInternship == null)
+            {
+                return HttpNotFound();
+            }
+            if (newStage != null)
+            {
+                studentInternship.Stage = newStage;
+                if (rate != null)
+                {
+                    studentInternship.Internship.Description += rate;      
+                }
+                entities.SaveChanges();
+            }
+            return RedirectToAction("StudentProfile", "Student");
+        }
+
         public ActionResult StudentRegister()
         {
             Student student = entities.Students.Find(Session["UserId"]);
-            if(student!=null)
+            if (student != null)
             {
                 return View(student);
             }
