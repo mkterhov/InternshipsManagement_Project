@@ -228,6 +228,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Login.css" />
+    <Content Include="Content\simple_sidebar.css" />
     <Content Include="Content\Student.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -250,6 +252,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Student.js" />
+    <Content Include="Views\StudentInternships\TextFile1.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -284,7 +287,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Firms\Create.cshtml" />
+    <Content Include="Models\StudentViewModels\Create.cshtml" />
     <Content Include="Views\Firms\Delete.cshtml" />
     <Content Include="Views\Firms\Details.cshtml" />
     <Content Include="Views\Firms\Edit.cshtml" />
@@ -314,9 +317,15 @@
     <Content Include="Views\StudentInternships\Edit.cshtml" />
     <Content Include="Views\StudentInternships\Index.cshtml" />
     <Content Include="Views\Student\StudentHome.cshtml" />
+    <Content Include="Views\Firms\HomeFirma.cshtml" />
+    <Content Include="Views\Firms\GestApl.cshtml" />
+    <Content Include="Views\Shared\Date.cshtml" />
+    <Content Include="Views\Shared\NotFound.cshtml" />
+    <Content Include="Views\Firms\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\" />
     <Folder Include="Views\Default\" />
     <Folder Include="Views\New\" />
   </ItemGroup>

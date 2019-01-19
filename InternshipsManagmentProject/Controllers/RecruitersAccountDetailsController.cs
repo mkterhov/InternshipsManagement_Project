@@ -50,15 +50,16 @@ namespace InternshipsManagmentProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,LastName,FirmId,ContactEmail,Bio,UserId")] Recruiter recruiter)
+        public ActionResult Create([Bind(Include = "Name,LastName,FirmId,ContactEmail,Bio")] Recruiter recruiter)
         {
             if (ModelState.IsValid)
             {
                 string guid = Guid.NewGuid().ToString();
                 recruiter.RecruiterId = guid;
+                recruiter.UserId = Session["UserId"].ToString();
                 db.Recruiters.Add(recruiter);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", recruiter.UserId);
@@ -69,11 +70,19 @@ namespace InternshipsManagmentProject.Controllers
         // GET: RecruitersAccountDetails/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id == null)
+            if(Session["UserId"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                id = Session["UserId"].ToString();
             }
-            Recruiter recruiter = db.Recruiters.Find(id);
+            else
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
+            
+            Recruiter recruiter = db.Recruiters.Where(x => x.UserId == id).FirstOrDefault();
             if (recruiter == null)
             {
                 return HttpNotFound();
@@ -94,7 +103,7 @@ namespace InternshipsManagmentProject.Controllers
             {
                 db.Entry(recruiter).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", recruiter.UserId);
             ViewBag.FirmId = new SelectList(db.Firms, "FirmId", "Name", recruiter.FirmId);

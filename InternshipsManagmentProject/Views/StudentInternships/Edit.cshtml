@@ -1,104 +1,79 @@
 ﻿@model InternshipsManagmentProject.Data.StudentInternship
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Student Internship";
 }
 
-<h2>Edit</h2>
-
-
-@using (Html.BeginForm())
+@if (Model != null)
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>StudentInternship</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.StudentId)
+    if (Model.Student.Name != null && Model.Student.LastName != null)
+    {
+        <h4>@Model.Student.Name @Model.Student.LastName</h4>
+    }
+    if (Model.Student.University != null)
+    {
+        <div>Universitate: @Model.Student.University</div>
+    }
+    if (Model.Student.LevelOfStudies != null)
+    {
+        <div>Nivel de Studii: @Model.Student.LevelOfStudies</div>
+    }
+    if (Model.Student.Domain != null)
+    {
+        <div>Domeniu: @Model.Student.Domain</div>
+    }
+    if (Model.Student.Bio != null)
+    {
+        <div>Bio: @Model.Student.Bio</div>
+    }
 
-        @Html.HiddenFor(model => model.InternshipId)
+}
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.StudentUserId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StudentUserId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.StudentUserId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<br />
+<br />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateCreated, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateCreated, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateCreated, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<a href="@Url.Content("~/Content/Images/")@Model.Resume.Name">See the Resume</a>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Completed, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Completed)
-                    @Html.ValidationMessageFor(model => model.Completed, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
+<br />
+<br />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Updates, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Updates, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Updates, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SubmitedResume, "SubmitedResume", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("SubmitedResume", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.SubmitedResume, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StatusOfApplication, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.StatusOfApplication)
-                    @Html.ValidationMessageFor(model => model.StatusOfApplication, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StudentResumeId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StudentResumeId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.StudentResumeId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StarredForFurtherReview, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.StarredForFurtherReview)
-                    @Html.ValidationMessageFor(model => model.StarredForFurtherReview, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+@if (Model.Stage == "0")
+{
+    <div>@Html.ActionLink("Check Resume", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "1" }, new { @class = "btn primary" })</div>
+}
+else if (Model.Stage == "1")
+{
+    <div>@Html.ActionLink("Accept", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "2" }, new { @class = "btn primary" })</div>
+    <div>@Html.ActionLink("Reject", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "rejected" }, new { @class = "btn primary" })</div>
+}
+else if (Model.Stage == "2")
+{
+    <div>Asteptare raspuns student.</div>
+}
+else if (Model.Stage == "3")
+{
+    <div>Internship-ul se intampla.</div>
+    <div>@Html.ActionLink("Termina Internship", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "4" }, new { @class = "btn primary" })</div>
+}
+else if (Model.Stage == "4")
+{
+    <div>Studentul a terminat.</div>
+}
+else if (Model.Stage == "done")
+{
+    <div>Studentul a dat Rating.</div>
+}
+else if (Model.Stage == "rejected")
+{
+    <div>Studentul a fost respins.</div>
+}
+else if (Model.Stage == "refused")
+{
+    <div>Studentul a declinat oferta.</div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Inapoi la Aplicanti", "Index", "StudentInternships", new { id = Model.InternshipId }, new { @class = "btn btn-primary" })
 </div>
 
 @section Scripts {

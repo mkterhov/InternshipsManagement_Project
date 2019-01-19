@@ -30,6 +30,7 @@ namespace InternshipsManagmentProject.Controllers
             HomeStudent homeStudent = new HomeStudent();
             string UserId = Session["UserId"].ToString();
             Student student = entities.Students.Where(user => user.UserId == UserId).FirstOrDefault();
+            homeStudent.ListOfIdsOfAppliedInternships = new List<string>();
             if (student != null && student.StudentInternships.Count > 0)
             {
                 foreach(var studentInternship in student.StudentInternships.ToList()){
@@ -37,6 +38,7 @@ namespace InternshipsManagmentProject.Controllers
 
                 }
             }
+            homeStudent.Student = student;
             homeStudent.Internships = entities.Internships.ToList();
             return View(homeStudent);
         }
@@ -108,31 +110,61 @@ namespace InternshipsManagmentProject.Controllers
         [HttpGet]
         public ActionResult StudentProfile(string idStudent=null, int selection = 0, string imagePath = "")
         {
-            string UserId = Session["UserId"].ToString();
-            if (idStudent != null)
-            {
-                student = entities.Students.Find(idStudent);
-            }
-            if (idStudent == null)
+            if (Session != null && Session["UserId"] != null)
             {
                 
-                student = entities.Students.Where(user => user.UserId == UserId).ToList().FirstOrDefault() ;
+                    string UserId = Session["UserId"].ToString();
+                    if (idStudent != null)
+                    {
+                        student = entities.Students.Find(idStudent);
+                    }
+                    if (idStudent == null)
+                    {
+
+                        student = entities.Students.Where(user => user.UserId == UserId).ToList().FirstOrDefault();
+                    }
+                    if (imagePath.Length > 0)
+                    {
+                        //load image pls
+                    }
+
+                    ViewBag.Selection = selection;
+                    //if (createOrUpdateStudent.Name!=null) {
+                    //    student = createOrUpdateStudent;
+                    //}
+                    return View(student);
+                
             }
-            if (imagePath.Length>0) {
-                //load image pls
+            else
+            {
+                return View("~/Shared/Error.cshtml");
             }
-            
-            ViewBag.Selection = selection;
-            //if (createOrUpdateStudent.Name!=null) {
-            //    student = createOrUpdateStudent;
-            //}
-            return View(student);
+        }
+
+
+        public ActionResult StudentStuff(string id, string id2, string newStage, string rate = null)
+        {
+            StudentInternship studentInternship = entities.StudentInternships.Where(st => st.StudentId == id && st.InternshipId == id2).ToList().FirstOrDefault();
+            if (studentInternship == null)
+            {
+                return HttpNotFound();
+            }
+            if (newStage != null)
+            {
+                studentInternship.Stage = newStage;
+                if (rate != null)
+                {
+                    studentInternship.Internship.Description += rate;      
+                }
+                entities.SaveChanges();
+            }
+            return RedirectToAction("StudentProfile", "Student");
         }
 
         public ActionResult StudentRegister()
         {
             Student student = entities.Students.Find(Session["UserId"]);
-            if(student!=null)
+            if (student != null)
             {
                 return View(student);
             }
@@ -181,5 +213,6 @@ namespace InternshipsManagmentProject.Controllers
         {
 
         }
+        
     }
 }

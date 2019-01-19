@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using InternshipsManagmentProject.Data;
 using InternshipsManagmentProject.Data.Interfaces;
+using InternshipsManagmentProject.Models.FirmViewModels;
 
 namespace InternshipsManagmentProject.Controllers
 {
     public class FirmsController : Controller
     {
         private Entities db = new Entities();
+        private const string ContentPath = "~/Content/Images/";
 
         // GET: Firms
         public ActionResult Index()
@@ -50,12 +53,27 @@ namespace InternshipsManagmentProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,Description,NumberOfEmployees,Logo")] Firm firm)
+        public ActionResult Create([Bind(Include = "Name,Description,NumberOfEmployees")] Firm firm, HttpPostedFileBase Logo)
         {
             if (ModelState.IsValid)
             {
                 string guid = Guid.NewGuid().ToString();
                 firm.FirmId = guid;
+                Image logoFirm = new Image();
+                if (Logo != null)
+                {
+                    var fileName = Path.GetFileName(Logo.FileName);
+                    var directoryToSave = Server.MapPath(Url.Content(ContentPath));
+                    string GuidFileName = Guid.NewGuid().ToString() + ".jpg";
+                    var pathToSave = Path.Combine(directoryToSave, GuidFileName);
+                    Logo.SaveAs(pathToSave);
+                    logoFirm.Name = GuidFileName;
+                    logoFirm.Path = pathToSave;
+                    logoFirm.Id = Guid.NewGuid().ToString();
+                    db.Images.Add(logoFirm);
+                    firm.Image = logoFirm;
+                }
+                
                 db.Firms.Add(firm);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -131,6 +149,23 @@ namespace InternshipsManagmentProject.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult HomeFirma()
+        {
+            var userId = Session["UserId"].ToString();
+            Recruiter recruiter = db.Recruiters.Where(a => a.UserId == userId).FirstOrDefault();
+            Firm firm = recruiter.Firm;
+            List<Internship> internships = Enumerable.ToList(db.Internships.Where(x => x.FirmOrganizerId == firm.FirmId).AsEnumerable());
+
+            HomeFirm homeFirma = new HomeFirm(firm, internships);
+            return View(homeFirma);
+        }
+        public ActionResult GestApl()
+        {
+            List<Student> lista = Enumerable.ToList(db.Students.AsEnumerable());
+            GestAplicanti gestApl = new GestAplicanti(lista);
+            return View(gestApl);
         }
     }
 }

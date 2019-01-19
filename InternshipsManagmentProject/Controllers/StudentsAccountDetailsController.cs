@@ -58,9 +58,9 @@ namespace InternshipsManagmentProject.Controllers
                 student.StudentId = guid;
                 db.Students.Add(student);
                 db.SaveChanges();
-                return RedirectToAction("StudentProfile", new RouteValueDictionary(
-                new { controller = "Student", action = "StudentProfile", idStudent = student.StudentId }));
-                //return RedirectToAction("StudentProfile","Student");
+                //return RedirectToAction("StudentProfile", new RouteValueDictionary(
+                //new { controller = "Student", action = "StudentProfile", idStudent = student.StudentId }));
+                return RedirectToAction("Index","Home");
             }
 
             ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", student.UserId);

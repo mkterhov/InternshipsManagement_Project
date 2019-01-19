@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
+@if (Request.IsAuthenticated && User.Identity.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
@@ -7,16 +7,33 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @{
+                string user_id = "", user_role = "";
+                if (User.Identity.IsAuthenticated && Session["UserId"] != null)
+                {
+                    user_id = Session["UserId"].ToString();
+                    user_role = Session["Role"].ToString();
+                }
+                if (user_role.Equals("Student"))
+                {
+                   @Html.ActionLink(User.Identity.GetUserName(), "StudentProfile", "Student", routeValues: null, htmlAttributes: new { idStudent = User.Identity.GetUserId() })
+                }
+                else
+                {
+                    @Html.ActionLink(User.Identity.GetUserName(), "Edit", "RecruitersAccountDetails", routeValues: new { id = User.Identity.GetUserId()}, htmlAttributes: new { id = User.Identity.GetUserId() })
+                }
+            }
+            
+            
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Iesire din cont</a></li>
     </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Cont nou", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Intra in cont", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

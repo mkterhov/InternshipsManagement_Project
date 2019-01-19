@@ -14,6 +14,7 @@ using System.IO;
 using File = InternshipsManagmentProject.Data.File;
 using System.Web.Routing;
 using System.Web.Security;
+using System.Data.Entity;
 
 namespace InternshipsManagmentProject.Controllers
 {
@@ -24,6 +25,7 @@ namespace InternshipsManagmentProject.Controllers
         //add a role manager
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private const string ContentPath = "~/Content/Images/";
 
         public AccountController()
         {
@@ -82,20 +84,28 @@ namespace InternshipsManagmentProject.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, false, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
                     Session["UserId"] = UserManager.FindByEmail(model.Email).Id;
                     Session["Role"] = UserManager.GetRoles(UserManager.FindByEmail(model.Email).Id).FirstOrDefault();
-
+                    string userId = Session["UserId"].ToString();
                     string role = Session["Role"].ToString();
                     if (role == "Student")
                     {
-                        return RedirectToAction("StudentProfile", new RouteValueDictionary(
-                        new { controller = "Student", action = "StudentProfile" }));
+                        return RedirectToAction("Index", "Home");
+                        //return RedirectToAction("StudentProfile", new RouteValueDictionary(
+                        //new { controller = "Student", action = "StudentProfile" }));
                     }
-
+                    if (role=="Recruiter")
+                    {
+                        Recruiter recruiter = entities.Recruiters.Where(a => a.UserId == userId).FirstOrDefault();
+                        Firm firm = recruiter.Firm;
+                        Session["FirmId"] = firm.FirmId;
+                        // return RedirectToLocal(returnUrl);
+                        return RedirectToAction("Index", "Home");
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -164,7 +174,7 @@ namespace InternshipsManagmentProject.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase Image)
+        public async Task<ActionResult> SubmitRegister(RegisterViewModel model, HttpPostedFileBase ProfilePhoto)
         {
             if (ModelState.IsValid)
             {
@@ -178,6 +188,30 @@ namespace InternshipsManagmentProject.Controllers
                     Session["UserId"] = UserManager.FindByEmail(model.Email).Id;
                     Session["Role"] = UserManager.GetRoles(UserManager.FindByEmail(model.Email).Id).FirstOrDefault();
 
+                    string id = Session["UserId"].ToString();
+                    Data.Image fileToSave = new Data.Image();
+                    AspNetUser aspNetUser = entities.AspNetUsers.Find(id);
+
+                    if (ProfilePhoto != null)
+                    {
+                        var fileName = Path.GetFileName(ProfilePhoto.FileName);
+                        var directoryToSave = Server.MapPath(Url.Content(ContentPath));
+                        string GuidFileName = Guid.NewGuid().ToString() + ".jpg";
+                        var pathToSave = Path.Combine(directoryToSave, GuidFileName);
+                        ProfilePhoto.SaveAs(pathToSave);
+                        fileToSave.Name = GuidFileName;
+                        fileToSave.Path = pathToSave;
+                        fileToSave.Id = Guid.NewGuid().ToString();
+                        entities.Images.Add(fileToSave);
+                        aspNetUser.Image = fileToSave;
+                    }
+
+                        
+                    
+                    entities.Entry(aspNetUser).State = EntityState.Modified;
+                    entities.SaveChanges();
+
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -189,13 +223,13 @@ namespace InternshipsManagmentProject.Controllers
                         return RedirectToAction("Create", "StudentsAccountDetails");
 
                     }
-                    return RedirectToAction("Home", "Home");
+                    return RedirectToAction("Create","RecruitersAccountDetails");
                 }
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return RedirectToAction("Register", "Account");
         }
 
         //
@@ -418,6 +452,7 @@ namespace InternshipsManagmentProject.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Session.Remove("Role");
             return RedirectToAction("Index", "Home");
         }
 

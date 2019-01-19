@@ -1,0 +1,56 @@
+﻿@model InternshipsManagmentProject.Models.FirmViewModels.GestAplicanti
+@{
+    ViewBag.Title = "Gestioneaza Aplicanti";
+}
+
+<h2>Gestioneaza Aplicanti</h2>
+<table class="table">
+    @foreach (var item in Model.StudentiAplicanti)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)  @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                <button>Vezi Profil</button>
+            </td>
+            <td>
+                @{
+                    string id1 = "starB" + item.StudentId.ToString();
+
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Five-pointed_star.svg" width="20" height="20" id="@id1" onclick="changeImage('@id1')">
+                }
+            </td>
+            <td>
+                @{
+                    string id2 = "astB" + item.StudentId.ToString();
+                }
+                <button id="@id2" onclick="clickAst('@id2')">In asteptare</button>
+            </td>
+            <td>
+                <button>Respinge</button>
+            </td>
+        </tr>
+                    }
+
+</table>
+
+<script language="javascript">
+    function changeImage(n) {
+
+        if (document.getElementById(n).src == "https://upload.wikimedia.org/wikipedia/commons/1/18/Five-pointed_star.svg")
+        {
+            document.getElementById(n).src = "https://vignette.wikia.nocookie.net/shadowfight/images/9/9a/Exclusive_star.png/revision/latest?cb=20141228081928";
+        }
+        else
+        {
+            document.getElementById(n).src = "https://upload.wikimedia.org/wikipedia/commons/1/18/Five-pointed_star.svg";
+        }
+    }
+
+    function clickAst(n) {
+        document.getElementById(n).textContent = "Asteapta";
+        document.getElementById(n).disabled = true;
+    }
+</script>
+
