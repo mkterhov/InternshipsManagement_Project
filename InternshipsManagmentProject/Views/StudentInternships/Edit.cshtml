@@ -1,7 +1,7 @@
 ﻿@model InternshipsManagmentProject.Data.StudentInternship
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Student Internship";
 }
 
 <h4>@Model.Student.Name @Model.Student.LastName</h4>
@@ -19,20 +19,20 @@
                 <div>@Html.ActionLink("Reject", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "rejected" }, new { @class = "btn primary" })</div>
         }
         else if(Model.Stage == "2"){
-                <div>Waiting for Student to accept.</div>
+                <div>Asteptare raspuns student.</div>
         }
         else if(Model.Stage == "3"){
-                <div>The Student has finished this Internship.</div>
+                <div>Studentul a terminat.</div>
         }
         else if(Model.Stage == "rejected"){
-                <div>You have rejected the student.</div>
+                <div>Studentul a fost respins.</div>
         }
         else if(Model.Stage == "refused"){
-                <div>The student has refused the offer.</div>
+                <div>Studentul a declinat oferta.</div>
         }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Inapoi", "Index")
 </div>
 
 @section Scripts {
