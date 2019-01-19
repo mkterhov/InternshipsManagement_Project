@@ -11,7 +11,8 @@ namespace InternshipsManagmentProject.Data
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class Internship
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -25,24 +26,53 @@ namespace InternshipsManagmentProject.Data
         public string InternshipId { get; set; }
         public string FirmOrganizerId { get; set; }
         public string RecruiterResponsibleId { get; set; }
+    
+        [DisplayName("Data Inceput")]
         public System.DateTime StartDate { get; set; }
+
+        [DisplayName("Data Sfarsit")]
         public System.DateTime EndDate { get; set; }
+
+        [DisplayName("Descriere")]
         public string Description { get; set; }
+
+        [DisplayName("Categorie")]
         public string Category { get; set; }
+
+        [DisplayName("Oras")]
         public string City { get; set; }
+
+        [DisplayName("Nr pozitii disponibile")]
         public Nullable<int> PositionsAvailable { get; set; }
+
+        [DisplayName("Poza")]
         public string InternshipPostPhoto { get; set; }
+
+        [DisplayName("Titlu")]
         public string Title { get; set; }
+
+        [DisplayName("Termen limita")]
         public Nullable<System.DateTime> DeadlineApplications { get; set; }
+
+        [DisplayName("Tip job")]
         public string TypeJob { get; set; }
+
+        [DisplayName("Departament")]
         public string Department { get; set; }
+
+        [DisplayName("Cuvinte cheie")]
         public string Keywords { get; set; }
         public Nullable<bool> Deleted { get; set; }
         public Nullable<bool> Hidden { get; set; }
+
+        [DisplayName("Perioada")]
         public string Duration { get; set; }
         public Nullable<System.DateTime> LastUpdated { get; set; }
     
+        [DisplayName("Firma")]
         public virtual Firm Firm { get; set; }
+
+        [DisplayName("Imagine")]
         public virtual Image Image { get; set; }
         public virtual Recruiter Recruiter { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
