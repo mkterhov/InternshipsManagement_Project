@@ -4,35 +4,76 @@
     ViewBag.Title = "Student Internship";
 }
 
-<h4>@Model.Student.Name @Model.Student.LastName</h4>
-<div>Universitate: @Model.Student.University</div>
-<div>Nivel de Studii: @Model.Student.LevelOfStudies</div>
-<div>Domeniu: @Model.Student.Domain</div>
-<div>Bio: @Model.Student.Bio</div>
+@if (Model != null)
+{
+    if (Model.Student.Name != null && Model.Student.LastName != null)
+    {
+        <h4>@Model.Student.Name @Model.Student.LastName</h4>
+    }
+    if (Model.Student.University != null)
+    {
+        <div>Universitate: @Model.Student.University</div>
+    }
+    if (Model.Student.LevelOfStudies != null)
+    {
+        <div>Nivel de Studii: @Model.Student.LevelOfStudies</div>
+    }
+    if (Model.Student.Domain != null)
+    {
+        <div>Domeniu: @Model.Student.Domain</div>
+    }
+    if (Model.Student.Bio != null)
+    {
+        <div>Bio: @Model.Student.Bio</div>
+    }
+
+}
+
+<br />
+<br />
+
 <a href="@Url.Content("~/Content/Images/")@Model.Resume.Name">See the Resume</a>
-        @if (Model.Stage == "0")
-        {
-                <div>@Html.ActionLink("Check Resume", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "1" }, new { @class = "btn primary" })</div>
-        }
-        else if(Model.Stage == "1"){
-                <div>@Html.ActionLink("Accept", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "2" }, new { @class = "btn primary" })</div>
-                <div>@Html.ActionLink("Reject", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "rejected" }, new { @class = "btn primary" })</div>
-        }
-        else if(Model.Stage == "2"){
-                <div>Asteptare raspuns student.</div>
-        }
-        else if(Model.Stage == "3"){
-                <div>Studentul a terminat.</div>
-        }
-        else if(Model.Stage == "rejected"){
-                <div>Studentul a fost respins.</div>
-        }
-        else if(Model.Stage == "refused"){
-                <div>Studentul a declinat oferta.</div>
-        }
+
+<br />
+<br />
+
+@if (Model.Stage == "0")
+{
+    <div>@Html.ActionLink("Check Resume", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "1" }, new { @class = "btn primary" })</div>
+}
+else if (Model.Stage == "1")
+{
+    <div>@Html.ActionLink("Accept", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "2" }, new { @class = "btn primary" })</div>
+    <div>@Html.ActionLink("Reject", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "rejected" }, new { @class = "btn primary" })</div>
+}
+else if (Model.Stage == "2")
+{
+    <div>Asteptare raspuns student.</div>
+}
+else if (Model.Stage == "3")
+{
+    <div>Internship-ul se intampla.</div>
+    <div>@Html.ActionLink("Termina Internship", "Edit", "StudentInternships", new { id = Model.StudentId, id2 = Model.InternshipId, newStage = "4" }, new { @class = "btn primary" })</div>
+}
+else if (Model.Stage == "4")
+{
+    <div>Studentul a terminat.</div>
+}
+else if (Model.Stage == "done")
+{
+    <div>Studentul a dat Rating.</div>
+}
+else if (Model.Stage == "rejected")
+{
+    <div>Studentul a fost respins.</div>
+}
+else if (Model.Stage == "refused")
+{
+    <div>Studentul a declinat oferta.</div>
+}
 
 <div>
-    @Html.ActionLink("Inapoi", "Index")
+    @Html.ActionLink("Inapoi la Aplicanti", "Index", "StudentInternships", new { id = Model.InternshipId }, new { @class = "btn btn-primary" })
 </div>
 
 @section Scripts {
