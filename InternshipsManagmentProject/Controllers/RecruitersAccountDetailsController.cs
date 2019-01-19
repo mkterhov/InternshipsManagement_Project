@@ -59,7 +59,7 @@ namespace InternshipsManagmentProject.Controllers
                 recruiter.UserId = Session["UserId"].ToString();
                 db.Recruiters.Add(recruiter);
                 db.SaveChanges();
-                return RedirectToAction("HomeFirma", "Firms");
+                return RedirectToAction("Index", "Home");
             }
 
             ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", recruiter.UserId);

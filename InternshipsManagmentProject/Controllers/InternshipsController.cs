@@ -162,7 +162,7 @@ namespace InternshipsManagmentProject.Controllers
 
                 db.Entry(internship).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             ViewBag.FirmOrganizerId = new SelectList(db.Firms, "FirmId", "Name", internship.FirmOrganizerId);
             ViewBag.InternshipPostPhoto = new SelectList(db.Images, "Id", "Name", internship.InternshipPostPhoto);

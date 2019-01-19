@@ -94,16 +94,17 @@ namespace InternshipsManagmentProject.Controllers
                     string role = Session["Role"].ToString();
                     if (role == "Student")
                     {
-                        return RedirectToAction("StudentProfile", new RouteValueDictionary(
-                        new { controller = "Student", action = "StudentProfile" }));
+                        return RedirectToAction("Index", "Home");
+                        //return RedirectToAction("StudentProfile", new RouteValueDictionary(
+                        //new { controller = "Student", action = "StudentProfile" }));
                     }
                     if (role=="Recruiter")
                     {
                         Recruiter recruiter = entities.Recruiters.Where(a => a.UserId == userId).FirstOrDefault();
                         Firm firm = recruiter.Firm;
                         Session["FirmId"] = firm.FirmId;
-                        return RedirectToLocal(returnUrl);
-
+                        // return RedirectToLocal(returnUrl);
+                        return RedirectToAction("Index", "Home");
                     }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
@@ -187,8 +188,9 @@ namespace InternshipsManagmentProject.Controllers
                     Session["UserId"] = UserManager.FindByEmail(model.Email).Id;
                     Session["Role"] = UserManager.GetRoles(UserManager.FindByEmail(model.Email).Id).FirstOrDefault();
 
-
+                    string id = Session["UserId"].ToString();
                     Data.Image fileToSave = new Data.Image();
+                    AspNetUser aspNetUser = entities.AspNetUsers.Find(id);
 
                     if (ProfilePhoto != null)
                     {
@@ -200,13 +202,12 @@ namespace InternshipsManagmentProject.Controllers
                         fileToSave.Name = GuidFileName;
                         fileToSave.Path = pathToSave;
                         fileToSave.Id = Guid.NewGuid().ToString();
+                        entities.Images.Add(fileToSave);
+                        aspNetUser.Image = fileToSave;
                     }
-                    string id = Session["UserId"].ToString();
 
-                    AspNetUser aspNetUser = entities.AspNetUsers.Find(id);
                         
-                    entities.Images.Add(fileToSave);
-                    aspNetUser.Image = fileToSave;
+                    
                     entities.Entry(aspNetUser).State = EntityState.Modified;
                     entities.SaveChanges();
 
