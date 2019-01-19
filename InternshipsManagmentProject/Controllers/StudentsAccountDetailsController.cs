@@ -60,7 +60,7 @@ namespace InternshipsManagmentProject.Controllers
                 db.SaveChanges();
                 //return RedirectToAction("StudentProfile", new RouteValueDictionary(
                 //new { controller = "Student", action = "StudentProfile", idStudent = student.StudentId }));
-                return RedirectToAction("Home","Index");
+                return RedirectToAction("Index","Home");
             }
 
             ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", student.UserId);
