@@ -1,10 +1,10 @@
 ﻿@model InternshipsManagmentProject.Data.Internship
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Creeaza internship";
 }
 
-<h2>Create</h2>
+<h2>Creeaza internship</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Internship</h4>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -22,21 +22,23 @@
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group">
+        @Html.HiddenFor(model => model.FirmOrganizerId)
+        @*<div class="form-group">
             @Html.LabelFor(model => model.FirmOrganizerId, "FirmOrganizerId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("FirmOrganizerId",null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FirmOrganizerId, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
-        <div class="form-group">
+        @Html.HiddenFor(model => model.RecruiterResponsibleId)
+        @*<div class="form-group">
             @Html.LabelFor(model => model.RecruiterResponsibleId, "RecruiterResponsibleId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("RecruiterResponsibleId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RecruiterResponsibleId, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -70,21 +72,23 @@
             </div>
         </div>
 
-        <div class="form-group">
+        @Html.HiddenFor(model => model.PositionsAvailable)
+        @*<div class="form-group">
             @Html.LabelFor(model => model.PositionsAvailable, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PositionsAvailable, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PositionsAvailable, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
-        <div class="form-group">
+        @Html.HiddenFor(model => model.InternshipPostPhoto)
+        @*<div class="form-group">
             @Html.LabelFor(model => model.InternshipPostPhoto, "InternshipPostPhoto", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("InternshipPostPhoto", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.InternshipPostPhoto, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -98,14 +102,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Creeaza un nou internship" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Inapoi la lista", "Index", "Home")
 </div>
 
 @section Scripts {

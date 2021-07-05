@@ -1,5 +1,6 @@
-﻿@{
-    ViewBag.Title = "Fii intern";
+﻿@model IEnumerable<InternshipsManagmentProject.Data.Internship>
+@{
+    ViewBag.Title = "Fii-intern";
 }
 @{
     //example of usage, possible errors
@@ -12,49 +13,241 @@
         user_role = Session["Role"].ToString();
     }
 }
-@*session variable usage example*@
-<p>@user_id</p>
-<p>@user_role</p>
+<br />
+<br />
 
-<div class="jumbotron">
-    <h2>Working Links For Different entities and actions</h2>
-    <h6>development use only</h6>
-    <ul>
-        <li>
-            @Html.ActionLink("Firms", "Index", "Firms")
-            <i>CRUD FOR FIRM ENTITIES</i>
-        </li>
-        <li>
-            //Open the Student Register page
-            @Html.ActionLink("Student Register", "StudentRegister", "Student");
-        </li>
-        <li>
-            //Open the Student Profile page
-            @Html.ActionLink("Student", "StudentProfile", "Student");
-        </li>
-        <li>
-            //Open the Student Profile page
-            @Html.ActionLink("StudentHomeApply", "StudentHome", "Student");
-        </li>
-        <li>
-            //Jump directly into a menu, optional parameter, default = 0
-            @Html.ActionLink("Student Edit Profile", "StudentProfile", "Student", new { selection = 3 }, null);
-        </li>
-        <li>
-            @Html.ActionLink("Internships", "Index", "Internships")
-            <i>CRUD FOR Internships</i>
-        </li>
-        <li>
-            @Html.ActionLink("RecruiterDetails", "Index", "RecruitersAccountDetails")
-            <i>CRUD FOR RecruiterDetails</i>
-        </li>
-        <li>
-            @Html.ActionLink("StudentsDetails", "Index", "StudentsAccountDetails")
-            <i>CRUD FOR StudentAccount</i>
-        </li>
-        <li>
-            <i>CRUD FOR THE REST OF THE ENTITIES COMING SOON</i>
-        </li>
-    </ul>
 
-</div>
+
+@if (Session != null)
+{
+    if (Session["Role"] != null)
+    {
+        if (Session["Role"].ToString() == ("Recruiter"))
+        {
+            <h4>
+                @Html.ActionLink("Adauga internship", "Create", "Internships")
+            </h4>
+        }
+    }
+}
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+                @Html.TextBox("Search") <button type="submit">Submit</button>
+    }
+
+<table class="table">
+    @foreach (var item in Model)
+        {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+
+            <td>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
+                    Vezi detalii
+                </button>
+
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">@item.Title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h2>Detalii</h2>
+
+                                <div>
+
+                                    <hr />
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            Titlu
+                                        </dt>
+                                        <dd>
+                                            @item.Title
+                                        </dd>
+                                        <dt>
+                                            Data Inceput
+                                        </dt>
+                                        <dd>
+                                            @item.StartDate
+                                        </dd>
+                                        <dt>
+                                            Data Sfarsit
+                                        </dt>
+                                        <dd>
+                                            @item.EndDate
+                                        </dd>
+                                        <dt>
+                                            Descriere
+                                        </dt>
+                                        <dd>
+                                            @item.Description
+                                        </dd>
+                                        <dt>
+                                            Oras
+                                        </dt>
+                                        <dd>
+                                            @item.City
+                                        </dd>
+                                        <dt>
+                                            Numar pozitii disponibile
+                                        </dt>
+                                        <dd>
+                                            @item.PositionsAvailable
+                                        </dd>
+                                        <dt>
+                                            Categorie
+                                        </dt>
+                                        <dd>
+                                            @item.Category
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+
+            @{
+                if (User.Identity.IsAuthenticated)
+                {
+                    if (Session != null)
+                    {
+                        if (Session["Role"] != null)
+                        {
+
+                            if (Session["Role"].ToString() == "Recruiter")
+                            {
+                                <td>
+                                    <div>@Html.ActionLink("Editeaza", "Edit", "Internships", new { id = item.InternshipId }, new { @class = "btn btn-warning" })</div>
+                                </td>
+                                <td>
+                                    <div>
+                                        @Html.ActionLink("Gestioneaza Aplicanti", "Index", "StudentInternships", new { id = item.InternshipId }, new { @class = "btn btn-primary" })
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div>@Html.ActionLink("Sterge", "Delete", "Internships", new { id = item.InternshipId }, new { @class = "btn btn-danger" })</div>
+                                </td>
+
+                            }
+                            if (Session["Role"].ToString() == "Student")
+                            {
+                                bool apply = true;
+                                foreach (var i in item.StudentInternships)
+                                {
+                                    if (i.StudentUserId.ToString() == Session["UserId"].ToString()) { apply = false; }
+                                }
+
+                                <td>
+                                    @if (apply)
+{
+                                        <div>@Html.ActionLink("Apply", "Create", "StudentInternships", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
+                                    }
+                                    else
+                                    {
+                                        <div>Already Applied</div>
+                                    }
+                                </td>
+                            }
+                        }
+                        else
+                        {
+                            <td>
+                                <div> @Html.ActionLink("Aplica internship", "Login", "Account", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
+                            </td>
+                        }
+                    }
+                    else
+                    {
+                        <td>
+                            <div> @Html.ActionLink("Aplica internship", "Login", "Account", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
+                        </td>
+                    }
+                }
+                else
+                {
+                    @*apply to be worked on*@
+                    <td>
+                        <div> @Html.ActionLink("Aplica internship", "Login", "Account", new { internshipId = item.InternshipId }, new { @class = "btn primary" })</div>
+                    </td>
+                }
+            }
+
+        </tr>
+    }
+
+</table>
+
+
+
+@*<table class="table">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Title, "Details", "Internships", routeValues: new { id = item.InternshipId }, htmlAttributes: new { id = item.InternshipId })
+                </td>
+
+                    <td>
+                        @Html.ActionLink("Aplica", "Login", "Account", new { idInternship = item.InternshipId }, new { idInternship = item.InternshipId })
+                    </td>
+            </tr>
+        }
+
+    </table>*@
+
+@*<div class="jumbotron">
+        <h2>Working Links For Different entities and actions</h2>
+        <h6>development use only</h6>
+        <ul>
+            <li>
+                @Html.ActionLink("Firms", "Index", "Firms")
+                <i>CRUD FOR FIRM ENTITIES</i>
+            </li>
+            <li>
+                //Open the Student Register page
+                @Html.ActionLink("Student Register", "StudentRegister", "Student");
+            </li>
+            <li>
+                //Open the Student Profile page
+                @Html.ActionLink("Student", "StudentProfile", "Student");
+            </li>
+            <li>
+                //Open the Student Profile page
+                @Html.ActionLink("StudentHomeApply", "StudentHome", "Student");
+            </li>
+            <li>
+                //Jump directly into a menu, optional parameter, default = 0
+                @Html.ActionLink("Student Edit Profile", "StudentProfile", "Student", new { selection = 3 }, null);
+            </li>
+            <li>
+                @Html.ActionLink("Internships", "Index", "Internships")
+                <i>CRUD FOR Internships</i>
+            </li>
+            <li>
+                @Html.ActionLink("RecruiterDetails", "Index", "RecruitersAccountDetails")
+                <i>CRUD FOR RecruiterDetails</i>
+            </li>
+            <li>
+                @Html.ActionLink("StudentsDetails", "Index", "StudentsAccountDetails")
+                <i>CRUD FOR StudentAccount</i>
+            </li>
+            <li>
+                <i>CRUD FOR THE REST OF THE ENTITIES COMING SOON</i>
+            </li>
+        </ul>
+
+    </div>*@

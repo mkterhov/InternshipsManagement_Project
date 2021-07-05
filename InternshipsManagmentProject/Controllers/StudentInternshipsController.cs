@@ -17,10 +17,12 @@ namespace InternshipsManagmentProject.Controllers
         private Entities db = new Entities();
 
         // GET: StudentInternships
-        public ActionResult Index()
+        public ActionResult Index(string id = null)
         {
-            var studentInternships = db.StudentInternships.Include(s => s.Internship).Include(s => s.Resume).Include(s => s.Student);
-            return View(studentInternships.ToList());
+            if (id == null) {
+                return View(db.StudentInternships.Include(s => s.Internship).Include(s => s.Resume).Include(s => s.Student).ToList());
+            }
+            return View(db.StudentInternships.Where(s => s.InternshipId == id).Include(s => s.Internship).Include(s => s.Resume).Include(s => s.Student).ToList());
         }
 
         // GET: StudentInternships/Details/5

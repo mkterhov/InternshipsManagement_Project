@@ -105,12 +105,17 @@ namespace InternshipsManagmentProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FirmOrganizerId,RecruiterResponsibleId,StartDate,EndDate,Description,City,PositionsAvailable,InternshipPostPhoto,Category,Title")] Internship internship)
+        public ActionResult Create([Bind(Include = "StartDate,EndDate,Description,City,PositionsAvailable,InternshipPostPhoto,Category,Title")] Internship internship)
         {
             if (ModelState.IsValid)
             {
                 string guid = Guid.NewGuid().ToString();
                 internship.InternshipId = guid;
+                var userId = Session["UserId"].ToString();
+                Recruiter recruiter = db.Recruiters.Where(a => a.UserId == userId).FirstOrDefault();
+                Firm firm = recruiter.Firm;
+                internship.FirmOrganizerId = firm.FirmId;
+                internship.RecruiterResponsibleId = recruiter.RecruiterId;
                 db.Internships.Add(internship);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -149,13 +154,15 @@ namespace InternshipsManagmentProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "InternshipId,FirmOrganizerId,RecruiterResponsibleId,StartDate,EndDate,Description,City,PositionsAvailable,InternshipPostPhoto,Category,Title")] Internship internship)
+        public ActionResult Edit([Bind(Include = " InternshipId,FirmOrganizerId,RecruiterResponsibleId,StartDate,EndDate,Description,City,PositionsAvailable,InternshipPostPhoto,Category,Title")] Internship internship)
         {
             if (ModelState.IsValid)
             {
+
+
                 db.Entry(internship).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             ViewBag.FirmOrganizerId = new SelectList(db.Firms, "FirmId", "Name", internship.FirmOrganizerId);
             ViewBag.InternshipPostPhoto = new SelectList(db.Images, "Id", "Name", internship.InternshipPostPhoto);
